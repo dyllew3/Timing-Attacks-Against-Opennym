@@ -3,13 +3,15 @@
 
 + Research papers
 + Learn Packet Sniffing
-  + Download packet sniffing tool(Done)
-  + Attempt basic local sniffing(Done)
+  + Download packet sniffing tool (Done)
+  + Attempt basic local sniffing (Done)
 + Setup nym server
-  + Run locally(Done)
-  + Attempt to ping it
+  + Run locally (Done)
+  + Attempt to ping it (Done)
 + Generate Data for nym
-  + Look at users generated for nym
+  + Look at users generated for nym (Done)
+  + Generate rules table data (Done)
+  + Setup https server locally
   + Generate users for timing attacks
   + Generate user behaviour
 + Attempt timing attacks on nym

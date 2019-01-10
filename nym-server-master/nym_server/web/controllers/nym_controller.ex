@@ -43,7 +43,8 @@ defmodule NymServer.NymController do
       top_ratings = Enum.map(nym.top_ratings, &get_rating/1)
       %{
         id: nym.id,
-        topRatings: top_ratings
+        topRatings: top_ratings,
+        topDomains: nym.top_domains
       }
     end
 
