@@ -11,7 +11,7 @@
 + Generate Data for nym
   + Look at users generated for nym (Done)
   + Generate rules table data (Done)
-  + Setup https server locally
+  + Setup https server locally(Done)
   + Generate users for timing attacks
   + Generate user behaviour
 + Attempt timing attacks on nym

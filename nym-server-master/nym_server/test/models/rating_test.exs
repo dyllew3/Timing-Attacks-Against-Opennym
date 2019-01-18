@@ -3,7 +3,7 @@ defmodule NymServer.RatingTest do
 
   alias NymServer.Rating
 
-  @valid_attrs %{domain: "some content", item: "some content", num_votes: 42, score: 42}
+  @valid_attrs %{domain: "some content", item: "some content", score: 42, num_votes: 42, nym_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

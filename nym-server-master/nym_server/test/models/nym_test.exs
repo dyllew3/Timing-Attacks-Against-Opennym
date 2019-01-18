@@ -3,7 +3,7 @@ defmodule NymServer.NymTest do
 
   alias NymServer.Nym
 
-  @valid_attrs %{name: "some content", nym_id: "some content"}
+  @valid_attrs %{name: "some content", nym_id: 1}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

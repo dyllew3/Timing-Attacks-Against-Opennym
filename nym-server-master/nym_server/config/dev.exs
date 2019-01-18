@@ -8,6 +8,8 @@ use Mix.Config
 # with brunch.io to recompile .js and .css sources.
 config :nym_server, NymServer.Endpoint,
   http: [port: 4000],
+  https: [port: 4400, otp_app: :nym_server, keyfile: "priv/keys/localhost.key", certfile: "priv/keys/localhost.cert"
+  ],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,

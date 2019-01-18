@@ -69,7 +69,7 @@ with open("rules.csv") as input_file:
 
     conn.commit()
 
-# # Add Nym version into nym metadata table
-# insert_command = "INSERT INTO {} (clustering_version) VALUES (%s)".format(METADATA_TABLE)
-# cur.execute(insert_command, (0.1))
-# conn.commit()
+# Add Nym version into nym metadata table
+insert_command = "INSERT INTO {} (clustering_version, support_list_version) VALUES (%s, %s)".format(METADATA_TABLE)
+cur.execute(insert_command, (0.1, 0.25))
+conn.commit()
