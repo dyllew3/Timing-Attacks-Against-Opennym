@@ -12,11 +12,12 @@
   + Look at users generated for nym (Done)
   + Generate rules table data (Done)
   + Setup https server locally(Done)
-  + Generate users for timing attacks
-  + Generate user behaviour
 + Attempt timing attacks on nym
   + Time how long an operation takes
   + Try to identify user patterns
++ Generate data for timing attacks
+  + Generate users for timing attacks
+  + Generate user behaviour
 + Implement method of prevention
 + Attempt timing attacks again
 + Write final report
