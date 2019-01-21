@@ -20,16 +20,17 @@ def make_requests(req, put_req=False, dat=None):
                 s.get(req, verify=False)
             else:
                 s.put(req, data=json.dumps({'rating' : rating_update}), headers=headers, verify=False)
+                rating_update["nymRating"]["numVotes"] += 1
             print(i)
     return 0
 
 def main():
     # Nyms
-    make_requests('https://localhost:4400/nym')
-    # make_requests('https://localhost:4400/nym/0')
+    #make_requests('https://localhost:4400/nym')
+    #make_requests('https://localhost:4400/nym/0')
 
     # Ratings
-    # make_requests('https://localhost:4400/ratings/3/spotify.com')
+    make_requests('https://localhost:4400/ratings/3/spotify.com')
     # make_requests('https://localhost:4400/ratings/update', True, rating_update)
 
     # Cookies
