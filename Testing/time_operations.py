@@ -1,8 +1,8 @@
-NUM_TESTS = 1000
+NUM_TESTS = 1
 import json
 import requests
 import time
-URL = "https://34.242.175.35"
+URL = "https://34.248.8.95"
 
 
 rating_update = {
@@ -20,7 +20,7 @@ def make_requests(req, put_req=False, dat=None):
     with requests.Session() as s:
         for i in range(NUM_TESTS):
             if not put_req:
-                s.get(req, verify=False)
+                a = s.get(req, verify=False, headers={'Z-padding':'00000'})
             else:
                 s.put(req, data=json.dumps({'rating' : rating_update}), headers=headers, verify=False)
                 rating_update["nymRating"]["numVotes"] += 1
@@ -55,7 +55,7 @@ def main():
     # Not working
     # make_requests(URL + ':4400/identity/spotify.com/timestamp')
     
-    make_requests(URL + ':4400/identity/nym/spotify.com/3')
+    #make_requests(URL + ':4400/identity/nym/spotify.com/3')
     
     # Not working
     # make_requests(URL + ':4400/identity/nym/spotify.com/3/timestamp')
