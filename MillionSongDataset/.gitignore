@@ -1,0 +1,6 @@
+.vscode/
+venv/
+blc-python/
+.idea/
+.cache-yasirm96
+__pycache__/

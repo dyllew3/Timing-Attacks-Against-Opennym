@@ -1,0 +1,69 @@
+{
+  "dataset": {
+    "base": "Data/Dataset/",
+    "train_triplets": "train_triplets.txt",
+    "unique_tracks": "unique_tracks.txt",
+    "mismatched_sids": "sid_mismatches.txt",
+    "untrusted_song_ids_set": "untrusted_song_ids_set"
+  },
+  "song_data": {
+    "base": "Data/Song_Data",
+    "sids_to_ids_map": "sids_to_ids_map",
+    "sid_to_details_map": "sids_to_details_map",
+    "song_to_uri_map": "song_to_uri_map"
+  },
+  "user_data": {
+    "base": "Data/User_Data",
+    "normalized_user_songs_map": "normalized_user_songs_map",
+    "user_songs_map": "user_songs_dict_map",
+    "user_to_id_map": "user_to_id_map",
+    "user_to_row_map": "user_to_row_map",
+    "user_total_play_counts_map": "user_total_play_counts_map",
+    "user_max_play_counts_map": "user_max_play_counts_map",
+    "user_ratings_map": "user_ratings_map",
+    "top_users_dir": "Top_Users/"
+  },
+  "nym_data": {
+    "base": "Data/Nym_Data/",
+    "P_with_ids": "P_with_ids",
+    "nym_ratings_dir": "Nym_Ratings/",
+    "nym_songs_dir": "Nym_Songs/",
+    "unique_artists_dir": "Unique_Artists/",
+    "nym_variance_dir": "Nym_Song_Variances/",
+    "nym_users_map": "nym_users_map",
+    "top_users_file": "top_users.csv",
+    "file_formats": {
+      "top_artists": "{}_top_artists.csv",
+      "artists": "{}_artists.csv",
+      "songs": "{}_songs.csv"
+    }
+  },
+  "database_data": {
+    "base": "Data/DB_Data/",
+    "input_data": "ratings.csv",
+    "nym_data": "nyms.csv"
+  },
+  "evaluation_data": {
+    "base": "Data/Evaluation_Data",
+    "file_formats": {
+      "nym_artists": "{}_artists.csv",
+      "nym_recommendations": "{}_recommendations.csv"
+    }
+  },
+  "sparse_mat": {
+    "base": "Data/BLC_Input/",
+    "rows": "users.txt",
+    "columns": "songs.txt",
+    "ratings": "ratings.txt"
+  },
+  "results": {
+    "P": "results/P_40k"
+  },
+  "spotify": {
+    "client_id": "9aac513fd5624a2a94c0e8f8b3224557",
+    "client_secret": "0393fdf0c9dc4e09bff4fb7c202f4703",
+    "redirect_uri": "http://localhost/",
+    "scope": "user-library-read",
+    "username": "yasirm96"
+  }
+}
