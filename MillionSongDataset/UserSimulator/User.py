@@ -20,23 +20,43 @@ class User:
         self.sids_to_details_map = {}
         self.uri_to_song = {}
 
+        # Load users songs map
         self.user_songs_map_path = path.join(config["user_data"]["base"], config["user_data"]["user_songs_map"])
+        self.load_user_songs()
+        # Load users
         self.user_to_id_map_path = path.join(config["user_data"]["base"], config["user_data"]["user_to_id_map"])
+        self.load_users()
+       
+        # Load song id to their num id
         self.sids_to_ids_map_path = path.join(config["song_data"]["base"], config["song_data"]["sids_to_ids_map"])
+        self.load_song_ids()
+        
+        # Load song num id to their details
         self.sids_to_details_map_path = path.join(config["song_data"]["base"], config["song_data"]["sid_to_details_map"])
+        self.load_song_details()
+        
+        # Load song uri to songs
         self.song_to_uri_path = path.join(config["song_data"]["base"], config["song_data"]["song_to_uri_map"])
+        self.load_uri_to_songs()
+        
+        # Load recommendations
         self.recommendations_path = path.join(config["database_data"]["base"], config["database_data"]['input_data'])
+        self.load_recommendations()
+
 
     def load_uri_to_songs(self):
         with open(self.song_to_uri_path, 'rb') as input_pickle:
             print('Loading and inverting dictionary')
-            for k, v in load(input_pickle):
-                self.uri_to_song[k] = v
+            for k, v in load(input_pickle).items():
+                self.uri_to_song[v] = k
+            print(self.uri_to_song.items())
 
     def load_song_ids(self):
         with open(self.sids_to_ids_map_path, 'rb') as output:
             self.song_to_id_dict = load(output)
             print("Loaded dict of song ids to numbers")
+    
+    def load_song_details(self):
         with open(self.sids_to_details_map_path, 'rb') as input_pickle:
             self.sids_to_details_map = load(input_pickle)
             print('loaded song details')
@@ -60,7 +80,6 @@ class User:
             csv_reader = csv.reader(csvfile, delimiter=',')
             # Remove empty lists and only look at songs from the nym
             self.recommendations =  list(filter(lambda x: x != [] and x[1] == str(self.nym), csv_reader))
-            print(self.recommendations)
 
     def load_song_tuples(self):
         with open(self.sids_to_details_map_path, 'rb') as output_pickle:
@@ -84,4 +103,7 @@ class User:
         return self.recommendations[self.current_recommendation - 1]
 
     def dump_songs(self):
-        pass
+        print("Writing new users song map to disk")
+        with open(self.user_songs_map_path, 'wb') as output:
+            dump(self.user_songs_map, output)
+        print("Done")

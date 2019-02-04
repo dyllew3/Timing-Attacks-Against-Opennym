@@ -87,7 +87,7 @@ def listen_to_playlist():
     user = User(nym, user_num, config)
     while True:
         print("running user")
-        print(random.randint(0, len(USER_LIST)))
+        print(user.get_next_recommendation())
         time.sleep(.50)
     pass
 
