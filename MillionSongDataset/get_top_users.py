@@ -44,5 +44,5 @@ with open(top_users_file_path, 'w') as output:
 
         users_string = ",".join(map(str, top_users))
         output.write("{},{}\n".format(nym, users_string))
-        # print("Top Users: {}".format(str(top_users)))
-        # print("User Play Counts: {}".format(str(user_play_counts)))
+        print("Top Users: {}".format(str(top_users)))
+        print("User Play Counts: {}".format(str(user_play_counts)))

@@ -159,35 +159,34 @@ def evaluate_users(sp):
 
         nym_users_dict[nym].append(f)
 
-    # result_file = open("user_evaluation.txt", 'w')
+    result_file = open("user_evaluation.txt", 'w')
     nym_average_precision = [0, 0, 0, 0, 0]
     nym_average_recall = [0, 0, 0, 0, 0]
     intervals = [10, 30, 50, 70, 100]
 
     # Iterate the users in each nym to calculate the average
-    for nym, users in nym_users_dict.items():
+    for nym, users in list(nym_users_dict.items())[:5]:
         print("Processing Nym {}".format(nym))
         average_precision = [0, 0, 0, 0, 0]
         average_recall = [0, 0, 0, 0, 0]
-        # result_file.write("Processing nym {}\n".format(nym))
+        result_file.write("Processing nym {}\n".format(nym))
 
         average_num_artists = 0
 
         for user_file in users:
             # print("Processing file {}".format(user_file))
             filepath = path.join(top_users_dir, user_file)
-
+            print(filepath)
             artists = get_nym_artists(filepath, num_artists=500)
             top_artists = get_user_artists(filepath)
             top_artists = rank_artists(top_artists)
 
             average_num_artists += len(artists)
-            continue
 
             if not top_artists or not artists:
                 continue
 
-            for i in range(5):
+            for i in range(2):
                 # Get recommendations from Spotify
                 print("Getting artist uris")
                 artist_uris = sp.get_artist_uris(top_artists)
@@ -220,11 +219,11 @@ def evaluate_users(sp):
             print("Finished user {}".format(user_file))
 
         print("Average Num Artists: {}".format(average_num_artists / 5))
-        # nym_average_precision = [precision / 5 for precision in nym_average_precision]
-        # nym_average_recall = [recall / 5 for recall in nym_average_recall]
+        nym_average_precision = [precision / 5 for precision in nym_average_precision]
+        nym_average_recall = [recall / 5 for recall in nym_average_recall]
 
-        # result_file.write("Average Precision: {}\n".format(str(nym_average_precision)))
-        # result_file.write("Average Recall: {}\n".format(str(nym_average_recall)))
+        result_file.write("Average Precision: {}\n".format(str(nym_average_precision)))
+        result_file.write("Average Recall: {}\n".format(str(nym_average_recall)))
 
 
 sp = SpotifyWrapper(config)
