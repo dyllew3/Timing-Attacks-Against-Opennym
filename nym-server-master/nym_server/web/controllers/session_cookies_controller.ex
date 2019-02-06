@@ -14,7 +14,10 @@ defmodule NymServer.SessionCookiesController do
         try do
           top_cookies = nym.top_domains
                       |> Enum.map(fn(domain) -> get_domain_cookies(nym_id, domain) end)
-          render(conn, "index.json", cookies: top_cookies)
+          conn
+          |> register_before_send(&pad_packet(&1))
+          |> send_resp(200,"body")
+          #render(conn, "index.json", cookies: top_cookies)
         rescue
           ArgumentError -> error_response(conn, :bad_request)
           NoResultsError -> error_response(conn, :not_found)
