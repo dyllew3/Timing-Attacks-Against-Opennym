@@ -2,6 +2,7 @@ defmodule NymServer.NymController do
     use NymServer.Web, :controller
 
     alias NymServer.{Nym, Rating, NymMetadata}
+    import NymServer.Utils
 
     # Returns all Nyms
     def index(conn, _params) do
@@ -10,8 +11,12 @@ defmodule NymServer.NymController do
               |> put_status(:not_found)
               |> text("")
         nyms -> conn
-              |> assign(:nyms, Enum.map(nyms, &insert_nym_ratings/1))
-              |> render("index.json")
+              #|> assign(:nyms, Enum.map(nyms, &insert_nym_ratings/1))
+              |> register_before_send(&pad_packet(&1))
+              |> send_resp(200, Poison.encode! %{nyms: Enum.map(nyms, &insert_nym_ratings/1) })
+              #|> render("index.json")
+
+
       end
     end
 
@@ -23,7 +28,10 @@ defmodule NymServer.NymController do
              |> text("")
         nym -> conn
              |> assign(:nym, insert_nym_ratings(nym))
-             |> render("show.json")
+             #|> render("show.json")
+             |> register_before_send(&pad_packet(&1))
+             |> send_resp(200, Poison.encode! insert_nym_ratings(nym))
+
       end
     end
 

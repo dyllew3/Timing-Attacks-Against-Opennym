@@ -6,6 +6,16 @@ defmodule NymServer.SessionCookiesController do
 
   import NymServer.Utils
 
+
+  def render_cookie(cookie) do
+    %{
+      session: %{
+        domain: cookie.domain,
+        issued: cookie.updated_at,
+        cookies: Poison.decode! cookie.cookies
+      }
+    }
+  end
   # Given a nym ID, get the cookies for it's top domains
   def index(conn, %{"nym_id" => nym_id}) do
     case Repo.get(Nym, nym_id) do
@@ -14,9 +24,10 @@ defmodule NymServer.SessionCookiesController do
         try do
           top_cookies = nym.top_domains
                       |> Enum.map(fn(domain) -> get_domain_cookies(nym_id, domain) end)
+          all_cookies =    %{ cookies: Enum.map(top_cookies, &render_cookie/1) }
           conn
           |> register_before_send(&pad_packet(&1))
-          |> send_resp(200,"body")
+          |> send_resp(200, Poison.encode! all_cookies)
           #render(conn, "index.json", cookies: top_cookies)
         rescue
           ArgumentError -> error_response(conn, :bad_request)

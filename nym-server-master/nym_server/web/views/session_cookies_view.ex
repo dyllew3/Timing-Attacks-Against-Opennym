@@ -1,6 +1,7 @@
 defmodule NymServer.SessionCookiesView do
   use NymServer.Web, :view
 
+
   def render("index.json", %{cookies: cookies}) do
     %{
       cookies: Enum.map(cookies, &render_cookie/1)
@@ -19,7 +20,7 @@ defmodule NymServer.SessionCookiesView do
     }
   end
 
-  defp render_cookie(cookie) do
+  def render_cookie(cookie) do
     %{
       session: %{
         domain: cookie.domain,

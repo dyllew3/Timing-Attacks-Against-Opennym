@@ -20,6 +20,7 @@ parser.add_argument("--filter_sparse_songs", help="Filter Sparse Songs (cols)", 
 parser.add_argument("--build_song_dict", help="Generates a dict of song ids to (artist, song) tuples", action="store_true")
 parser.add_argument("--build_top_users", help="Writes to file the top songs for the top users in the Dataset", action="store_true")
 parser.add_argument("--all", help="Do all of the above", action="store_true")
+parser.add_argument("--refresh", help="Used when data has been changed and no need to parse", action="store_true")
 args = parser.parse_args()
 
 
@@ -32,7 +33,7 @@ if args.parse or args.all:
     train_triplet_parser.write_data_to_disk()
     print("Done")
 
-if args.normalize_ratings or args.all:
+if args.normalize_ratings or args.all or args.refresh:
     # Normalize play counts
     print("Normalizing play counts")
     song_rating_normalizer = SongRatingNormalizer(config)
@@ -41,7 +42,7 @@ if args.normalize_ratings or args.all:
     song_rating_normalizer.write_data_to_disk()
     print("Done")
 
-if args.gen_matrix or args.all:
+if args.gen_matrix or args.all or args.refresh:
     # Generate sparse matrix for BLC
     print("Generating Sparse Matrix")
     sparse_mat_generator = SparseMatGenerator(config, num_users=40000)
@@ -50,7 +51,7 @@ if args.gen_matrix or args.all:
     sparse_mat_generator.write_user_data()
     print("Done")
 
-if args.filter_sparse_songs or args.all:
+if args.filter_sparse_songs or args.all or args.refresh:
     # Filter sparse songs from matrix
     print("Filtering Sparse Songs from matrix")
     sparse_song_filter = SparseSongFilter(config)
@@ -59,7 +60,7 @@ if args.filter_sparse_songs or args.all:
     sparse_song_filter.write_filtered_matrix()
     print("Done")
 
-if args.build_song_dict or args.all:
+if args.build_song_dict or args.all or args.refresh:
     # Build dict of song IDs to artist-song tuples
     print("Building dict of songs")
     song_dict_builder = SongDictBuilder(config)
@@ -67,7 +68,7 @@ if args.build_song_dict or args.all:
     song_dict_builder.write_song_details_to_file()
     print("Done")
 
-if args.build_top_users or args.all:
+if args.build_top_users or args.all or args.refresh:
     # Build the top users for dataset
     print("Outputting top users")
     top_user_builder = TopUserBuilder(config)
