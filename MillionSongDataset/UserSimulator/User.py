@@ -48,8 +48,9 @@ class User:
         with open(self.song_to_uri_path, 'rb') as input_pickle:
             print('Loading and inverting dictionary')
             for k, v in load(input_pickle).items():
-                self.uri_to_song[v] = k
-            print(self.uri_to_song.items())
+                song, artist = k.split("<SEP>")
+                self.uri_to_song[v] = (artist, song)
+            print("Done")
 
     def load_song_ids(self):
         with open(self.sids_to_ids_map_path, 'rb') as output:
@@ -80,6 +81,7 @@ class User:
             csv_reader = csv.reader(csvfile, delimiter=',')
             # Remove empty lists and only look at songs from the nym
             self.recommendations =  list(filter(lambda x: x != [] and x[1] == str(self.nym), csv_reader))
+        self.current_recommendation = len(self.recommendations) - 1
 
     def load_song_tuples(self):
         with open(self.sids_to_details_map_path, 'rb') as output_pickle:
@@ -98,9 +100,15 @@ class User:
             result.append((s_id, plays))
         self.user_songs_map[self.user_num] = result
 
+    def find_sid(self, song_details):
+        for k, v in self.sids_to_details_map.items():
+            if v == song_details:
+                return k
+        return None
+
     def get_next_recommendation(self):
-        self.current_recommendation += 1
-        return self.recommendations[self.current_recommendation - 1]
+        self.current_recommendation -= 1
+        return self.recommendations[self.current_recommendation + 1]
 
     def dump_songs(self):
         print("Writing new users song map to disk")

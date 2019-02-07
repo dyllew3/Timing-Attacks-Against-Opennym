@@ -51,12 +51,12 @@ class NymRatingFormatter:
 
     def generate_db_input(self):
         # Check if song to uri dict exists, otherwise build it
-        if path.isfile(self.song_to_uri_path):
-            with open(self.song_to_uri_path, 'rb') as input_pickle:
-                self.song_to_uri_dict = load(input_pickle)
-        else:
-            print("Getting spotify uris")
-            self.get_song_spotify_ids()
+        #if path.isfile(self.song_to_uri_path):
+        #    with open(self.song_to_uri_path, 'rb') as input_pickle:
+        #        self.song_to_uri_dict = load(input_pickle)
+        #else:
+        print("Getting spotify uris")
+        self.get_song_spotify_ids()
 
         # Go through nym songs dict, generate list of (nym, domain, item, rating, num_votes) tuples
         with open(self.db_input_path, 'w') as db_input_file:

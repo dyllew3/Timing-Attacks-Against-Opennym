@@ -82,7 +82,9 @@ def listen_to_playlist():
     user = User(nym, user_num, config)
     while True:
         print("running user")
-        print(user.get_next_recommendation())
+        uri = user.get_next_recommendation()[3]
+        song_sid = (user.find_sid(user.uri_to_song[uri]))
+        user.update_user_play_count(song_sid)
         time.sleep(.50)
     pass
 
