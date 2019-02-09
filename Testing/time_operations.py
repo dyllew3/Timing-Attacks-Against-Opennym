@@ -24,8 +24,11 @@ def make_requests(req, put_req=False, dat=None):
                 print(a.headers)
                 print(len(a.content))
             else:
-                s.put(req, data=json.dumps({'rating' : rating_update}), headers=headers, verify=False)
+                a = s.put(req, data=json.dumps({'rating' : rating_update}), headers=headers, verify=False)
                 rating_update["nymRating"]["numVotes"] += 1
+                print(a.headers)
+                print(len(a.content))
+                print(a.content)
             print(i)
             time.sleep(0.2)
     return 0
@@ -33,11 +36,11 @@ def make_requests(req, put_req=False, dat=None):
 def main():
     # Nyms
     #make_requests(URL + ':4000/nym')
-    make_requests(URL + ':4000/nym/0')
+    #make_requests(URL + ':4000/nym/0')
 
     # Ratings
     #make_requests(URL + ':4000/ratings/3/spotify.com')
-    #make_requests(URL + ':4000/ratings/update', True, rating_update)
+    make_requests(URL + ':4000/ratings/update', True, rating_update)
 
     # Cookies
     #make_requests(URL + ':4000/cookies/1')

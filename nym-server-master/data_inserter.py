@@ -26,6 +26,9 @@ cur.execute(delete_command)
 delete_command = "DELETE FROM {}".format(RULES_TABLE)
 cur.execute(delete_command)
 
+delete_command = "DELETE FROM {}".format(METADATA_TABLE)
+cur.execute(delete_command)
+
 conn.commit()
 
 # Add nyms to the table

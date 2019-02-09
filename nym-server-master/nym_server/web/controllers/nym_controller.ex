@@ -8,8 +8,7 @@ defmodule NymServer.NymController do
     def index(conn, _params) do
       case Repo.all Nym do
         []   -> conn
-              |> put_status(:not_found)
-              |> text("")
+              |> error_response(:not_found)
         nyms -> conn
               #|> assign(:nyms, Enum.map(nyms, &insert_nym_ratings/1))
               |> register_before_send(&pad_packet(&1))
@@ -24,8 +23,7 @@ defmodule NymServer.NymController do
     def show(conn, %{"id" => id}) do
       case Repo.get(Nym, id) do
         nil -> conn
-             |> put_status(:not_found)
-             |> text("")
+             |> error_response(:not_found)
         nym -> conn
              |> assign(:nym, insert_nym_ratings(nym))
              #|> render("show.json")

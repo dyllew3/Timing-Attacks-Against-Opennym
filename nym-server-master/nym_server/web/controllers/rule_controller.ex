@@ -3,16 +3,19 @@ defmodule NymServer.RuleController do
   alias NymServer.{Rule, NymMetadata, Nym}
   alias Ecto.NoResultsError
 
+  import NymServer.Utils
+
   # Returns a list of domains supported by OpenNym
   def supported_index(conn, _params) do
     case Repo.all Rule do
       []    -> conn
-               |> put_status(:internal_server_error)
-               |> text("")
+               |> error_response(:internal_server_error)
       rules -> domains = get_domains(rules)
                conn
-               |> assign(:domains, domains)
-               |> render("supported_index.json")
+               |> register_before_send(&pad_packet(&1))
+               #|> assign(:domains, domains)
+               |> send_resp(200, Poison.encode! %{ supportList: domains })
+               #|> render("supported_index.json")
     end
   end
 
@@ -20,8 +23,7 @@ defmodule NymServer.RuleController do
   def supported_version_index(conn, _params) do
     case Repo.one(NymMetadata) do
       nil -> conn
-             |> put_status(:internal_server_error)
-             |> text("")
+             |> error_response(:internal_server_error)
       meta -> conn
               |> assign(:support_list_version, meta.support_list_version)
               |> render("supported_version_index.json")
@@ -49,8 +51,7 @@ defmodule NymServer.RuleController do
         rescue
           NoResultsError -> # Failed to get rule for one of the domains, send 500
             conn
-            |> put_status(:internal_server_error)
-            |> text("")
+            |> error_response(:internal_server_error)
         end
     end
   end
@@ -59,8 +60,7 @@ defmodule NymServer.RuleController do
   def domain_rule_show(conn, %{"domain" => domain}) do
     case Repo.get_by(Rule, [domain: domain]) do
       nil  -> conn
-              |> put_status(:bad_request)
-              |> text("")
+              |> error_response(:bad_request)
       rule -> conn
               |> assign(:rule, rule)
               |> render("domain_rule_show.json")
@@ -71,8 +71,7 @@ defmodule NymServer.RuleController do
   def rule_issued_show(conn, %{"domain" => domain}) do
     case Repo.get_by(Rule, [domain: domain]) do
       nil  -> conn
-              |> put_status(:not_found)
-              |> text("")
+              |> error_response(:not_found)
       rule -> conn
               |> assign(:timestamp, rule.updated_at)
               |> render("rule_issued_show.json")

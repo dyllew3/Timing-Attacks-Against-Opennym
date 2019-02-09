@@ -8,6 +8,19 @@ defmodule NymServer.RatingController do
 
   require Logger
 
+  def render_rating_local(rating) do
+    %{
+      rating: %{
+        domain: rating.domain,
+        item: rating.item,
+        nymRating: %{
+          score: rating.score,
+          numVotes: rating.num_votes
+        }
+      }
+    }
+  end
+
   def index(conn, %{"nym_id" => nym_id, "domain" => domain}) do
     # Check nym exists and domain supported, then return nym
     nym_query =
@@ -25,8 +38,10 @@ defmodule NymServer.RatingController do
           |> Enum.take(10)
 
           conn
-          |> assign(:ratings, ratings)
-          |> render("index.json")
+          |> register_before_send(&pad_packet(&1))
+          #|> assign(:ratings, ratings)
+          |> send_resp(200, Poison.encode! %{ratings: Enum.map(ratings, &render_rating_local/1) })
+          #|> render("index.json")
     end
   end
 
@@ -34,15 +49,20 @@ defmodule NymServer.RatingController do
   def show(conn, %{"nym_id" => nym_id, "domain" => domain, "id" => id}) do
     try do
       rating = Repo.get_by!(Rating, [nym_id: nym_id, domain: domain, item: id])
-      render(conn, "show.json", rating: rating)
+      #render(conn, "show.json", rating: rating)
+      conn
+      |> register_before_send(&pad_packet(&1))
+      |> send_resp(200, Poison.encode! render_rating_local(rating))
     rescue
       # If rating doesn't exist, create it given valid nym ID and domain
       NoResultsError -> case {Repo.get(Nym, nym_id), Repo.get_by(Rule, [domain: domain])} do
         {nil, _} -> error_response(conn)
         {_, nil} -> error_response(conn)
         _        -> conn
-                 |> assign(:rating, %Rating{domain: domain, item: id, score: 0.0, num_votes: 0, nym_id: nym_id})
-                 |> render("show.json")
+                 |> register_before_send(&pad_packet(&1))
+                 |> send_resp(200, Poison.encode! render_rating_local(%Rating{domain: domain, item: id, score: 0.0, num_votes: 0, nym_id: nym_id}))
+                 #|> assign(:rating, %Rating{domain: domain, item: id, score: 0.0, num_votes: 0, nym_id: nym_id})
+                 #|> render("show.json")
       end
     end
   end
@@ -94,12 +114,14 @@ defmodule NymServer.RatingController do
       {:failed, reason} -> error_response(conn, reason)
       {:error, _}       -> error_response(conn, :internal_server_error)
       {:conflict, updated_rating} -> conn
-                                  |> put_status(:conflict)
-                                  |> assign(:updated_rating, updated_rating)
-                                  |> render("conflict.json")
+                                  #|> put_status(:conflict)
+                                  |> register_before_send(&pad_packet(&1, :conflict))
+                                  #|> assign(:updated_rating, updated_rating)
+                                  |> send_resp(:conflict, Poison.encode! updated_rating)
       {:ok, rating}     -> conn
-                        |> assign(:rating, rating)
-                        |> render("update.json")
+                        |> register_before_send(&pad_packet(&1))
+                        #|> assign(:rating, rating)
+                        |> send_resp(200, Poison.encode! render_rating_local(rating) )
     end
   end
 

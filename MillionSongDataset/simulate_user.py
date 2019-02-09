@@ -2,7 +2,11 @@ from UserSimulator.User import User
 import random
 import time
 from json import load
+import json
+import csv
+import requests
 
+REQ = "http://localhost:4000/ratings/update"
 # pre-selected users just for convenience
 # contains tuples in the form (nym, user_number)
 USER_LIST = [
@@ -74,17 +78,42 @@ USER_LIST = [
     (9,753614)
 ]
 
+# Send new ratings to the server
+def update_server(song_uri):
+    resp = None
+    with open('Data\\DB_Data\\ratings.csv', 'r') as input_file:
+        ratings = csv.reader(input_file, delimiter=',')
+        for rating in ratings:
+            if rating[3] == song_uri:
+                new_rating = {
+                    "nymRating" : {
+                        "numVotes" : int(rating[5]),
+                        "score": int(rating[4])
+                    },
+                    "domain": rating[2],
+                    "item": rating[3],
+                    "nym_id": rating[1]
+                }
+                headers = { "content-type": "application/json"}
+                resp = requests.put(REQ, data=json.dumps({'rating' : new_rating}), headers=headers, verify=False)
+    return resp
+
 config = load(open('config.json'))
 
 def listen_to_playlist():
     index = random.randint(0, len(USER_LIST) - 1)
     nym, user_num = USER_LIST[index]
     user = User(nym, user_num, config)
+    count = 10
     while True:
         print("running user")
         uri = user.get_next_recommendation()[3]
         song_sid = (user.find_sid(user.uri_to_song[uri]))
-        user.update_user_play_count(song_sid)
+        user.update_user_play_count(song_sid, 200)
+        user.dump_songs()
+        if count <= 0:
+            break
+        count -= 1
         time.sleep(.50)
     pass
 
