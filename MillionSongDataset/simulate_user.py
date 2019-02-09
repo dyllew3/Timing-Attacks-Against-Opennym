@@ -104,18 +104,24 @@ def listen_to_playlist():
     index = random.randint(0, len(USER_LIST) - 1)
     nym, user_num = USER_LIST[index]
     user = User(nym, user_num, config)
-    count = 10
+    count = 20
     while True:
         print("running user")
-        uri = user.get_next_recommendation()[3]
-        song_sid = (user.find_sid(user.uri_to_song[uri]))
-        user.update_user_play_count(song_sid, 200)
-        user.dump_songs()
-        if count <= 0:
-            break
-        count -= 1
-        time.sleep(.50)
-    pass
+        try:
+            uri = user.get_next_recommendation()[3]
+            song_sid = (user.find_sid(user.uri_to_song[uri]))
+            user.update_user_play_count(song_sid, 1)
+            if count <= 0:
+                break
+            count -= 1
+            time.sleep(.50)
+        except:
+            print("Something went wrong")
+            continue
+    user.dump_songs()
+
+
 
 if __name__ == "__main__":
-    listen_to_playlist()
+    for _ in range(1):
+        listen_to_playlist()

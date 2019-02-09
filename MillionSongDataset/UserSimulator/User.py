@@ -81,7 +81,6 @@ class User:
             csv_reader = csv.reader(csvfile, delimiter=',')
             # Remove empty lists and only look at songs from the nym
             self.recommendations =  list(filter(lambda x: x != [] and x[1] == str(self.nym), csv_reader))
-        self.current_recommendation = len(self.recommendations) - 1
 
     def load_song_tuples(self):
         with open(self.sids_to_details_map_path, 'rb') as output_pickle:
@@ -107,8 +106,8 @@ class User:
         return None
 
     def get_next_recommendation(self):
-        self.current_recommendation -= 1
-        return self.recommendations[self.current_recommendation + 1]
+        self.current_recommendation += 1
+        return self.recommendations[self.current_recommendation - 1]
 
     def dump_songs(self):
         print("Writing new users song map to disk")
