@@ -6,7 +6,7 @@ defmodule NymServer.Utils do
 
   def pad_packet(conn, status \\ 200) do
     base_size = 204 + byte_size("padding-len") + byte_size(conn.resp_body)
-    max_size = 15202
+    max_size = 16000
     padding_size = max_size - base_size
     padding = for _ <- 1 .. (padding_size), do: '0'
     padding_size_string = cond do
@@ -31,7 +31,7 @@ defmodule NymServer.Utils do
     conn
     |> PC.resp(status, Enum.join([conn.resp_body, padding], ""))
     |> PC.put_resp_header("padding-len", padding_size_string)
-    |> PC.update_resp_header("content-length", "15202", &(&1 <> "; content-length=15202"))
+    |> PC.update_resp_header("content-length", "16000", &(&1 <> "; content-length=16000"))
   end
 
   def error_response(conn, reason \\ :bad_request) do

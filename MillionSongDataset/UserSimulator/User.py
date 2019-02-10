@@ -91,7 +91,6 @@ class User:
     def update_user_play_count(self, song_id, amount=1):
         result = []
         song_num = self.song_to_id_dict[song_id]
-        print(song_num)
         user_songs = self.user_songs_map[self.user_num]
         for s_id, plays in user_songs:
             if s_id == song_num:

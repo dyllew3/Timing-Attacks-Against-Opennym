@@ -45,7 +45,7 @@ with open("nyms.csv") as input_file:
     conn.commit()
 
 # Add Ratings to the table
-with open("ratings.csv") as input_file:
+with open("ratings-1.csv") as input_file:
     print("Reading in ratings to db")
     csv_reader = reader(input_file)
     next(csv_reader)

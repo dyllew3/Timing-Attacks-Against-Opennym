@@ -35,7 +35,7 @@ defmodule NymServer.RatingController do
       {:failed, reason} -> error_response(conn, reason)
       nym -> ratings = filter_domains(nym.ratings, domain)
           |> Enum.sort_by(&(&1.score), &>=/2) # Sort in descending order by num votes
-          |> Enum.take(10)
+          |> Enum.take(20)
 
           conn
           |> register_before_send(&pad_packet(&1))

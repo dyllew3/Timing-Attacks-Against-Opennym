@@ -5,8 +5,23 @@ from json import load
 import json
 import csv
 import requests
+from DataPreprocessor.build_user_track_dict import TrainTripletParser
+from DataPreprocessor.normalize_play_counts import SongRatingNormalizer
+from DataPreprocessor.create_blc_input import SparseMatGenerator
+from DataPreprocessor.filter_sparse_songs import SparseSongFilter
+from DataPreprocessor.build_song_dict import SongDictBuilder
+from DataPreprocessor.get_top_user_artists import TopUserBuilder
+
+from ResultProcessor.process_P import PProcessor
+from ResultProcessor.build_nym_ratings import NymRatingBuilder
+from ResultProcessor.get_top_nym_songs import SongListBuilder
+from ResultProcessor.get_unique_nym_artists import UniqueNymArtistFilter
+from ResultProcessor.get_nym_artist_variance import ArtistVarianceCalculator
+from ResultProcessor.NymRatingFormatter import NymRatingFormatter
+from spotify import SpotifyWrapper
 
 REQ = "http://localhost:4000/ratings/update"
+RATINGS_REQ = "http://localhost:4000/ratings/{}/spotify.com"
 # pre-selected users just for convenience
 # contains tuples in the form (nym, user_number)
 USER_LIST = [
@@ -31,6 +46,11 @@ USER_LIST = [
     (12,473021),
     (12,811920),
     (12,94387),
+    (13,190513),	
+    (13,272213),	
+    (13,372156),	
+    (13,745999),	
+    (13,752718),
     (14,152776),
     (14,291748),
     (14,555065),
@@ -78,45 +98,159 @@ USER_LIST = [
     (9,753614)
 ]
 
-# Send new ratings to the server
-def update_server(song_uri):
-    resp = None
-    with open('Data\\DB_Data\\ratings.csv', 'r') as input_file:
+def update_data():
+        # Normalize play counts
+    print("Normalizing play counts")
+    song_rating_normalizer = SongRatingNormalizer(config)
+    song_rating_normalizer.load_user_songs_dict()
+    song_rating_normalizer.normalize_data()
+    song_rating_normalizer.write_data_to_disk()
+    print("Done")
+    del song_rating_normalizer
+
+    # Generate sparse matrix for BLC
+    print("Generating Sparse Matrix")
+    sparse_mat_generator = SparseMatGenerator(config, num_users=40000)
+    sparse_mat_generator.load_data()
+    sparse_mat_generator.generate_sparse_mat()
+    sparse_mat_generator.write_user_data()
+    print("Done")
+    del sparse_mat_generator
+
+    # Filter sparse songs from matrix
+    print("Filtering Sparse Songs from matrix")
+    sparse_song_filter = SparseSongFilter(config)
+    sparse_song_filter.parse_sparse_mat_files()
+    sparse_song_filter.filter_sparse_songs()
+    sparse_song_filter.write_filtered_matrix()
+    print("Done")
+    del sparse_song_filter
+
+    # Build dict of song IDs to artist-song tuples
+    print("Building dict of songs")
+    song_dict_builder = SongDictBuilder(config)
+    song_dict_builder.load_track_list()
+    song_dict_builder.write_song_details_to_file()
+    print("Done")
+    del song_dict_builder
+
+    # Build the top users for dataset
+    print("Outputting top users")
+    top_user_builder = TopUserBuilder(config)
+    top_user_builder.load_data()
+    top_user_builder.get_top_songs()
+    top_user_builder.dump_top_users()
+    del top_user_builder
+
+def gen_db_data():
+    # Map row numbers to users in raw P file
+    print("Processing P")
+    p_processor = PProcessor(config)
+    p_processor.generate_row_user_map()
+    p_processor.map_rows_to_users()
+    del p_processor
+
+    # Build ratings for nym and write out to nym_ratings directory
+    print("Generating Nym Ratings")
+    nym_rating_builder = NymRatingBuilder(config)
+    nym_rating_builder.load_data()
+    nym_rating_builder.delete_old_ratings()
+    nym_rating_builder.build_ratings()
+    nym_rating_builder.dump_nym_users_map()
+    del nym_rating_builder
+
+    # Get Top Nym songs based on ratings
+    print("Generating Song Lists")
+    song_list_builder = SongListBuilder(config)
+    song_list_builder.load_data()
+    song_list_builder.load_ratings()
+    song_list_builder.delete_old_songs()
+    song_list_builder.build_song_lists()
+    del song_list_builder
+
+    # Get artists unique to each nym
+    print("Generating artists unique to each nym")
+    unique_nym_artist_filter = UniqueNymArtistFilter(config)
+    unique_nym_artist_filter.load_songs()
+    unique_nym_artist_filter.delete_old_artists()
+    unique_nym_artist_filter.build_top_nym_artists()
+    unique_nym_artist_filter.filter_unique_artists()
+    del unique_nym_artist_filter
+
+    print("Calculating Artist Variances")
+    artist_variance_calculator = ArtistVarianceCalculator(config)
+    artist_variance_calculator.load_data()
+    artist_variance_calculator.calculate_variance()
+    del artist_variance_calculator
+
+    print("Generating ratings for db")
+    nym_rating_formatter = NymRatingFormatter(config)
+    nym_rating_formatter.load_data()
+    nym_rating_formatter.parse_song_rankings()
+    nym_rating_formatter.generate_db_input()
+    del nym_rating_formatter
+
+
+def load_previous_ratings(nym):
+    result = {}
+    with open('Data/DB_Data/ratings-1.csv', 'r') as input_file:
         ratings = csv.reader(input_file, delimiter=',')
-        for rating in ratings:
-            if rating[3] == song_uri:
-                new_rating = {
-                    "nymRating" : {
-                        "numVotes" : int(rating[5]),
-                        "score": int(rating[4])
-                    },
-                    "domain": rating[2],
-                    "item": rating[3],
-                    "nym_id": rating[1]
-                }
-                headers = { "content-type": "application/json"}
-                resp = requests.put(REQ, data=json.dumps({'rating' : new_rating}), headers=headers, verify=False)
+        for _,nym_r,domain, item,rating,num_v in ratings:
+            if nym_r != "nym" and int(nym_r) == nym:
+                result[item] = [domain,rating,num_v]
+    # sort by item
+    return result
+
+def load_new_ratings(nym):
+    result = {}
+    with open('Data/DB_Data/ratings.csv', 'r') as input_file:
+        ratings = csv.reader(input_file, delimiter=',')
+        for _,nym_r,domain, item,rating,num_v in ratings:
+            if  nym_r != "nym" and int(nym_r) == nym:
+                result[item] = [domain,rating,num_v]
+    # sort by item
+    return result
+
+# Send new ratings to the server
+def update_server(nym):
+    #ratings_resp = requests.get(RATINGS_REQ.format(nym), verify=False)
+    #current_ratings = ratings_resp.content[:len(ratings_resp.content) - int(ratings_resp.headers["padding-len"])]
+    old_ratings = load_previous_ratings(nym)
+    new_ratings = load_new_ratings(nym)
+    resp = None
+    for k, v in new_ratings.items():
+        if (not k in old_ratings) or old_ratings[k] != v:
+            domain, rating, num_v = v
+            print("item:{} , rating:{}, num votes:{}".format(k, rating, num_v))
+            new_rating = {
+                "nymRating" : {
+                    "numVotes" : int(num_v),
+                    "score": float(rating)
+                },
+                "domain": domain,
+                "item": k,
+                "nym_id": nym
+            }
+            headers = { "content-type": "application/json"}
+            resp = requests.put(REQ, data=json.dumps({'rating' : new_rating}), headers=headers, verify=False)
     return resp
 
 config = load(open('config.json'))
 
-def listen_to_playlist():
-    index = random.randint(0, len(USER_LIST) - 1)
-    nym, user_num = USER_LIST[index]
+def listen_to_playlist(nym, user_num):
     user = User(nym, user_num, config)
-    count = 20
+    count = 1
     while True:
-        print("running user")
         try:
             uri = user.get_next_recommendation()[3]
             song_sid = (user.find_sid(user.uri_to_song[uri]))
-            user.update_user_play_count(song_sid, 1)
+            amount = 1 if nym != 13 else 100
+            user.update_user_play_count(song_sid, amount)
             if count <= 0:
                 break
             count -= 1
             time.sleep(.50)
         except:
-            print("Something went wrong")
             continue
     user.dump_songs()
 
@@ -124,4 +258,13 @@ def listen_to_playlist():
 
 if __name__ == "__main__":
     for _ in range(1):
-        listen_to_playlist()
+        index = random.randint(0, len(USER_LIST) - 1)
+        nym, user_num = USER_LIST[index]
+        print("nym:{}, user:{}".format(nym, user_num))
+        listen_to_playlist(nym, user_num)
+        update_data()
+        gen_db_data()
+        blah = update_server(nym)
+        if blah == None:
+            print(blah.content[:len(blah.content) - int(blah.headers["padding-len"])])
+        print("finished iteration")

@@ -25,7 +25,7 @@ defmodule NymServer.NymController do
         nil -> conn
              |> error_response(:not_found)
         nym -> conn
-             |> assign(:nym, insert_nym_ratings(nym))
+             #|> assign(:nym, insert_nym_ratings(nym))
              #|> render("show.json")
              |> register_before_send(&pad_packet(&1))
              |> send_resp(200, Poison.encode! insert_nym_ratings(nym))
