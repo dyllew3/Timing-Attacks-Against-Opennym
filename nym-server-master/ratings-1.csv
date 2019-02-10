@@ -129,7 +129,7 @@ id,nym,domain,item,rating,num_votes
 127,0,spotify.com,01BlGnXpLuC0BjgUxVYZFb,3.57,327
 128,0,spotify.com,7eEXXED3AUJErvOSx9quZV,3.55,315
 129,0,spotify.com,24H5KPBdSvHQMRXTp12K3J,3.54,293
-130,0,spotify.com,2O3glDo4007Nfb845wbMca,3.51,193
+130,0,spotify.com,5b6CdmdsSwlvctqpk37Vji,3.51,193
 131,0,spotify.com,78DAnFAmuBbekO4LeuhRkR,3.49,216
 132,0,spotify.com,0iTy5EHLi1dQwyJdg1L7Vj,3.48,186
 133,0,spotify.com,1RZKRHaNFoMelRo9m5Fg3a,3.46,776
@@ -303,7 +303,7 @@ id,nym,domain,item,rating,num_votes
 301,10,spotify.com,4An0hbjs1THl9cQprYrN6G,3.30,53
 302,10,spotify.com,4rpCHSfzPUeOFRxh2t5TSt,3.29,43
 303,10,spotify.com,7qGr3rjRhndRIpFUA5f2HJ,3.28,58
-304,10,spotify.com,2O3glDo4007Nfb845wbMca,3.27,55
+304,10,spotify.com,5b6CdmdsSwlvctqpk37Vji,3.27,55
 305,10,spotify.com,5wBB0bSW7UOPUqma2gi9TZ,3.26,103
 306,10,spotify.com,7GFKaNVQ2bovzkp7DG4GeA,3.23,44
 307,10,spotify.com,6jPme5BwHxTlgBfhANWhBg,3.22,27
@@ -440,7 +440,7 @@ id,nym,domain,item,rating,num_votes
 438,12,spotify.com,5IFEYJg1Z3sAvyTWrs27jE,3.69,385
 439,12,spotify.com,1Cwsd5xI8CajJz795oy4XF,3.66,50
 440,12,spotify.com,4ym27Y8fHaRKwFBdgeMZkG,3.64,30
-441,12,spotify.com,2O3glDo4007Nfb845wbMca,3.62,60
+441,12,spotify.com,5b6CdmdsSwlvctqpk37Vji,3.62,60
 442,12,spotify.com,0umOKmb2xrgD9yutQHbCXz,3.61,58
 443,12,spotify.com,7jKQ0EX9Tx1SIIHtoTlVjN,3.60,65
 444,12,spotify.com,0C2eEsMBj78CLkHNJPjohc,3.59,53
@@ -618,7 +618,7 @@ id,nym,domain,item,rating,num_votes
 616,14,spotify.com,78DAnFAmuBbekO4LeuhRkR,3.29,101
 617,14,spotify.com,2kbAFQ30mjhn1KulfJB7Vk,3.28,138
 618,14,spotify.com,612bT1ABG8UEmqdKfsL6nZ,3.27,52
-619,14,spotify.com,2O3glDo4007Nfb845wbMca,3.26,90
+619,14,spotify.com,5b6CdmdsSwlvctqpk37Vji,3.26,90
 620,14,spotify.com,7KzhCmWutdZ0dV3Aklvdyg,3.24,78
 621,14,spotify.com,7AeiEKLxELeuY343K7wJo7,3.23,203
 622,14,spotify.com,2THkQauDWMvJgXFGPY4iKB,3.20,71
@@ -760,7 +760,7 @@ id,nym,domain,item,rating,num_votes
 758,1,spotify.com,2N2yrmodOnVF10mKvItC9P,3.60,74
 759,1,spotify.com,2U7bhB1xvTrsO3v4rInXGn,3.59,159
 760,1,spotify.com,12UklUdz4pjK9Q4irXuT8X,3.58,69
-761,1,spotify.com,2O3glDo4007Nfb845wbMca,3.55,59
+761,1,spotify.com,5b6CdmdsSwlvctqpk37Vji,3.55,59
 762,1,spotify.com,1qfYG2JrchEyJiqKnkE7YQ,3.54,73
 763,1,spotify.com,51oGCkKff1Qu4WBX8Uuaby,3.50,40
 764,1,spotify.com,7F8JbSCPBXm3IxMx2UMMhH,3.49,92
@@ -1493,7 +1493,7 @@ id,nym,domain,item,rating,num_votes
 1491,6,spotify.com,7mMlbJlXXo2mRtQ4R9sIzD,3.66,56
 1492,6,spotify.com,775moiHFrYKJf6QathlMAR,3.65,83
 1493,6,spotify.com,2UZ6MDDg3y5fTAzQU3YYfo,3.64,91
-1494,6,spotify.com,2O3glDo4007Nfb845wbMca,3.63,59
+1494,6,spotify.com,5b6CdmdsSwlvctqpk37Vji,3.63,59
 1495,6,spotify.com,0qNAiA1JEOPxcWP3KB4nsB,3.62,161
 1496,6,spotify.com,3TLX0Z7t8X3Xc1oAXZ8O4z,3.60,32
 1497,6,spotify.com,12UklUdz4pjK9Q4irXuT8X,3.59,50
@@ -1595,7 +1595,7 @@ id,nym,domain,item,rating,num_votes
 1593,8,spotify.com,5UsLjwBaTHBX4ektWIr4XX,4.95,234
 1594,8,spotify.com,3kVRKixPYEjrerKc0MZPdK,4.94,326
 1595,8,spotify.com,2TYC9SaRhYypUQzB1ZVTG2,4.93,560
-1596,8,spotify.com,3t4i2ZrrPcIZLgK7VNqD36,4.92,396
+1596,8,spotify.com,3t4i2ZrrPcIZLgK7VNqD36,4.92,395
 1597,8,spotify.com,34mVMU0haBu1EDZdocO3d3,4.91,218
 1598,8,spotify.com,2s2Ld1Xm7t88gSVvohNbPL,4.90,470
 1599,8,spotify.com,5rb9QrpfcKFHM1EUbSIurX,4.89,196
@@ -1604,7 +1604,7 @@ id,nym,domain,item,rating,num_votes
 1602,8,spotify.com,2BDqAaVKzQDnoVPZbdp68D,4.86,209
 1603,8,spotify.com,13o0DRf89gTEHrxL31Gh09,4.85,283
 1604,8,spotify.com,05UGuscco306NcBvGHVQ2h,4.84,373
-1605,8,spotify.com,39sUeHQoIGY6BEIcgTMRXW,4.83,252
+1605,8,spotify.com,39sUeHQoIGY6BEIcgTMRXW,4.83,253
 1606,8,spotify.com,6zc7xLlx5rrEUgIuGa7DoR,4.82,316
 1607,8,spotify.com,0J87xSp2QvaYf7rmR0hMEJ,4.81,249
 1608,8,spotify.com,4QjnpnbbD12xV42ErUAvpC,4.80,262
@@ -1715,7 +1715,7 @@ id,nym,domain,item,rating,num_votes
 1713,8,spotify.com,5MzjN4pg411OErJ1U2F3bj,3.55,123
 1714,8,spotify.com,4BVpazLjBjjLSszUABDORS,3.53,171
 1715,8,spotify.com,1ng36571Iyov4HBxUClySn,3.52,41
-1716,8,spotify.com,2O3glDo4007Nfb845wbMca,3.50,123
+1716,8,spotify.com,5b6CdmdsSwlvctqpk37Vji,3.50,123
 1717,8,spotify.com,1qfYG2JrchEyJiqKnkE7YQ,3.49,137
 1718,8,spotify.com,4QbpBv2ka7Zpbrrl5QFAgy,3.48,270
 1719,8,spotify.com,2Vjiw3HXbTZ1MIvEfxlyr4,3.47,190
@@ -1876,7 +1876,7 @@ id,nym,domain,item,rating,num_votes
 1874,9,spotify.com,5IFEYJg1Z3sAvyTWrs27jE,3.43,247
 1875,9,spotify.com,4lszJlGQexVkAAN50Feo8b,3.42,51
 1876,9,spotify.com,5gTTQf7enQdpHKd0mHLHOU,3.41,39
-1877,9,spotify.com,2O3glDo4007Nfb845wbMca,3.39,36
+1877,9,spotify.com,5b6CdmdsSwlvctqpk37Vji,3.39,36
 1878,9,spotify.com,7KzhCmWutdZ0dV3Aklvdyg,3.37,30
 1879,9,spotify.com,5WsSGr7QfriYlbs4TaT9qK,3.35,78
 1880,9,spotify.com,4BVpazLjBjjLSszUABDORS,3.34,33
