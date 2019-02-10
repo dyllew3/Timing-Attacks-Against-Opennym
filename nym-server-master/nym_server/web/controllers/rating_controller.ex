@@ -91,7 +91,7 @@ defmodule NymServer.RatingController do
       case db_query do
         {:failed, reason} -> {:failed, reason}
         rating            ->
-          case ((rating.num_votes + 1) == nym_rating["numVotes"] or (rating.num_votes) == nym_rating["numVotes"] or (rating.num_votes - 1) == nym_rating["numVotes"]  ) do
+          case ((rating.num_votes + 1) == nym_rating["numVotes"] or (rating.num_votes) == nym_rating["numVotes"]) do
             true -> rating
             false -> {:conflict, %{
               num_votes: rating.num_votes,

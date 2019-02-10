@@ -265,6 +265,6 @@ if __name__ == "__main__":
         update_data()
         gen_db_data()
         blah = update_server(nym)
-        if blah == None:
+        if blah != None:
             print(blah.content[:len(blah.content) - int(blah.headers["padding-len"])])
         print("finished iteration")
