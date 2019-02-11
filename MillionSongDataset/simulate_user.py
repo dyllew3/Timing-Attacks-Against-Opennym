@@ -2,6 +2,7 @@ from UserSimulator.User import User
 import random
 import time
 from json import load
+import pickle
 import json
 import csv
 import requests
@@ -19,6 +20,7 @@ from ResultProcessor.get_unique_nym_artists import UniqueNymArtistFilter
 from ResultProcessor.get_nym_artist_variance import ArtistVarianceCalculator
 from ResultProcessor.NymRatingFormatter import NymRatingFormatter
 from spotify import SpotifyWrapper
+from os import path
 
 REQ = "http://localhost:4000/ratings/update"
 RATINGS_REQ = "http://localhost:4000/ratings/{}/spotify.com"
@@ -97,6 +99,71 @@ USER_LIST = [
     (9,543235),
     (9,753614)
 ]
+config = load(open('config.json'))
+
+
+
+def make_rating( nym_id, domain,  item, score, num_v,):
+    return {
+                "nymRating" : {
+                    "numVotes" : num_v,
+                    "score": score
+                },
+                "domain": domain,
+                "item": item,
+                "nym_id": nym_id
+            }
+
+def manual_update(details):
+    _, nym, domain, item, rating, num_votes = details
+    new_rating = make_rating(nym, domain, item, rating, num_votes)
+    headers = { "content-type": "application/json"}
+    resp = requests.put(REQ, data=json.dumps({'rating' : new_rating}), headers=headers, verify=False)
+    return resp
+
+
+
+def load_user_nym_pairs():
+    nym_users_dict = {}
+    user_nym_pairs = []
+    path_to_P_with_ids = path.join(config["nym_data"]["base"], config["nym_data"]["P_with_ids"])
+    with open(path_to_P_with_ids) as input_file:
+            for line in input_file:
+                user_nym_pairs.append(map(int, line.split(",")))
+
+        # Convert list to dict
+    for user, nym in user_nym_pairs:
+        if nym not in nym_users_dict:
+            nym_users_dict[nym] = []
+
+        nym_users_dict[nym].append(user)
+    return nym_users_dict
+
+def load_user_song_map():
+    with open(path.join(config["user_data"]["base"], config["user_data"]["user_songs_map"]), 'rb') as input_pickle:
+       return pickle.load(input_pickle)
+    print("Done")
+
+def havent_played_song(user,song_id):
+    song = user.song_to_id_dict[song_id]
+    user_songs_map = load_user_song_map()
+    nym_users_dict = load_user_nym_pairs()
+    result = []
+    for nym, users in nym_users_dict.items():
+        # print("Building ratings for nym {}".format(nym))
+        # Iterate through each user in a Nym
+        for user in sorted(users):
+            # For each user get every song they listened to and their play counts
+            found = False
+            for user_song, _ in user_songs_map[user]:
+                if user_song == song:
+                    found = True
+                    break
+            if not found:
+                result.append((nym, user))              
+    return sorted(result, key=lambda x: x[0])
+
+
 
 def update_data():
         # Normalize play counts
@@ -235,7 +302,6 @@ def update_server(nym):
             resp = requests.put(REQ, data=json.dumps({'rating' : new_rating}), headers=headers, verify=False)
     return resp
 
-config = load(open('config.json'))
 
 def listen_to_playlist(nym, user_num):
     user = User(nym, user_num, config)
@@ -244,7 +310,7 @@ def listen_to_playlist(nym, user_num):
         try:
             uri = user.get_next_recommendation()[3]
             song_sid = (user.find_sid(user.uri_to_song[uri]))
-            amount = 1 if nym != 13 else 100
+            amount = 50
             user.update_user_play_count(song_sid, amount)
             if count <= 0:
                 break
@@ -260,11 +326,16 @@ if __name__ == "__main__":
     for _ in range(1):
         index = random.randint(0, len(USER_LIST) - 1)
         nym, user_num = USER_LIST[index]
-        print("nym:{}, user:{}".format(nym, user_num))
-        listen_to_playlist(nym, user_num)
+        print("nym:{}, user:{}".format(0, user_num))
+        user = User(0, user_num, config)
+        uri = user.get_next_recommendation()[3]
+        song_sid = (user.find_sid(user.uri_to_song[uri]))
+        nym, user_num = list(filter(lambda x: x[0] == 0, havent_played_song(user, song_sid)))[9]
+        del user
+        listen_to_playlist(0, user_num)
         update_data()
         gen_db_data()
-        blah = update_server(nym)
-        if blah != None:
-            print(blah.content[:len(blah.content) - int(blah.headers["padding-len"])])
+        #blah = update_server(nym)
+        #if blah != None:
+        #    print(blah.content[:len(blah.content) - int(blah.headers["padding-len"])])
         print("finished iteration")

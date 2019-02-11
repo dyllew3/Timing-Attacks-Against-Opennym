@@ -32,6 +32,7 @@ if args.parse or args.all:
     train_triplet_parser.filter_sparse_users()
     train_triplet_parser.write_data_to_disk()
     print("Done")
+    del train_triplet_parser
 
 if args.normalize_ratings or args.all or args.refresh:
     # Normalize play counts
@@ -41,6 +42,7 @@ if args.normalize_ratings or args.all or args.refresh:
     song_rating_normalizer.normalize_data()
     song_rating_normalizer.write_data_to_disk()
     print("Done")
+    del song_rating_normalizer
 
 if args.gen_matrix or args.all or args.refresh:
     # Generate sparse matrix for BLC
@@ -50,6 +52,7 @@ if args.gen_matrix or args.all or args.refresh:
     sparse_mat_generator.generate_sparse_mat()
     sparse_mat_generator.write_user_data()
     print("Done")
+    del sparse_mat_generator
 
 if args.filter_sparse_songs or args.all or args.refresh:
     # Filter sparse songs from matrix
@@ -59,6 +62,7 @@ if args.filter_sparse_songs or args.all or args.refresh:
     sparse_song_filter.filter_sparse_songs()
     sparse_song_filter.write_filtered_matrix()
     print("Done")
+    del sparse_song_filter
 
 if args.build_song_dict or args.all or args.refresh:
     # Build dict of song IDs to artist-song tuples
@@ -67,6 +71,7 @@ if args.build_song_dict or args.all or args.refresh:
     song_dict_builder.load_track_list()
     song_dict_builder.write_song_details_to_file()
     print("Done")
+    del song_dict_builder
 
 if args.build_top_users or args.all or args.refresh:
     # Build the top users for dataset
@@ -75,3 +80,4 @@ if args.build_top_users or args.all or args.refresh:
     top_user_builder.load_data()
     top_user_builder.get_top_songs()
     top_user_builder.dump_top_users()
+    del top_user_builder

@@ -92,11 +92,23 @@ class User:
         result = []
         song_num = self.song_to_id_dict[song_id]
         user_songs = self.user_songs_map[self.user_num]
+        found = False
         for s_id, plays in user_songs:
             if s_id == song_num:
                 plays += amount
+                found = True
             result.append((s_id, plays))
+        if not found:
+            result.append((song_num, amount))
         self.user_songs_map[self.user_num] = result
+
+    def played_song(self, song_id):
+        song_num = self.song_to_id_dict[song_id]
+        user_songs = self.user_songs_map[self.user_num]
+        for s_id, _ in user_songs:
+            if s_id == song_num:
+               return True
+        return False
 
     def find_sid(self, song_details):
         for k, v in self.sids_to_details_map.items():
