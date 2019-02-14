@@ -16,6 +16,7 @@ defmodule NymServer.SessionCookiesController do
       }
     }
   end
+
   # Given a nym ID, get the cookies for it's top domains
   def index(conn, %{"nym_id" => nym_id}) do
     case Repo.get(Nym, nym_id) do
