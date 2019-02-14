@@ -7,6 +7,21 @@ defmodule NymServer.IdentityInterfaceController do
 
     alias NymServer.{Nym, Rating, NymMetadata}
 
+    def render_rating_local(rating) do
+    %{
+      rating: %{
+        domain: rating.domain,
+        item: rating.item,
+        nymRating: %{
+          score: rating.score,
+          numVotes: rating.num_votes
+        },
+        timestamp: rating.updated_at,
+        nym: rating.nym_id
+      }
+    }
+  end
+
     def domain_index(conn, params) do
         query =
             case params do

@@ -5,6 +5,19 @@ defmodule NymServer.RuleController do
 
   import NymServer.Utils
 
+  def render_rule_local(rule) do
+    %{
+      domainRule: %{
+        domain: rule.domain,
+        timestamp: rule.updated_at,
+        rule: %{
+          endpoint: rule.endpoint,
+          regex: rule.rule
+        }
+      }
+    }
+  end
+
   # Returns a list of domains supported by OpenNym
   def supported_index(conn, _params) do
     case Repo.all Rule do
@@ -25,8 +38,9 @@ defmodule NymServer.RuleController do
       nil -> conn
              |> error_response(:internal_server_error)
       meta -> conn
-              |> assign(:support_list_version, meta.support_list_version)
-              |> render("supported_version_index.json")
+              |> register_before_send(&pad_packet(&1))
+              #|> assign(:support_list_version, meta.support_list_version)
+              |> send_resp(200, Poison.encode! %{ version: meta.support_list_version})
     end
   end
 
@@ -46,8 +60,10 @@ defmodule NymServer.RuleController do
       domains -> # Try get rules given domains and send back as response
         try do
           conn
-          |> assign(:rules, Enum.map(domains, &get_rule/1))
-          |> render("nym_rules_show.json")
+          |> register_before_send(&pad_packet(&1))
+          #|> assign(:rules, Enum.map(domains, &get_rule/1))
+          #|> render("nym_rules_show.json")
+          |> send_resp(200, Poison.encode! %{ rules: Enum.map(Enum.map(domains, &get_rule/1), &render_rule_local/1)})
         rescue
           NoResultsError -> # Failed to get rule for one of the domains, send 500
             conn
@@ -62,8 +78,10 @@ defmodule NymServer.RuleController do
       nil  -> conn
               |> error_response(:bad_request)
       rule -> conn
-              |> assign(:rule, rule)
-              |> render("domain_rule_show.json")
+              #|> assign(:rule, rule)
+              |> register_before_send(&pad_packet(&1))
+              #|> render("domain_rule_show.json")
+              |> send_resp(200, Poison.encode! render_rule_local(rule))
     end
   end
 
@@ -73,8 +91,10 @@ defmodule NymServer.RuleController do
       nil  -> conn
               |> error_response(:not_found)
       rule -> conn
-              |> assign(:timestamp, rule.updated_at)
-              |> render("rule_issued_show.json")
+              |> register_before_send(&pad_packet(&1))
+              #|> assign(:timestamp, rule.updated_at)
+              |> send_resp(200, Poison.encode! %{domainRule: %{timestamp: rule.updated_at}})
+              #|> render("rule_issued_show.json")
     end
   end
 
