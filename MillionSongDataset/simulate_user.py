@@ -1,4 +1,6 @@
 from UserSimulator.User import User
+from UserSimulator.user_behavior import *
+
 import random
 import time
 from json import load
@@ -24,6 +26,7 @@ from os import path
 
 REQ = "http://localhost:4000/ratings/update"
 RATINGS_REQ = "http://localhost:4000/ratings/{}/spotify.com"
+
 # pre-selected users just for convenience
 # contains tuples in the form (nym, user_number)
 USER_LIST = [
@@ -116,7 +119,7 @@ def make_rating( nym_id, domain,  item, score, num_v,):
 
 def manual_update(details):
     _, nym, domain, item, rating, num_votes = details
-    new_rating = make_rating(nym, domain, item, rating, num_votes)
+    new_rating = make_rating(nym, domain, item, rating, num_votes+1)
     headers = { "content-type": "application/json"}
     resp = requests.put(REQ, data=json.dumps({'rating' : new_rating}), headers=headers, verify=False)
     return resp

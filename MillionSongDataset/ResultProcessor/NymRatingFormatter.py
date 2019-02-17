@@ -105,4 +105,20 @@ class NymRatingFormatter:
         with open(self.song_to_uri_path, 'wb') as output:
             dump(self.song_to_uri_dict, output)
 
+    def get_song_spotify_object(self):
+        # Login to spotify
+        spotipy = SpotifyWrapper(self.config)
+        spotipy.authorize_user()
 
+        failed_lookups = 0
+
+        for song_artist_key in self.unique_songs:
+            uri = spotipy.get_song_uri(song_artist_key)
+            self.song_to_uri_dict[song_artist_key] = uri
+
+            if not uri:
+                failed_lookups += 1
+
+        print("Failed to get {} of {} song uris".format(failed_lookups, len(self.unique_songs)))
+
+        return spotipy

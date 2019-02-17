@@ -97,14 +97,23 @@ class SpotifyWrapper:
             results = self.spotify.search(q=song, type="track")
 
         song_uri = None
+        duration = None
         for item in results["tracks"]["items"]:
             # if item["name"].lower() == song.lower():
             for artist_item in item["artists"]:
                 if self.format_artist(artist_item["name"]).lower() == artist.lower():
                     song_uri = item["uri"].split(":")[2]
+                    duration = float(item["duration_ms"])/1000
                     break
-
+        if song_uri:
+            self.song_uri_dict[song_uri] = (song, duration)
         return song_uri
+
+    def get_duration(self, song_uri):
+        if song_uri in self.song_uri_dict.keys():
+            return self.song_uri_dict[song_uri][1]
+        else:
+            return None
 
     def get_recommendations(self, artist_uris, num_artists=100):
         if not self.spotify:

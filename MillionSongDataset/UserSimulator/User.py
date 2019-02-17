@@ -19,6 +19,7 @@ class User:
         self.song_tuple_list = {}
         self.sids_to_details_map = {}
         self.uri_to_song = {}
+        self.user_times = []
 
         # Load users songs map
         self.user_songs_map_path = path.join(config["user_data"]["base"], config["user_data"]["user_songs_map"])
