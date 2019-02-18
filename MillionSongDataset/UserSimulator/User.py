@@ -118,8 +118,17 @@ class User:
         return None
 
     def get_next_recommendation(self):
-        self.current_recommendation += 1
-        return self.recommendations[self.current_recommendation - 1]
+        self.current_recommendation += 1 
+        current_recommendation = self.current_recommendation - 1
+        self.current_recommendation %= len(self.recommendations)
+        return self.recommendations[current_recommendation]
+
+    def get_prev_recommendation(self):
+        current_recommendation = self.current_recommendation
+        self.current_recommendation -= 1 
+        if self.current_recommendation < 0:
+            self.current_recommendation = len(self.recommendations) - 1
+        return self.recommendations[current_recommendation]
 
     def dump_songs(self):
         print("Writing new users song map to disk")

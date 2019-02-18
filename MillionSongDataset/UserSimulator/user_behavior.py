@@ -52,8 +52,8 @@ Time_Info = {
 
 def calculate_session_length(day_info, device, prev_session=None):
     if device == Devices.Mobile:
-        day_time =  day_info.time().hour()
-        # Lowest time time for mobile userd
+        day_time =  day_info.time().hour
+        # Lowest time time for mobile users
         if day_info.weekday() == Days.Saturday and day_time >= Mobile_Worst_Morning[0] and day_time <= Mobile_Worst_Morning[1]:
             return 0.0
         else:
@@ -64,20 +64,25 @@ def calculate_session_length(day_info, device, prev_session=None):
 
 
 def load_spotify():
-    config = load(open('../config.json'))
+    config = load(open('config.json'))
     nym_rat = NymRatingFormatter(config)
     nym_rat.load_data()
     nym_rat.parse_song_rankings()
-    nym_rat.get_song_spotify_ids()
     return nym_rat.get_song_spotify_object()
 
 def playback_decision(spotify_obj, uri):
     duration  = spotify_obj.get_duration(uri)
     rand_float = random()
+    listened = False
     if duration:
-        if rand_float >= 0 and rand_float < PROB_SKIP: 
+        if rand_float >= 0 and rand_float < PROB_SKIP:
+            print("Skipping")
             time.sleep(float(duration)/20)
         elif rand_float >= PROB_SKIP and rand_float < PROB_SKIP + PROB_FULL_LISTEN:
-            time.sleep(float(duration)) 
+            print("Playing")
+            print("Duration is {}".format(duration))
+            time.sleep(float(duration))
+            listened = True
     else:
         time.sleep(0.5)
+    return listened
