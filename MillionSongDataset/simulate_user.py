@@ -1,5 +1,6 @@
 from UserSimulator.User import User
-from UserSimulator.user_behavior import *
+from UserSimulator.user_behavior import calculate_session_length, Devices, load_spotify
+from datetime import datetime
 from datetime import timedelta
 import random
 import time
@@ -307,32 +308,40 @@ def update_server(nym):
 
 
 def listen_to_playlist(nym, user_num):
+    prev_sess = None
     user = User(nym, user_num, config)
     start = datetime.now()
     sess_length = calculate_session_length(start, Devices.Mobile)
     end = timedelta(seconds=(sess_length * 60))
     spotify_obj = load_spotify()
-    while datetime.now() < start + end:
-        print("Got here")
-        try:
-            id, nym, domain, uri, rating, num_votes = user.get_next_recommendation()
-            resp = None
-            if playback_decision(spotify_obj, uri):
-                resp = manual_update([id, nym, domain, uri, rating, num_votes])
-            if resp:
-                to_be_added = False
-                while resp.status_code != 200 and not to_be_added:
-                    rating = resp.content[:len(resp.content) - int(resp.headers["padding-len"])].decode('utf8')
-                    rating = load(rating)
-                    if int(rating["nymRating"]["numVotes"]) == 0:
-                        to_be_added = True
-                    else:
-                        num_votes = float(rating["nymRating"]["score"])
-                        num_votes = int(rating["nymRating"]["numVotes"])
-                        resp = manual_update([id, nym, domain, uri, rating, num_votes])
+    decision = 'appload'
+    while sess_length > 0:
+        while datetime.now() < start + end:
+            print("Got here")
+            try:
+                id, nym, domain, uri, rating, num_votes = user.get_next_recommendation()
+                resp = None
+                decision = playback_decision(spotify_obj, uri, decision)
+                if  decision == 'trackdone':
+                    resp = manual_update([id, nym, domain, uri, rating, num_votes])
+                if resp:
+                    to_be_added = False
+                    while resp.status_code != 200 and not to_be_added:
+                        rating = resp.content[:len(resp.content) - int(resp.headers["padding-len"])].decode('utf8')
+                        rating = load(rating)
+                        if int(rating["nymRating"]["numVotes"]) == 0:
+                            to_be_added = True
+                        else:
+                            num_votes = float(rating["nymRating"]["score"])
+                            num_votes = int(rating["nymRating"]["numVotes"])
+                            resp = manual_update([id, nym, domain, uri, rating, num_votes])
 
-        except:
-            continue
+            except:
+                continue
+        prev_sess = sess_length
+        sess_length = calculate_session_length(start, Devices.Mobile, prev_session=prev_sess)
+        end = timedelta(seconds=(sess_length * 60))
+        start = datetime.now()
     user.dump_songs()
 
 
@@ -343,9 +352,4 @@ if __name__ == "__main__":
         nym, user_num = USER_LIST[index]
         print("nym:{}, user:{}".format(0, user_num))
         listen_to_playlist(nym, user_num)
-        update_data()
-        gen_db_data()
-        #blah = update_server(nym)
-        #if blah != None:
-        #    print(blah.content[:len(blah.content) - int(blah.headers["padding-len"])])
         print("finished iteration")

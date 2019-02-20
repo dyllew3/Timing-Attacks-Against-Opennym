@@ -6,6 +6,23 @@ from os import path
 from random import random
 from datetime import datetime
 import time
+import numpy as np
+from itertools import repeat
+
+class MarkovUserBehavior:
+    START_STATE = "appload"
+    def __init__(self):
+        self.states = ['fwdbtn','clickrow','trackdone','appload'] 
+        self.transition_matrix = [
+            [0.75, 0.05, 0.20, 0.00],
+            [0.08, 0.58, 0.34, 0.00],
+            [0.10, 0.05, 0.84, 0.00],
+            [0.15, 0.13, 0.55, 0.16]
+        ]
+
+    def get_next_state(self, current_state):
+        row = self.states.index(current_state)
+        return  np.random.choice(self.states, len(self.states), self.transition_matrix[row])
 
 class Devices(Enum):
     Mobile = 0
@@ -32,23 +49,14 @@ Mobile_Session_length = 5.00
 # However it is a function of the time when session started
 Desktop_Session_Length = 50.00
 
-NUM_PLAYBACKS = 684807
 
-# Probability of listening to the full track
-PROB_FULL_LISTEN = 400000/NUM_PLAYBACKS
-
-# Probability of skipping after 5% duration of the track
-PROB_SKIP = 0.8625 - PROB_FULL_LISTEN
-
-Time_Info = {
-    Devices.Desktop : {
-
-    },
-    Devices.Mobile: {
-        'peak':(15.00, 18.00),
-        'lowest':(3.00, 6.00)
-    }
-}
+def approx_sess_len(prev_session):
+    if prev_session <= 6:
+        return np.random.choice([4, 0], 2, p=[0.5, 0.5])
+    else:
+        rise = (8 - 4)/(14.00 - 6.00)
+        median_val = rise * prev_session + 1.0
+        return np.random.choice([median_val, 0], 2, p=[0.5, 0.5])
 
 def calculate_session_length(day_info, device, prev_session=None):
     if device == Devices.Mobile:
@@ -56,8 +64,13 @@ def calculate_session_length(day_info, device, prev_session=None):
         # Lowest time time for mobile users
         if day_info.weekday() == Days.Saturday and day_time >= Mobile_Worst_Morning[0] and day_time <= Mobile_Worst_Morning[1]:
             return 0.0
-        else:
+        elif not prev_session:
             return Mobile_Session_length
+        elif prev_session:
+            if prev_session <= 6:
+                return np.random.choice([4, 0], 2, p=[0.5, 0.5])
+            else:
+                return approx_sess_len(prev_session)
     elif device == Devices.Desktop:
         return Desktop_Session_Length
     return 0.0
@@ -70,19 +83,19 @@ def load_spotify():
     nym_rat.parse_song_rankings()
     return nym_rat.get_song_spotify_object()
 
-def playback_decision(spotify_obj, uri):
+def playback_decision(spotify_obj, uri, user_decision):
     duration  = spotify_obj.get_duration(uri)
-    rand_float = random()
-    listened = False
+    a = MarkovUserBehavior()
+    next_dec = "appload"
     if duration:
-        if rand_float >= 0 and rand_float < PROB_SKIP:
+        next_dec = a.get_next_state(user_decision)
+        if next_dec == 'fwdbtn' or next_dec == 'clickrow' :
             print("Skipping")
             time.sleep(float(duration)/20)
-        elif rand_float >= PROB_SKIP and rand_float < PROB_SKIP + PROB_FULL_LISTEN:
+        elif next_dec == 'trackdone':
             print("Playing")
             print("Duration is {}".format(duration))
             time.sleep(float(duration))
-            listened = True
     else:
         time.sleep(0.5)
-    return listened
+    return next_dec
