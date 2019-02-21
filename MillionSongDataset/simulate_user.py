@@ -353,7 +353,15 @@ if __name__ == "__main__":
         index = random.randint(0, len(USER_LIST) - 1)
         nym, user_num = USER_LIST[index]
         print("nym:{}, user:{}".format(0, user_num))
+        current_hour = datetime.now().hour
+        played = False
+        pick_time = random.uniform(current_hour, current_hour + 1) % 24
         while datetime.now() < start + period:
-            listen_to_playlist(nym, user_num)
-            print("finished iteration")
-            time.sleep(60*60)
+            if  not played and datetime.now().minute >= (pick_time % 1) * 60:
+                listen_to_playlist(nym, user_num)
+                print("finished iteration")
+                played = True
+            if current_hour < datetime.now().hour:
+                current_hour = datetime.now().hour
+                played = False
+                pick_time = random.uniform(current_hour, current_hour + 1) % 24
