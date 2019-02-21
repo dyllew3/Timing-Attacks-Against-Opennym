@@ -347,9 +347,13 @@ def listen_to_playlist(nym, user_num):
 
 
 if __name__ == "__main__":
+    start = datetime.now()
+    period = timedelta(hours=3)
     for _ in range(1):
         index = random.randint(0, len(USER_LIST) - 1)
         nym, user_num = USER_LIST[index]
         print("nym:{}, user:{}".format(0, user_num))
-        listen_to_playlist(nym, user_num)
-        print("finished iteration")
+        while datetime.now() < start + period:
+            listen_to_playlist(nym, user_num)
+            print("finished iteration")
+            time.sleep(60*60)
