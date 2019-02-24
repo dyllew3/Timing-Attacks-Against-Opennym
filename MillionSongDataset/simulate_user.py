@@ -360,6 +360,7 @@ if __name__ == "__main__":
         current_hour = datetime.now().hour
         played = False
         pick_time = random.uniform(current_hour, current_hour + 1) % 24
+        print("Picked time is {}".format(pick_time))
         while datetime.now() < start + period:
             if  not played and datetime.now().minute >= (pick_time % 1) * 60:
                 listen_to_playlist(nym, user_num)
