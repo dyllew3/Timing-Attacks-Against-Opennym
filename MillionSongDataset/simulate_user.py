@@ -25,7 +25,7 @@ from ResultProcessor.NymRatingFormatter import NymRatingFormatter
 from spotify import SpotifyWrapper
 from os import path
 
-REQ = "http://localhost:4000/ratings/update"
+REQ = "https://ec2-52-50-185-176.eu-west-1.compute.amazonaws.com:4400/ratings/update"
 RATINGS_REQ = "http://localhost:4000/ratings/{}/spotify.com"
 
 # pre-selected users just for convenience
@@ -324,6 +324,10 @@ def listen_to_playlist(nym, user_num):
                 decision = playback_decision(spotify_obj, uri, decision)
                 if  decision == 'trackdone':
                     resp = manual_update([id, nym, domain, uri, rating, num_votes])
+                elif decision == "appload":
+                    user.get_prev_recommendation()
+                elif decision == "clickrow":
+                    user.set_recommendation(random.randint(0, len(user.recommendations)))
                 if resp:
                     to_be_added = False
                     while resp.status_code != 200 and not to_be_added:

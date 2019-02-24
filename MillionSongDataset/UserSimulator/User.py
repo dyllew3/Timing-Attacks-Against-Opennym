@@ -23,26 +23,26 @@ class User:
 
         # Load users songs map
         self.user_songs_map_path = path.join(config["user_data"]["base"], config["user_data"]["user_songs_map"])
-        self.load_user_songs()
+        #self.load_user_songs()
         # Load users
         self.user_to_id_map_path = path.join(config["user_data"]["base"], config["user_data"]["user_to_id_map"])
-        self.load_users()
+        #self.load_users()
        
         # Load song id to their num id
         self.sids_to_ids_map_path = path.join(config["song_data"]["base"], config["song_data"]["sids_to_ids_map"])
-        self.load_song_ids()
+        #self.load_song_ids()
         
         # Load song num id to their details
         self.sids_to_details_map_path = path.join(config["song_data"]["base"], config["song_data"]["sid_to_details_map"])
-        self.load_song_details()
+        #self.load_song_details()
         
         # Load song uri to songs
         self.song_to_uri_path = path.join(config["song_data"]["base"], config["song_data"]["song_to_uri_map"])
-        self.load_uri_to_songs()
+        #self.load_uri_to_songs()
         
         # Load recommendations
         self.recommendations_path = path.join(config["database_data"]["base"], config["database_data"]['input_data'])
-        self.load_recommendations()
+        #self.load_recommendations()
 
 
     def load_uri_to_songs(self):
@@ -129,6 +129,10 @@ class User:
         if self.current_recommendation < 0:
             self.current_recommendation = len(self.recommendations) - 1
         return self.recommendations[current_recommendation]
+
+    def set_recommendation(self, index):
+        self.current_recommendation = index
+        return self.recommendations[index]
 
     def dump_songs(self):
         print("Writing new users song map to disk")
