@@ -1,5 +1,5 @@
 from UserSimulator.User import User
-from UserSimulator.user_behavior import calculate_session_length, Devices, load_spotify
+from UserSimulator.user_behavior import calculate_session_length, Devices, load_spotify, playback_decision
 from datetime import datetime
 from datetime import timedelta
 import random
