@@ -42,7 +42,7 @@ class User:
         
         # Load recommendations
         self.recommendations_path = path.join(config["database_data"]["base"], config["database_data"]['input_data'])
-        #self.load_recommendations()
+        self.load_recommendations()
 
 
     def load_uri_to_songs(self):

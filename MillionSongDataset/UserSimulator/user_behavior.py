@@ -16,13 +16,13 @@ class MarkovUserBehavior:
         self.transition_matrix = [
             [0.75, 0.05, 0.20, 0.00],
             [0.08, 0.58, 0.34, 0.00],
-            [0.10, 0.05, 0.84, 0.00],
-            [0.15, 0.13, 0.55, 0.16]
+            [0.102, 0.055, 0.842, 0.001],
+            [0.15, 0.14, 0.55, 0.16]
         ]
 
     def get_next_state(self, current_state):
         row = self.states.index(current_state)
-        return  np.random.choice(self.states, len(self.states), self.transition_matrix[row])
+        return  np.random.choice(self.states, 1, p=self.transition_matrix[row])
 
 class Devices(Enum):
     Mobile = 0
@@ -52,11 +52,11 @@ Desktop_Session_Length = 50.00
 
 def approx_sess_len(prev_session):
     if prev_session <= 6:
-        return np.random.choice([4, 0], 2, p=[0.5, 0.5])
+        return np.random.choice([4, 0], 1, p=[0.5, 0.5])
     else:
         rise = (8 - 4)/(14.00 - 6.00)
         median_val = rise * prev_session + 1.0
-        return np.random.choice([median_val, 0], 2, p=[0.5, 0.5])
+        return np.random.choice([median_val, 0], 1, p=[0.5, 0.5])
 
 def calculate_session_length(day_info, device, prev_session=None):
     if device == Devices.Mobile:
@@ -68,9 +68,9 @@ def calculate_session_length(day_info, device, prev_session=None):
             return Mobile_Session_length
         elif prev_session:
             if prev_session <= 6:
-                return np.random.choice([4, 0], 2, p=[0.5, 0.5])
+                return np.random.choice([4, 0], 1, p=[0.5, 0.5])[0]
             else:
-                return approx_sess_len(prev_session)
+                return approx_sess_len(prev_session)[0]
     elif device == Devices.Desktop:
         return Desktop_Session_Length
     return 0.0
@@ -94,8 +94,10 @@ def playback_decision(spotify_obj, uri, user_decision):
             time.sleep(float(duration)/20)
         elif next_dec == 'trackdone':
             print("Playing")
-            print("Duration is {}".format(duration))
+            print("Duration is {}".format(str(duration)))
             time.sleep(float(duration))
+        return next_dec
     else:
+        print("no duration found")
         time.sleep(0.5)
     return next_dec
