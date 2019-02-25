@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+\begin{document}
+\begin{algorithm}
+\caption{User Model}\label{euclid}
+\begin{algorithmic}[1]
+\Procedure{listen\_playlist}{$nym, user, device$}
+\State $\textit{start\_time} \gets \text{time.now}$
+\State $\textit{prev\_session} \gets \text{0}$
+\State $\textit{this\_session\_len} \gets \text{get\_session\_len(start\_time, device, prev\_session)}$
+\While {$\text{this\_session\_len} > \textit{0}$}
+
+\State $state \gets  Spotify start state$
+
+\While {$\text{time.now} < \text{this\_session\_len + start\_time}$}
+    \State $next\_song \gets \text{get\_next\_song(state, nym)}$
+    \State $state \gets \text{get\_next\_state(state)}$
+    \If {$state == trackdone$}
+        \State $\text{update\_play\_count(state, nym, song)}$
+        \State $\text{play\_song(song)}$
+        \State    $\text{update\_ratings()}$
+        \State    $\text{send\_ratings()}$
+    \EndIf
+    \State \textbf{end}
+    \If {$state == fwdbutton$}
+        \State $\text{play\_song\_partially(song)}$
+    \EndIf
+    \State \textbf{end}
+\EndWhile
+\State \textbf{end}
+\State $\textit{prev\_session} \gets \text{this\_session\_len}$
+\State $\textit{this\_session\_len} \gets \text{get\_session\_len(current\_time, device, prev\_session)}$
+\State $\textit{start\_time} \gets \text{time.now}$
+
+
+\EndWhile
+\State \textbf{end}
+\EndProcedure
+\State \textbf{end}
+
+\Procedure{Simulate User}{}
+\State $\textit{nym} \gets \text{Nym that user belongs to}$
+\State $\textit{user} \gets \text{User's number}$
+\State $\textit{device} \gets \text{User's device}$
+\State $simulation\_len \gets \text{How long the simulation should run}$
+\State $current\_time \gets \text{time.now}$
+\State $prev\_session \gets \text{0}$
+
+\While {$current\_time < \textit{simulation\_len}$}
+\If {$have\_session( current\_time )$}
+    
+\State    $listen\_playlist(nym, user)$
+\EndIf
+\State \textbf{end}
+\State $current\_time \gets \text{time.now}$
+\EndWhile
+\State \textbf{end}
+\EndProcedure
+\State \textbf{end}
+\end{algorithmic}
+\end{algorithm}
+\end{document} 

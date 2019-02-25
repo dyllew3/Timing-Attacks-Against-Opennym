@@ -86,7 +86,7 @@ def load_spotify():
 def playback_decision(spotify_obj, uri, user_decision):
     duration  = spotify_obj.get_duration(uri)
     a = MarkovUserBehavior()
-    next_dec = "appload"
+    next_dec = user_decision
     if duration:
         next_dec = a.get_next_state(user_decision)
         if next_dec == 'fwdbtn' or next_dec == 'clickrow' :
