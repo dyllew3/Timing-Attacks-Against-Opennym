@@ -28,7 +28,7 @@ import asyncio
 import queue
 import csv
 
-REQ = "https://ec2-52-50-185-176.eu-west-1.compute.amazonaws.com:4400/ratings/update"#
+REQ = "https://ec2-52-50-185-176.eu-west-1.compute.amazonaws.com:4400/ratings/update"#localhost
 RATINGS_REQ = "http://localhost:4000/ratings/{}/spotify.com"
 
 import threading
@@ -169,50 +169,40 @@ def havent_played_song(user,song_id):
 
 
 
-def listen_to_playlist(nym, user_num):
-    prev_sess = None
-    user = User(nym, user_num, config)
-    start = datetime.now()
-    sess_length = float(calculate_session_length(start, Devices.Mobile))
-    end = timedelta(seconds=(sess_length * 60))
-    decision = 'appload'
-    while sess_length > 0:
-        while datetime.now() < start + end:
-            print("Got here")
-            try:
-                id, nym, domain, uri, rating, num_votes = user.get_next_recommendation()
-                resp = None
-                decision = playback_decision(spotify_obj, uri, decision)
-                if  decision == 'trackdone' and spotify_obj.get_duration(uri):
-                    print("Updating")
+def listen_to_playlist(user_obj, prev_decis=None):
+    user = user_obj
+    decision = prev_decis
+    print("Got here")
+    try:
+        id, nym, domain, uri, rating, num_votes = user.get_next_recommendation()
+        resp = None
+        decision = playback_decision(spotify_obj, uri, decision)
+        if  decision == 'trackdone' and spotify_obj.get_duration(uri):
+            print("Updating")
+            sent = datetime.now().time().isoformat()
+            resp = update([id, nym, domain, uri, rating, int(num_votes)])
+            recv = resp.headers["Date"].replace(",", " ")
+            timing_info.put([str(nym), str(user.user_num), sent, recv])
+        elif decision == "clickrow":
+            user.set_recommendation(random.randint(0, len(user.recommendations)))
+        if resp:
+            to_be_added = False
+            while resp.status_code != 200 and not to_be_added:
+                rating = resp.content[:len(resp.content) - int(resp.headers["padding-len"])].decode('utf8')
+                rating = load(rating)
+                if int(rating["nymRating"]["numVotes"]) == 0:
+                    to_be_added = True
+                else:
+                    num_votes = float(rating["nymRating"]["score"])
+                    num_votes = int(rating["nymRating"]["numVotes"])
                     sent = datetime.now().time().isoformat()
-                    resp = update([id, nym, domain, uri, rating, int(num_votes)])
-                    recv = resp.headers["Date"].replace(",", " ")
-                    timing_info.put([str(user_num), sent, recv])
-                elif decision == "clickrow":
-                    user.set_recommendation(random.randint(0, len(user.recommendations)))
-                if resp:
-                    to_be_added = False
-                    while resp.status_code != 200 and not to_be_added:
-                        rating = resp.content[:len(resp.content) - int(resp.headers["padding-len"])].decode('utf8')
-                        rating = load(rating)
-                        if int(rating["nymRating"]["numVotes"]) == 0:
-                            to_be_added = True
-                        else:
-                            num_votes = float(rating["nymRating"]["score"])
-                            num_votes = int(rating["nymRating"]["numVotes"])
-                            sent = datetime.now().time().isoformat()
-                            resp = update([id, nym, domain, uri, rating, num_votes])
-                            recv = datetime.now().time().isoformat()
-                            timing_info.put([str(user_num), sent, recv])
+                    resp = update([id, nym, domain, uri, rating, num_votes])
+                    recv = datetime.now().time().isoformat()
+                    timing_info.put([str(nym), str(user.user_num), sent, recv])
 
-            except Exception as e:
-                print(e)
-        prev_sess = sess_length
-        sess_length = calculate_session_length(start, Devices.Mobile, prev_session=prev_sess)
-        print("Session length is {}".format(sess_length))
-        end = timedelta(seconds=(int(sess_length) * 60))
-        start = datetime.now()
+    except Exception as e:
+        print(e)
+    return (decision, user)
 
 def load_users(users_tuples):
     result = []
@@ -221,62 +211,64 @@ def load_users(users_tuples):
         result.append(User(config, nym, user))
     return result
 
-async def run_for_async(period, nym, user):
-    current_hour = datetime.now().hour
-    pick_time = random.uniform(current_hour, current_hour + 1) % 24
-    print("Picked time is {}".format(pick_time))
-    played = False
-    while datetime.now() < start + period:
-        if  not played and datetime.now().minute >= (pick_time % 1) * 60:
-            listen_to_playlist(nym, user)
-            print("finished iteration")
-            played = True
-        if current_hour < datetime.now().hour:
-            current_hour = datetime.now().hour
-            played = False
-            pick_time = random.uniform(current_hour, current_hour + 1) % 24
-
-async def run_multiple_users(period, user_list):
-    await asyncio.gather([run_for_async(period, x[0], x[1]) for x in user_list ])
-    pass
 
 def run_for(period, nym, user):
     current_hour = datetime.now().hour
     pick_time = random.uniform(current_hour, current_hour + 1) % 24
     print("Picked time is {}".format(pick_time))
-    played = False
+    user_obj = User(nym, user, config)
+    decision = 'appload'
     while datetime.now() < start + period:
-        if  not played and datetime.now().minute >= (pick_time % 1) * 60:
-            listen_to_playlist(nym, user)
-            print("finished iteration")
-            played = True
-        if current_hour < datetime.now().hour:
-            current_hour = datetime.now().hour
-            played = False
-            pick_time = random.uniform(current_hour, current_hour + 1) % 24
+        try:
+            id, nym, domain, uri, rating, num_votes = user_obj.get_next_recommendation()
+            resp = None
+            decision = playback_decision(spotify_obj, uri, decision)
+            if  decision == 'trackdone' and spotify_obj.get_duration(uri):
+                print("Updating")
+                sent = datetime.now().time().isoformat()
+                resp = update([id, nym, domain, uri, rating, int(num_votes)])
+                recv = resp.headers["Date"].replace(",", " ")
+                timing_info.put([str(nym), str(user_obj.user_num), sent, recv])
+            elif decision == "clickrow":
+                user_obj.set_recommendation(random.randint(0, len(user_obj.recommendations)))
+            if resp:
+                to_be_added = False
+                while resp.status_code != 200 and not to_be_added:
+                    rating = resp.content[:len(resp.content) - int(resp.headers["padding-len"])].decode('utf8')
+                    rating = load(rating)
+                    if int(rating["nymRating"]["numVotes"]) == 0:
+                        to_be_added = True
+                    else:
+                        num_votes = float(rating["nymRating"]["score"])
+                        num_votes = int(rating["nymRating"]["numVotes"])
+                        sent = datetime.now().time().isoformat()
+                        resp = update([id, nym, domain, uri, rating, num_votes])
+                        recv = datetime.now().time().isoformat()
+                        timing_info.put([str(nym), str(user_obj.user_num), sent, recv])
 
+        except Exception as e:
+            print(e)
 #
 NUM_THREADS = 4
 
+NYMS = [0,1,2,3,4,5,6,7,8,9,10,12,14]
 
 if __name__ == "__main__":
     start = datetime.now()
     period = timedelta(hours=3)
     print("Enter number of users")
     num_users = int(input())
-    users_tuples_indexes = np.random.choice(len(USER_LIST), num_users, replace=False)
-    users_tuples = [USER_LIST[x] for x in users_tuples_indexes]
-    n = len(USER_LIST)/NUM_THREADS
-    for i  in range(0, len(USER_LIST), int(n)):
-        pass
+    #users_tuples_indexes = np.random.choice(len(USER_LIST), num_users, replace=False)
+    #users_tuples = [USER_LIST[x] for x in users_tuples_indexes]
+    nym_tuples = np.random.choice(NYMS, num_users)
     threads = []
-    for user in users_tuples:
-        thread = (threading.Thread(target=run_for, args=(period, user[0], user[1])))
+    for user, nym in enumerate(nym_tuples):
+        thread = (threading.Thread(target=run_for, args=(period, nym, user)))
         threads.append(thread)
         thread.start()
     for thread in threads:
         thread.join()
-    header = ["user", "sent", "received"]
+    header = ["nym","user", "sent", "received"]
     with open(path.join(config["user_tests"]["base"], config["user_tests"]["user_timing"]).format(num_users), 'w') as output:
         writer = csv.writer(output, delimiter=',',   quotechar='|', quoting=csv.QUOTE_MINIMAL)
         writer.writerow(header)

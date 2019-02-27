@@ -1,4 +1,8 @@
 {
+  "user_tests": {
+      "base": "TestUserFolder",
+      "user_timing": "{}_users_timing.csv"
+  },
   "dataset": {
     "base": "Data/Dataset/",
     "train_triplets": "train_triplets.txt",
