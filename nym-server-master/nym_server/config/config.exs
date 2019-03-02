@@ -25,7 +25,7 @@ config :logger,
 
 config :logger, :hutt,
   format: "$date $time $metadata[$level] $message\n",
-  path: "~/logs/info.log",
+  path: "logs/info.log",
   level: :debug
 
 # Import environment specific config. This must remain at the bottom
