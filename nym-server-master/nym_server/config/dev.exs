@@ -29,7 +29,8 @@ config :nym_server, NymServer.Endpoint,
   ]
 
 # Do not include metadata nor timestamps in development logs
-config :logger, :console, format: "[$level] $message\n"
+config :logger, :console, format: "[$level] $message\n",
+  backends: [{LoggerFileBackend, :hutt}, :console]
 
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
