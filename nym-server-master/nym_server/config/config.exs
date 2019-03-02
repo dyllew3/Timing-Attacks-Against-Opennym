@@ -24,7 +24,8 @@ config :logger,:console,
   metadata: [:request_id]
 
 config :logger, :hutt,
-  path: "~/hah.log",
+  format: "$date $time $metadata[$level] $message\n"
+  path: "/tmp/blah.log",
   level: :debug
 
 # Import environment specific config. This must remain at the bottom
