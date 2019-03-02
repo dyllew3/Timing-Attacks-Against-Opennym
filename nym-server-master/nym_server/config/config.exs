@@ -18,8 +18,8 @@ config :nym_server, NymServer.Endpoint,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
-config :logger,
-  backends: [:console, {LoggerFileBackend, :hutt}],
+config :logger,:console,
+  backends: [ {LoggerFileBackend, :hutt}],
   format: "$date $time $metadata[$level] $message\n",
   metadata: [:request_id]
 
