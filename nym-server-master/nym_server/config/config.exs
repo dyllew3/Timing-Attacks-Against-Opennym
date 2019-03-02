@@ -18,14 +18,14 @@ config :nym_server, NymServer.Endpoint,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
-config :logger,:console,
-  backends: [ {LoggerFileBackend, :hutt}],
+config :logger,
+  backends: [ {LoggerFileBackend, :hutt}, :console],
   format: "$date $time $metadata[$level] $message\n",
   metadata: [:request_id]
 
 config :logger, :hutt,
   format: "$date $time $metadata[$level] $message\n",
-  path: "/tmp/blah.log",
+  path: "~/logs/info.log",
   level: :debug
 
 # Import environment specific config. This must remain at the bottom
