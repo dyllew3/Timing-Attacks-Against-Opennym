@@ -24,7 +24,7 @@ config :logger,:console,
   metadata: [:request_id]
 
 config :logger, :hutt,
-  format: "$date $time $metadata[$level] $message\n"
+  format: "$date $time $metadata[$level] $message\n",
   path: "/tmp/blah.log",
   level: :debug
 
