@@ -28,7 +28,6 @@ defmodule NymServer.Utils do
       padding_size < 10 ->
         Enum.join(["0000",Integer.to_string(padding_size)], "")
     end
-    Logger.debug(conn.resp_body)
     conn
     |> PC.resp(status, Enum.join([conn.resp_body, padding], ""))
     |> PC.put_resp_header("padding-len", padding_size_string)
