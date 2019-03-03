@@ -6,8 +6,6 @@ defmodule NymServer.RatingController do
 
   import NymServer.Utils
 
-  require Logger
-
   def render_rating_local(rating) do
     %{
       rating: %{

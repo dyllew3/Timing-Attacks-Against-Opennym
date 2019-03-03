@@ -28,7 +28,7 @@ import asyncio
 import queue
 import csv
 
-REQ = "https://ec2-52-50-185-176.eu-west-1.compute.amazonaws.com:4400/ratings/update"#localhost
+REQ = "https://ec2-52-50-185-176.eu-west-1.compute.amazonaws.com:4400/ratings/update"#localhost 
 RATINGS_REQ = "http://localhost:4000/ratings/{}/spotify.com"
 
 import threading
@@ -106,7 +106,7 @@ config = load(open('config.json'))
 spotify_obj = load_spotify()
 timing_info = queue.Queue()
 
-def make_rating(nym_id, domain,  item, score, num_v,):
+def make_rating(nym_id, domain,  item, score, num_v, user):
     return {
                 "nymRating" : {
                     "numVotes" : num_v,
@@ -114,12 +114,13 @@ def make_rating(nym_id, domain,  item, score, num_v,):
                 },
                 "domain": domain,
                 "item": item,
-                "nym_id": nym_id
+                "nym_id": nym_id,
+                "user": user
             }
 
-def update(details):
+def update(details, user):
     _, nym, domain, item, rating, num_votes = details
-    new_rating = make_rating(nym, domain, item, rating, num_votes+1)
+    new_rating = make_rating(nym, domain, item, rating, num_votes+1, user)
     headers = { "content-type": "application/json"}
     resp = requests.put(REQ, data=json.dumps({'rating' : new_rating}), headers=headers, verify=False)
     return resp
@@ -180,7 +181,7 @@ def listen_to_playlist(user_obj, prev_decis=None):
         if  decision == 'trackdone' and spotify_obj.get_duration(uri):
             print("Updating")
             sent = datetime.now().time().isoformat()
-            resp = update([id, nym, domain, uri, rating, int(num_votes)])
+            resp = update([id, nym, domain, uri, rating, int(num_votes)], user.user_num)
             recv = resp.headers["Date"].replace(",", " ")
             timing_info.put([str(nym), str(user.user_num), sent, recv])
         elif decision == "clickrow":
@@ -196,7 +197,7 @@ def listen_to_playlist(user_obj, prev_decis=None):
                     num_votes = float(rating["nymRating"]["score"])
                     num_votes = int(rating["nymRating"]["numVotes"])
                     sent = datetime.now().time().isoformat()
-                    resp = update([id, nym, domain, uri, rating, num_votes])
+                    resp = update([id, nym, domain, uri, rating, num_votes], user)
                     recv = datetime.now().time().isoformat()
                     timing_info.put([str(nym), str(user.user_num), sent, recv])
 
@@ -226,7 +227,7 @@ def run_for(period, nym, user):
             if  decision == 'trackdone' and spotify_obj.get_duration(uri):
                 print("Updating")
                 sent = datetime.now().time().isoformat()
-                resp = update([id, nym, domain, uri, rating, int(num_votes)])
+                resp = update([id, nym, domain, uri, rating, int(num_votes)], user)
                 recv = resp.headers["Date"].replace(",", " ")
                 timing_info.put([str(nym), str(user_obj.user_num), sent, recv])
             elif decision == "clickrow":
@@ -242,7 +243,7 @@ def run_for(period, nym, user):
                         num_votes = float(rating["nymRating"]["score"])
                         num_votes = int(rating["nymRating"]["numVotes"])
                         sent = datetime.now().time().isoformat()
-                        resp = update([id, nym, domain, uri, rating, num_votes])
+                        resp = update([id, nym, domain, uri, rating, num_votes], user)
                         recv = datetime.now().time().isoformat()
                         timing_info.put([str(nym), str(user_obj.user_num), sent, recv])
 
