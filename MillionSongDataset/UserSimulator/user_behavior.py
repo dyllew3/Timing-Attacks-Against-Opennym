@@ -99,5 +99,4 @@ def playback_decision(spotify_obj, uri, user_decision):
         return next_dec
     else:
         print("no duration found")
-        time.sleep(0.5)
     return next_dec

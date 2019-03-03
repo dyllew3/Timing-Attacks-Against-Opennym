@@ -256,7 +256,7 @@ NYMS = [0,1,2,3,4,5,6,7,8,9,10,12,14]
 
 if __name__ == "__main__":
     start = datetime.now()
-    period = timedelta(hours=3)
+    period = timedelta(hours=6)
     print("Enter number of users")
     num_users = int(input())
     #users_tuples_indexes = np.random.choice(len(USER_LIST), num_users, replace=False)
