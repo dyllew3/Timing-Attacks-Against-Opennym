@@ -231,7 +231,7 @@ def run_for(period, nym, user):
                 recv = resp.headers["Date"].replace(",", " ")
                 timing_info.put([str(nym), str(user_obj.user_num), sent, recv])
             elif decision == "clickrow":
-                user_obj.set_recommendation(random.randint(0, len(user_obj.recommendations)))
+                user_obj.set_recommendation(random.randint(0, len(user_obj.recommendations) - 1))
             if resp:
                 to_be_added = False
                 while resp.status_code != 200 and not to_be_added:
