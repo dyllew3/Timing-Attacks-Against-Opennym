@@ -1,0 +1,824 @@
+
+2019-03-03 15:30:51.571 [info] PUT /ratings/update
+2019-03-03 15:30:51.611 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "7lJcj7F7GuDye26vYSk1bM", "nymRating" => %{"numVotes" => 141, "score" => "4.96"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 15:30:51.641 [debug] QUERY OK source="ratings" db=2.8ms decode=2.5ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "7lJcj7F7GuDye26vYSk1bM"]
+2019-03-03 15:30:51.655 [debug] QUERY OK db=0.1ms
+begin []
+2019-03-03 15:30:51.666 [debug] QUERY OK db=1.1ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [141, {{2019, 3, 3}, {15, 30, 51, 660792}}, 305]
+2019-03-03 15:30:51.667 [debug] QUERY OK db=1.0ms
+commit []
+2019-03-03 15:30:51.679 [info] Sent 200 in 106ms
+2019-03-03 15:33:29.403 [info] PUT /ratings/update
+2019-03-03 15:33:29.403 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "78DAnFAmuBbekO4LeuhRkR", "nymRating" => %{"numVotes" => 57, "score" => "3.14"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 15:33:29.406 [debug] QUERY OK source="ratings" db=2.1ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "78DAnFAmuBbekO4LeuhRkR"]
+2019-03-03 15:33:29.406 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 15:33:29.407 [debug] QUERY OK db=0.9ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [57, {{2019, 3, 3}, {15, 33, 29, 406712}}, 451]
+2019-03-03 15:33:29.409 [debug] QUERY OK db=1.0ms
+commit []
+2019-03-03 15:33:29.410 [info] Sent 200 in 7ms
+2019-03-03 15:37:01.599 [info] PUT /ratings/update
+2019-03-03 15:37:01.599 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2J1IxkhqZ2FnydAsvZjuhZ", "nymRating" => %{"numVotes" => 61, "score" => "3.10"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 15:37:01.602 [debug] QUERY OK source="ratings" db=2.2ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2J1IxkhqZ2FnydAsvZjuhZ"]
+2019-03-03 15:37:01.602 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 15:37:01.604 [debug] QUERY OK db=0.9ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [61, {{2019, 3, 3}, {15, 37, 1, 602988}}, 453]
+2019-03-03 15:37:01.605 [debug] QUERY OK db=1.0ms
+commit []
+2019-03-03 15:37:01.606 [info] Sent 200 in 7ms
+2019-03-03 15:45:22.808 [info] PUT /ratings/update
+2019-03-03 15:45:22.809 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "3e5rEt48191MwuHWBDwOcZ", "nymRating" => %{"numVotes" => 129, "score" => "4.18"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 15:45:22.811 [debug] QUERY OK source="ratings" db=2.0ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "3e5rEt48191MwuHWBDwOcZ"]
+2019-03-03 15:45:22.811 [debug] QUERY OK db=0.1ms queue=0.1ms
+begin []
+2019-03-03 15:45:22.813 [debug] QUERY OK db=0.9ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [129, {{2019, 3, 3}, {15, 45, 22, 812012}}, 377]
+2019-03-03 15:45:22.814 [debug] QUERY OK db=1.0ms
+commit []
+2019-03-03 15:45:22.815 [info] Sent 200 in 7ms
+2019-03-03 15:51:18.929 [info] PUT /ratings/update
+2019-03-03 15:51:18.929 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2UZ6MDDg3y5fTAzQU3YYfo", "nymRating" => %{"numVotes" => 132, "score" => "4.08"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 15:51:18.932 [debug] QUERY OK source="ratings" db=2.0ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2UZ6MDDg3y5fTAzQU3YYfo"]
+2019-03-03 15:51:18.932 [debug] QUERY OK db=0.0ms queue=0.2ms
+begin []
+2019-03-03 15:51:18.933 [debug] QUERY OK db=0.7ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [132, {{2019, 3, 3}, {15, 51, 18, 932759}}, 387]
+2019-03-03 15:51:18.934 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 15:51:18.936 [info] Sent 200 in 7ms
+2019-03-03 15:55:21.307 [info] PUT /ratings/update
+2019-03-03 15:55:21.308 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "52TSjnEfXo40EzuylAhf6k", "nymRating" => %{"numVotes" => 124, "score" => "4.06"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 15:55:21.309 [debug] QUERY OK source="ratings" db=0.7ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "52TSjnEfXo40EzuylAhf6k"]
+2019-03-03 15:55:21.310 [debug] QUERY OK db=0.0ms queue=0.2ms
+begin []
+2019-03-03 15:55:21.310 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [124, {{2019, 3, 3}, {15, 55, 21, 310196}}, 389]
+2019-03-03 15:55:21.311 [debug] QUERY OK db=1.0ms
+commit []
+2019-03-03 15:55:21.313 [info] Sent 200 in 5ms
+2019-03-03 16:00:39.528 [info] PUT /ratings/update
+2019-03-03 16:00:39.529 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "24H5KPBdSvHQMRXTp12K3J", "nymRating" => %{"numVotes" => 74, "score" => "3.96"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:00:39.530 [debug] QUERY OK source="ratings" db=0.7ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "24H5KPBdSvHQMRXTp12K3J"]
+2019-03-03 16:00:39.530 [debug] QUERY OK db=0.1ms queue=0.3ms
+begin []
+2019-03-03 16:00:39.531 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [74, {{2019, 3, 3}, {16, 0, 39, 530836}}, 396]
+2019-03-03 16:00:39.532 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 16:00:39.534 [info] Sent 200 in 5ms
+2019-03-03 16:04:34.080 [info] PUT /ratings/update
+2019-03-03 16:04:34.081 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "6Cv09gbV6mHXshhiHE1JO4", "nymRating" => %{"numVotes" => 93, "score" => "3.93"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:04:34.082 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "6Cv09gbV6mHXshhiHE1JO4"]
+2019-03-03 16:04:34.082 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 16:04:34.083 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [93, {{2019, 3, 3}, {16, 4, 34, 82819}}, 398]
+2019-03-03 16:04:34.084 [debug] QUERY OK db=0.7ms
+commit []
+2019-03-03 16:04:34.086 [info] Sent 200 in 5ms
+2019-03-03 16:10:50.924 [info] PUT /ratings/update
+2019-03-03 16:10:50.925 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "7eEXXED3AUJErvOSx9quZV", "nymRating" => %{"numVotes" => 91, "score" => "3.92"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:10:50.926 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "7eEXXED3AUJErvOSx9quZV"]
+2019-03-03 16:10:50.926 [debug] QUERY OK db=0.0ms queue=0.3ms
+begin []
+2019-03-03 16:10:50.927 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [91, {{2019, 3, 3}, {16, 10, 50, 926776}}, 399]
+2019-03-03 16:10:50.928 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 16:10:50.930 [info] Sent 200 in 5ms
+2019-03-03 16:13:20.034 [info] PUT /ratings/update
+2019-03-03 16:13:20.035 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "44HBcWA1jp22uKjKbwZd7Z", "nymRating" => %{"numVotes" => 122, "score" => "3.90"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:13:20.036 [debug] QUERY OK source="ratings" db=0.7ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "44HBcWA1jp22uKjKbwZd7Z"]
+2019-03-03 16:13:20.036 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 16:13:20.037 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [122, {{2019, 3, 3}, {16, 13, 20, 36935}}, 401]
+2019-03-03 16:13:20.038 [debug] QUERY OK db=0.7ms
+commit []
+2019-03-03 16:13:20.040 [info] Sent 200 in 5ms
+2019-03-03 16:15:39.847 [info] PUT /ratings/update
+2019-03-03 16:15:39.848 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "7EYR17bHR2ZkJ8o2mKSJDU", "nymRating" => %{"numVotes" => 148, "score" => "3.88"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:15:39.849 [debug] QUERY OK source="ratings" db=0.7ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "7EYR17bHR2ZkJ8o2mKSJDU"]
+2019-03-03 16:15:39.850 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 16:15:39.850 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [148, {{2019, 3, 3}, {16, 15, 39, 850055}}, 403]
+2019-03-03 16:15:39.851 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 16:15:39.853 [info] Sent 200 in 5ms
+2019-03-03 16:22:37.643 [info] PUT /ratings/update
+2019-03-03 16:22:37.643 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2p0RE2pkZMajUQmg2M12jY", "nymRating" => %{"numVotes" => 73, "score" => "3.55"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:22:37.645 [debug] QUERY OK source="ratings" db=0.6ms queue=0.4ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2p0RE2pkZMajUQmg2M12jY"]
+2019-03-03 16:22:37.645 [debug] QUERY OK db=0.0ms queue=0.1ms
+begin []
+2019-03-03 16:22:37.646 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [73, {{2019, 3, 3}, {16, 22, 37, 645723}}, 425]
+2019-03-03 16:22:37.647 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 16:22:37.649 [info] Sent 200 in 5ms
+2019-03-03 16:25:52.507 [info] PUT /ratings/update
+2019-03-03 16:25:52.508 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "1qfYG2JrchEyJiqKnkE7YQ", "nymRating" => %{"numVotes" => 73, "score" => "3.53"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:25:52.509 [debug] QUERY OK source="ratings" db=0.8ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "1qfYG2JrchEyJiqKnkE7YQ"]
+2019-03-03 16:25:52.510 [debug] QUERY OK db=0.0ms queue=0.3ms
+begin []
+2019-03-03 16:25:52.510 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [73, {{2019, 3, 3}, {16, 25, 52, 510069}}, 427]
+2019-03-03 16:25:52.511 [debug] QUERY OK db=0.9ms
+commit []
+2019-03-03 16:25:52.513 [info] Sent 200 in 6ms
+2019-03-03 16:31:40.533 [info] PUT /ratings/update
+2019-03-03 16:31:40.534 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "1CRDfNPQbtCGcqeAAgBGdW", "nymRating" => %{"numVotes" => 96, "score" => "3.49"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:31:40.535 [debug] QUERY OK source="ratings" db=0.6ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "1CRDfNPQbtCGcqeAAgBGdW"]
+2019-03-03 16:31:40.535 [debug] QUERY OK db=0.0ms queue=0.3ms
+begin []
+2019-03-03 16:31:40.536 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [96, {{2019, 3, 3}, {16, 31, 40, 535979}}, 429]
+2019-03-03 16:31:40.537 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 16:31:40.539 [info] Sent 200 in 5ms
+2019-03-03 16:40:41.613 [info] PUT /ratings/update
+2019-03-03 16:40:41.614 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "3e5rEt48191MwuHWBDwOcZ", "nymRating" => %{"numVotes" => 129, "score" => "4.18"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:40:41.615 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "3e5rEt48191MwuHWBDwOcZ"]
+2019-03-03 16:40:41.617 [info] Sent 200 in 3ms
+2019-03-03 16:46:37.764 [info] PUT /ratings/update
+2019-03-03 16:46:37.765 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2UZ6MDDg3y5fTAzQU3YYfo", "nymRating" => %{"numVotes" => 132, "score" => "4.08"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:46:37.766 [debug] QUERY OK source="ratings" db=1.0ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2UZ6MDDg3y5fTAzQU3YYfo"]
+2019-03-03 16:46:37.768 [info] Sent 200 in 4ms
+2019-03-03 16:50:40.156 [info] PUT /ratings/update
+2019-03-03 16:50:40.157 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "52TSjnEfXo40EzuylAhf6k", "nymRating" => %{"numVotes" => 124, "score" => "4.06"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:50:40.158 [debug] QUERY OK source="ratings" db=0.6ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "52TSjnEfXo40EzuylAhf6k"]
+2019-03-03 16:50:40.160 [info] Sent 200 in 3ms
+2019-03-03 16:55:58.180 [info] PUT /ratings/update
+2019-03-03 16:55:58.181 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "24H5KPBdSvHQMRXTp12K3J", "nymRating" => %{"numVotes" => 74, "score" => "3.96"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:55:58.182 [debug] QUERY OK source="ratings" db=1.3ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "24H5KPBdSvHQMRXTp12K3J"]
+2019-03-03 16:55:58.184 [info] Sent 200 in 4ms
+2019-03-03 16:59:52.756 [info] PUT /ratings/update
+2019-03-03 16:59:52.756 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "6Cv09gbV6mHXshhiHE1JO4", "nymRating" => %{"numVotes" => 93, "score" => "3.93"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 16:59:52.757 [debug] QUERY OK source="ratings" db=0.5ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "6Cv09gbV6mHXshhiHE1JO4"]
+2019-03-03 16:59:52.759 [info] Sent 200 in 3ms
+2019-03-03 17:06:09.633 [info] PUT /ratings/update
+2019-03-03 17:06:09.634 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "7eEXXED3AUJErvOSx9quZV", "nymRating" => %{"numVotes" => 91, "score" => "3.92"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:06:09.636 [debug] QUERY OK source="ratings" db=1.2ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "7eEXXED3AUJErvOSx9quZV"]
+2019-03-03 17:06:09.638 [info] Sent 200 in 4ms
+2019-03-03 17:08:38.815 [info] PUT /ratings/update
+2019-03-03 17:08:38.816 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "44HBcWA1jp22uKjKbwZd7Z", "nymRating" => %{"numVotes" => 122, "score" => "3.90"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:08:38.817 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "44HBcWA1jp22uKjKbwZd7Z"]
+2019-03-03 17:08:38.819 [info] Sent 200 in 3ms
+2019-03-03 17:10:58.517 [info] PUT /ratings/update
+2019-03-03 17:10:58.517 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "7EYR17bHR2ZkJ8o2mKSJDU", "nymRating" => %{"numVotes" => 148, "score" => "3.88"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:10:58.519 [debug] QUERY OK source="ratings" db=1.4ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "7EYR17bHR2ZkJ8o2mKSJDU"]
+2019-03-03 17:10:58.521 [info] Sent 200 in 4ms
+2019-03-03 17:16:58.230 [info] PUT /ratings/update
+2019-03-03 17:16:58.231 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "10ViidwjGLCfVtGPfdcszR", "nymRating" => %{"numVotes" => 173, "score" => "3.81"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:16:58.232 [debug] QUERY OK source="ratings" db=0.6ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "10ViidwjGLCfVtGPfdcszR"]
+2019-03-03 17:16:58.233 [debug] QUERY OK db=0.1ms queue=0.3ms
+begin []
+2019-03-03 17:16:58.233 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [173, {{2019, 3, 3}, {17, 16, 58, 233381}}, 408]
+2019-03-03 17:16:58.235 [debug] QUERY OK db=1.2ms
+commit []
+2019-03-03 17:16:58.236 [info] Sent 200 in 5ms
+2019-03-03 17:21:13.630 [info] PUT /ratings/update
+2019-03-03 17:21:13.630 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "1NyFRrFiJAJIaR6icj1goI", "nymRating" => %{"numVotes" => 111, "score" => "3.76"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:21:13.631 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "1NyFRrFiJAJIaR6icj1goI"]
+2019-03-03 17:21:13.632 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 17:21:13.632 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [111, {{2019, 3, 3}, {17, 21, 13, 632316}}, 411]
+2019-03-03 17:21:13.633 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 17:21:13.635 [info] Sent 200 in 5ms
+2019-03-03 17:26:56.370 [info] PUT /ratings/update
+2019-03-03 17:26:56.371 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "7968fxC9GmlqTiYRXT499O", "nymRating" => %{"numVotes" => 138, "score" => "3.70"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:26:56.372 [debug] QUERY OK source="ratings" db=0.6ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "7968fxC9GmlqTiYRXT499O"]
+2019-03-03 17:26:56.372 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 17:26:56.373 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [138, {{2019, 3, 3}, {17, 26, 56, 372682}}, 414]
+2019-03-03 17:26:56.374 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 17:26:56.375 [info] Sent 200 in 5ms
+2019-03-03 17:30:17.425 [info] PUT /ratings/update
+2019-03-03 17:30:17.426 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "0qNAiA1JEOPxcWP3KB4nsB", "nymRating" => %{"numVotes" => 206, "score" => "3.58"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:30:17.427 [debug] QUERY OK source="ratings" db=0.7ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "0qNAiA1JEOPxcWP3KB4nsB"]
+2019-03-03 17:30:17.428 [debug] QUERY OK db=0.1ms queue=0.3ms
+begin []
+2019-03-03 17:30:17.428 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [206, {{2019, 3, 3}, {17, 30, 17, 428417}}, 422]
+2019-03-03 17:30:17.429 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 17:30:17.432 [info] Sent 200 in 6ms
+2019-03-03 17:35:44.449 [info] PUT /ratings/update
+2019-03-03 17:35:44.493 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2p0RE2pkZMajUQmg2M12jY", "nymRating" => %{"numVotes" => 73, "score" => "3.55"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:35:44.494 [debug] QUERY OK source="ratings" db=0.7ms queue=0.4ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2p0RE2pkZMajUQmg2M12jY"]
+2019-03-03 17:35:44.496 [info] Sent 200 in 46ms
+2019-03-03 17:38:59.435 [info] PUT /ratings/update
+2019-03-03 17:38:59.435 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "1qfYG2JrchEyJiqKnkE7YQ", "nymRating" => %{"numVotes" => 73, "score" => "3.53"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:38:59.436 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "1qfYG2JrchEyJiqKnkE7YQ"]
+2019-03-03 17:38:59.438 [info] Sent 200 in 3ms
+2019-03-03 17:44:47.357 [info] PUT /ratings/update
+2019-03-03 17:44:47.358 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "1CRDfNPQbtCGcqeAAgBGdW", "nymRating" => %{"numVotes" => 96, "score" => "3.49"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:44:47.359 [debug] QUERY OK source="ratings" db=0.7ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "1CRDfNPQbtCGcqeAAgBGdW"]
+2019-03-03 17:44:47.361 [info] Sent 200 in 4ms
+2019-03-03 17:49:18.251 [info] PUT /ratings/update
+2019-03-03 17:49:18.252 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "0Fghw1Ky3HNSvj04EtPrnf", "nymRating" => %{"numVotes" => 65, "score" => "3.48"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:49:18.253 [debug] QUERY OK source="ratings" db=1.3ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "0Fghw1Ky3HNSvj04EtPrnf"]
+2019-03-03 17:49:18.254 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 17:49:18.254 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [65, {{2019, 3, 3}, {17, 49, 18, 254325}}, 430]
+2019-03-03 17:49:18.255 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 17:49:18.257 [info] Sent 200 in 6ms
+2019-03-03 17:53:13.183 [info] PUT /ratings/update
+2019-03-03 17:53:13.183 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "4B6BzjDSurNtids9TU4jdE", "nymRating" => %{"numVotes" => 56, "score" => "3.47"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:53:13.185 [debug] QUERY OK source="ratings" db=0.7ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "4B6BzjDSurNtids9TU4jdE"]
+2019-03-03 17:53:13.185 [debug] QUERY OK db=0.0ms queue=0.3ms
+begin []
+2019-03-03 17:53:13.186 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [56, {{2019, 3, 3}, {17, 53, 13, 185557}}, 431]
+2019-03-03 17:53:13.187 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 17:53:13.189 [info] Sent 200 in 6ms
+2019-03-03 17:57:37.184 [info] PUT /ratings/update
+2019-03-03 17:57:37.185 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "5MzjN4pg411OErJ1U2F3bj", "nymRating" => %{"numVotes" => 66, "score" => "3.46"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 17:57:37.186 [debug] QUERY OK source="ratings" db=0.7ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "5MzjN4pg411OErJ1U2F3bj"]
+2019-03-03 17:57:37.187 [debug] QUERY OK db=0.0ms queue=0.3ms
+begin []
+2019-03-03 17:57:37.187 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [66, {{2019, 3, 3}, {17, 57, 37, 187281}}, 432]
+2019-03-03 17:57:37.188 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 17:57:37.190 [info] Sent 200 in 5ms
+2019-03-03 18:02:09.147 [info] PUT /ratings/update
+2019-03-03 18:02:09.148 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "17xqcnBW4CdV6ARXLrKHWy", "nymRating" => %{"numVotes" => 153, "score" => "3.34"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:02:09.149 [debug] QUERY OK source="ratings" db=0.7ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "17xqcnBW4CdV6ARXLrKHWy"]
+2019-03-03 18:02:09.150 [debug] QUERY OK db=0.1ms queue=0.3ms
+begin []
+2019-03-03 18:02:09.150 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [153, {{2019, 3, 3}, {18, 2, 9, 150258}}, 437]
+2019-03-03 18:02:09.151 [debug] QUERY OK db=0.9ms
+commit []
+2019-03-03 18:02:09.153 [info] Sent 200 in 5ms
+2019-03-03 18:08:46.925 [info] PUT /ratings/update
+2019-03-03 18:08:46.925 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "3hZtCzZtVULcdJkln9pm3l", "nymRating" => %{"numVotes" => 64, "score" => "3.33"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:08:46.926 [debug] QUERY OK source="ratings" db=0.6ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "3hZtCzZtVULcdJkln9pm3l"]
+2019-03-03 18:08:46.927 [debug] QUERY OK db=0.1ms queue=0.3ms
+begin []
+2019-03-03 18:08:46.928 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [64, {{2019, 3, 3}, {18, 8, 46, 927477}}, 438]
+2019-03-03 18:08:46.929 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 18:08:46.931 [info] Sent 200 in 5ms
+2019-03-03 18:12:10.112 [info] PUT /ratings/update
+2019-03-03 18:12:10.113 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2THkQauDWMvJgXFGPY4iKB", "nymRating" => %{"numVotes" => 44, "score" => "3.31"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:12:10.114 [debug] QUERY OK source="ratings" db=0.7ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2THkQauDWMvJgXFGPY4iKB"]
+2019-03-03 18:12:10.114 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 18:12:10.115 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [44, {{2019, 3, 3}, {18, 12, 10, 114924}}, 439]
+2019-03-03 18:12:10.116 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 18:12:10.118 [info] Sent 200 in 5ms
+2019-03-03 18:18:38.991 [info] PUT /ratings/update
+2019-03-03 18:18:38.992 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "5wBB0bSW7UOPUqma2gi9TZ", "nymRating" => %{"numVotes" => 104, "score" => "3.26"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:18:38.993 [debug] QUERY OK source="ratings" db=0.7ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "5wBB0bSW7UOPUqma2gi9TZ"]
+2019-03-03 18:18:38.993 [debug] QUERY OK db=0.0ms queue=0.3ms
+begin []
+2019-03-03 18:18:38.994 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [104, {{2019, 3, 3}, {18, 18, 38, 993819}}, 444]
+2019-03-03 18:18:38.995 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 18:18:38.997 [info] Sent 200 in 5ms
+2019-03-03 18:21:13.059 [info] PUT /ratings/update
+2019-03-03 18:21:13.059 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "6HQZvxFGBVyjfCxTOAT3iB", "nymRating" => %{"numVotes" => 45, "score" => "3.23"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:21:13.061 [debug] QUERY OK source="ratings" db=0.7ms queue=0.4ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "6HQZvxFGBVyjfCxTOAT3iB"]
+2019-03-03 18:21:13.061 [debug] QUERY OK db=0.0ms queue=0.3ms
+begin []
+2019-03-03 18:21:13.062 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [45, {{2019, 3, 3}, {18, 21, 13, 61890}}, 445]
+2019-03-03 18:21:13.063 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 18:21:13.065 [info] Sent 200 in 5ms
+2019-03-03 18:23:51.690 [info] PUT /ratings/update
+2019-03-03 18:23:51.691 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "78DAnFAmuBbekO4LeuhRkR", "nymRating" => %{"numVotes" => 57, "score" => "3.14"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:23:51.692 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "78DAnFAmuBbekO4LeuhRkR"]
+2019-03-03 18:23:51.694 [info] Sent 200 in 3ms
+2019-03-03 18:27:23.628 [info] PUT /ratings/update
+2019-03-03 18:27:23.629 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2J1IxkhqZ2FnydAsvZjuhZ", "nymRating" => %{"numVotes" => 61, "score" => "3.10"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:27:23.630 [debug] QUERY OK source="ratings" db=0.5ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2J1IxkhqZ2FnydAsvZjuhZ"]
+2019-03-03 18:27:23.632 [info] Sent 200 in 3ms
+2019-03-03 18:31:10.447 [info] PUT /ratings/update
+2019-03-03 18:31:10.448 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "3ZBSXNYdTZVaBUQI3E2rF6", "nymRating" => %{"numVotes" => 36, "score" => "3.06"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:31:10.449 [debug] QUERY OK source="ratings" db=0.6ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "3ZBSXNYdTZVaBUQI3E2rF6"]
+2019-03-03 18:31:10.450 [debug] QUERY OK db=0.0ms queue=0.2ms
+begin []
+2019-03-03 18:31:10.450 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [36, {{2019, 3, 3}, {18, 31, 10, 450165}}, 454]
+2019-03-03 18:31:10.451 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 18:31:10.453 [info] Sent 200 in 5ms
+2019-03-03 18:36:26.477 [info] PUT /ratings/update
+2019-03-03 18:36:26.478 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "7lJcj7F7GuDye26vYSk1bM", "nymRating" => %{"numVotes" => 141, "score" => "4.96"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:36:26.479 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "7lJcj7F7GuDye26vYSk1bM"]
+2019-03-03 18:36:26.481 [info] Sent 200 in 3ms
+2019-03-03 18:40:22.344 [info] PUT /ratings/update
+2019-03-03 18:40:22.344 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2TYC9SaRhYypUQzB1ZVTG2", "nymRating" => %{"numVotes" => 258, "score" => "4.95"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:40:22.345 [debug] QUERY OK source="ratings" db=0.5ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2TYC9SaRhYypUQzB1ZVTG2"]
+2019-03-03 18:40:22.346 [debug] QUERY OK db=0.0ms queue=0.2ms
+begin []
+2019-03-03 18:40:22.346 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [258, {{2019, 3, 3}, {18, 40, 22, 346246}}, 306]
+2019-03-03 18:40:22.347 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 18:40:22.349 [info] Sent 200 in 5ms
+2019-03-03 18:45:05.146 [info] PUT /ratings/update
+2019-03-03 18:45:05.146 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "6HNruFQlzQx4ulL4ppRLYI", "nymRating" => %{"numVotes" => 110, "score" => "4.92"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:45:05.148 [debug] QUERY OK source="ratings" db=0.6ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "6HNruFQlzQx4ulL4ppRLYI"]
+2019-03-03 18:45:05.148 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 18:45:05.149 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [110, {{2019, 3, 3}, {18, 45, 5, 148604}}, 309]
+2019-03-03 18:45:05.150 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 18:45:05.151 [info] Sent 200 in 5ms
+2019-03-03 18:48:38.707 [info] PUT /ratings/update
+2019-03-03 18:48:38.708 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2lwwrWVKdf3LR9lbbhnr6R", "nymRating" => %{"numVotes" => 183, "score" => "4.87"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:48:38.709 [debug] QUERY OK source="ratings" db=0.7ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2lwwrWVKdf3LR9lbbhnr6R"]
+2019-03-03 18:48:38.709 [debug] QUERY OK db=0.1ms queue=0.3ms
+begin []
+2019-03-03 18:48:38.710 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [183, {{2019, 3, 3}, {18, 48, 38, 709958}}, 312]
+2019-03-03 18:48:38.711 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 18:48:38.713 [info] Sent 200 in 5ms
+2019-03-03 18:50:22.985 [info] PUT /ratings/update
+2019-03-03 18:50:22.986 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "42hwjij0VmBP3ngqoTrmvl", "nymRating" => %{"numVotes" => 128, "score" => "4.86"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:50:22.987 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "42hwjij0VmBP3ngqoTrmvl"]
+2019-03-03 18:50:22.987 [debug] QUERY OK db=0.0ms queue=0.2ms
+begin []
+2019-03-03 18:50:22.988 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [128, {{2019, 3, 3}, {18, 50, 22, 987537}}, 313]
+2019-03-03 18:50:22.989 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 18:50:22.991 [info] Sent 200 in 5ms
+2019-03-03 18:55:39.539 [info] PUT /ratings/update
+2019-03-03 18:55:39.540 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2LTl1pU074hnzAdy0SpHAb", "nymRating" => %{"numVotes" => 232, "score" => "4.85"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 18:55:39.541 [debug] QUERY OK source="ratings" db=0.6ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2LTl1pU074hnzAdy0SpHAb"]
+2019-03-03 18:55:39.542 [debug] QUERY OK db=0.0ms queue=0.2ms
+begin []
+2019-03-03 18:55:39.542 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [232, {{2019, 3, 3}, {18, 55, 39, 542307}}, 314]
+2019-03-03 18:55:39.543 [debug] QUERY OK db=0.7ms
+commit []
+2019-03-03 18:55:39.545 [info] Sent 200 in 5ms
+2019-03-03 19:00:13.175 [info] PUT /ratings/update
+2019-03-03 19:00:13.176 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "6zc7xLlx5rrEUgIuGa7DoR", "nymRating" => %{"numVotes" => 140, "score" => "4.84"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:00:13.177 [debug] QUERY OK source="ratings" db=0.7ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "6zc7xLlx5rrEUgIuGa7DoR"]
+2019-03-03 19:00:13.177 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 19:00:13.178 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [140, {{2019, 3, 3}, {19, 0, 13, 177844}}, 315]
+2019-03-03 19:00:13.179 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 19:00:13.181 [info] Sent 200 in 5ms
+2019-03-03 19:03:51.072 [info] PUT /ratings/update
+2019-03-03 19:03:51.072 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "4VQu1ooCteGDynSZYUgvT4", "nymRating" => %{"numVotes" => 101, "score" => "4.82"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:03:51.073 [debug] QUERY OK source="ratings" db=0.6ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "4VQu1ooCteGDynSZYUgvT4"]
+2019-03-03 19:03:51.074 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 19:03:51.074 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [101, {{2019, 3, 3}, {19, 3, 51, 74367}}, 317]
+2019-03-03 19:03:51.075 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 19:03:51.077 [info] Sent 200 in 5ms
+2019-03-03 19:07:46.945 [info] PUT /ratings/update
+2019-03-03 19:07:46.946 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2ffmPvnKZQqAOAEUo5Klpu", "nymRating" => %{"numVotes" => 198, "score" => "4.77"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:07:46.947 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2ffmPvnKZQqAOAEUo5Klpu"]
+2019-03-03 19:07:46.947 [debug] QUERY OK db=0.0ms queue=0.3ms
+begin []
+2019-03-03 19:07:46.948 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [198, {{2019, 3, 3}, {19, 7, 46, 947639}}, 322]
+2019-03-03 19:07:46.949 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 19:07:46.951 [info] Sent 200 in 5ms
+2019-03-03 19:11:43.794 [info] PUT /ratings/update
+2019-03-03 19:11:43.795 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "5BP0oaQ1VhuaznT77CBXQp", "nymRating" => %{"numVotes" => 72, "score" => "4.76"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:11:43.796 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "5BP0oaQ1VhuaznT77CBXQp"]
+2019-03-03 19:11:43.797 [debug] QUERY OK db=0.1ms queue=0.3ms
+begin []
+2019-03-03 19:11:43.797 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [72, {{2019, 3, 3}, {19, 11, 43, 797100}}, 323]
+2019-03-03 19:11:43.798 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 19:11:43.800 [info] Sent 200 in 5ms
+2019-03-03 19:16:53.781 [info] PUT /ratings/update
+2019-03-03 19:16:53.781 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "4VqPOruhp5EdPBeR92t6lQ", "nymRating" => %{"numVotes" => 167, "score" => "4.70"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:16:53.782 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "4VqPOruhp5EdPBeR92t6lQ"]
+2019-03-03 19:16:53.783 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 19:16:53.783 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [167, {{2019, 3, 3}, {19, 16, 53, 783338}}, 329]
+2019-03-03 19:16:53.784 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 19:16:53.786 [info] Sent 200 in 5ms
+2019-03-03 19:20:27.938 [info] PUT /ratings/update
+2019-03-03 19:20:27.939 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "1Q7apbyCNuDbZbd618dLtT", "nymRating" => %{"numVotes" => 152, "score" => "4.36"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:20:27.940 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "1Q7apbyCNuDbZbd618dLtT"]
+2019-03-03 19:20:27.940 [debug] QUERY OK db=0.1ms queue=0.2ms
+begin []
+2019-03-03 19:20:27.941 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [152, {{2019, 3, 3}, {19, 20, 27, 940663}}, 359]
+2019-03-03 19:20:27.942 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 19:20:27.944 [info] Sent 200 in 5ms
+2019-03-03 19:24:43.558 [info] PUT /ratings/update
+2019-03-03 19:24:43.559 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "5rb9QrpfcKFHM1EUbSIurX", "nymRating" => %{"numVotes" => 105, "score" => "4.35"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:24:43.560 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "5rb9QrpfcKFHM1EUbSIurX"]
+2019-03-03 19:24:43.561 [debug] QUERY OK db=0.1ms queue=0.3ms
+begin []
+2019-03-03 19:24:43.561 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [105, {{2019, 3, 3}, {19, 24, 43, 561224}}, 360]
+2019-03-03 19:24:43.562 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 19:24:43.564 [info] Sent 200 in 5ms
+2019-03-03 19:28:27.868 [info] PUT /ratings/update
+2019-03-03 19:28:27.868 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "0K6GsFLI8po7s9GOuid5tN", "nymRating" => %{"numVotes" => 90, "score" => "4.27"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:28:27.870 [debug] QUERY OK source="ratings" db=0.6ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "0K6GsFLI8po7s9GOuid5tN"]
+2019-03-03 19:28:27.870 [debug] QUERY OK db=0.0ms queue=0.3ms
+begin []
+2019-03-03 19:28:27.871 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [90, {{2019, 3, 3}, {19, 28, 27, 870639}}, 368]
+2019-03-03 19:28:27.872 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 19:28:27.874 [info] Sent 200 in 5ms
+2019-03-03 19:36:37.874 [info] PUT /ratings/update
+2019-03-03 19:36:37.875 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "3e5rEt48191MwuHWBDwOcZ", "nymRating" => %{"numVotes" => 129, "score" => "4.18"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:36:37.876 [debug] QUERY OK source="ratings" db=0.7ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "3e5rEt48191MwuHWBDwOcZ"]
+2019-03-03 19:36:37.878 [info] Sent 200 in 3ms
+2019-03-03 19:42:34.051 [info] PUT /ratings/update
+2019-03-03 19:42:34.052 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2UZ6MDDg3y5fTAzQU3YYfo", "nymRating" => %{"numVotes" => 132, "score" => "4.08"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:42:34.053 [debug] QUERY OK source="ratings" db=0.6ms queue=0.5ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2UZ6MDDg3y5fTAzQU3YYfo"]
+2019-03-03 19:42:34.055 [info] Sent 200 in 3ms
+2019-03-03 19:46:36.370 [info] PUT /ratings/update
+2019-03-03 19:46:36.371 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "52TSjnEfXo40EzuylAhf6k", "nymRating" => %{"numVotes" => 124, "score" => "4.06"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:46:36.372 [debug] QUERY OK source="ratings" db=0.5ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "52TSjnEfXo40EzuylAhf6k"]
+2019-03-03 19:46:36.374 [info] Sent 200 in 3ms
+2019-03-03 19:51:54.387 [info] PUT /ratings/update
+2019-03-03 19:51:54.388 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "24H5KPBdSvHQMRXTp12K3J", "nymRating" => %{"numVotes" => 74, "score" => "3.96"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:51:54.389 [debug] QUERY OK source="ratings" db=0.7ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "24H5KPBdSvHQMRXTp12K3J"]
+2019-03-03 19:51:54.391 [info] Sent 200 in 3ms
+2019-03-03 19:55:49.029 [info] PUT /ratings/update
+2019-03-03 19:55:49.030 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "6Cv09gbV6mHXshhiHE1JO4", "nymRating" => %{"numVotes" => 93, "score" => "3.93"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 19:55:49.031 [debug] QUERY OK source="ratings" db=0.5ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "6Cv09gbV6mHXshhiHE1JO4"]
+2019-03-03 19:55:49.033 [info] Sent 200 in 3ms
+2019-03-03 20:02:05.910 [info] PUT /ratings/update
+2019-03-03 20:02:05.910 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "7eEXXED3AUJErvOSx9quZV", "nymRating" => %{"numVotes" => 91, "score" => "3.92"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:02:05.911 [debug] QUERY OK source="ratings" db=0.5ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "7eEXXED3AUJErvOSx9quZV"]
+2019-03-03 20:02:05.914 [info] Sent 200 in 3ms
+2019-03-03 20:04:35.274 [info] PUT /ratings/update
+2019-03-03 20:04:35.275 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "44HBcWA1jp22uKjKbwZd7Z", "nymRating" => %{"numVotes" => 122, "score" => "3.90"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:04:35.276 [debug] QUERY OK source="ratings" db=0.5ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "44HBcWA1jp22uKjKbwZd7Z"]
+2019-03-03 20:04:35.278 [info] Sent 200 in 3ms
+2019-03-03 20:06:55.264 [info] PUT /ratings/update
+2019-03-03 20:06:55.270 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "7EYR17bHR2ZkJ8o2mKSJDU", "nymRating" => %{"numVotes" => 148, "score" => "3.88"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:06:55.271 [debug] QUERY OK source="ratings" db=0.5ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "7EYR17bHR2ZkJ8o2mKSJDU"]
+2019-03-03 20:06:55.273 [info] Sent 200 in 9ms
+2019-03-03 20:12:26.780 [info] PUT /ratings/update
+2019-03-03 20:12:26.780 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "0y44oC5I4MopiCRbOnYGk7", "nymRating" => %{"numVotes" => 70, "score" => "3.86"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:12:26.781 [debug] QUERY OK source="ratings" db=0.5ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "0y44oC5I4MopiCRbOnYGk7"]
+2019-03-03 20:12:26.782 [debug] QUERY OK db=0.0ms queue=0.2ms
+begin []
+2019-03-03 20:12:26.782 [debug] QUERY OK db=0.3ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [70, {{2019, 3, 3}, {20, 12, 26, 782344}}, 405]
+2019-03-03 20:12:26.783 [debug] QUERY OK db=0.9ms
+commit []
+2019-03-03 20:12:26.786 [info] Sent 200 in 5ms
+2019-03-03 20:18:59.316 [info] PUT /ratings/update
+2019-03-03 20:18:59.317 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2p0RE2pkZMajUQmg2M12jY", "nymRating" => %{"numVotes" => 73, "score" => "3.55"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:18:59.318 [debug] QUERY OK source="ratings" db=0.6ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2p0RE2pkZMajUQmg2M12jY"]
+2019-03-03 20:18:59.320 [info] Sent 200 in 3ms
+2019-03-03 20:25:46.592 [info] PUT /ratings/update
+2019-03-03 20:25:46.593 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "3hZtCzZtVULcdJkln9pm3l", "nymRating" => %{"numVotes" => 64, "score" => "3.33"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:25:46.594 [debug] QUERY OK source="ratings" db=0.6ms queue=0.5ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "3hZtCzZtVULcdJkln9pm3l"]
+2019-03-03 20:25:46.596 [info] Sent 200 in 3ms
+2019-03-03 20:29:09.742 [info] PUT /ratings/update
+2019-03-03 20:29:09.743 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2THkQauDWMvJgXFGPY4iKB", "nymRating" => %{"numVotes" => 44, "score" => "3.31"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:29:09.744 [debug] QUERY OK source="ratings" db=0.5ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2THkQauDWMvJgXFGPY4iKB"]
+2019-03-03 20:29:09.746 [info] Sent 200 in 3ms
+2019-03-03 20:34:29.073 [info] PUT /ratings/update
+2019-03-03 20:34:29.074 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2TYC9SaRhYypUQzB1ZVTG2", "nymRating" => %{"numVotes" => 258, "score" => "4.95"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:34:29.074 [debug] QUERY OK source="ratings" db=0.5ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2TYC9SaRhYypUQzB1ZVTG2"]
+2019-03-03 20:34:29.077 [info] Sent 200 in 3ms
+2019-03-03 20:38:00.336 [info] PUT /ratings/update
+2019-03-03 20:38:00.337 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "2MKqIFvHseB2VZgpdQdKsu", "nymRating" => %{"numVotes" => 96, "score" => "4.93"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:38:00.338 [debug] QUERY OK source="ratings" db=0.4ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "2MKqIFvHseB2VZgpdQdKsu"]
+2019-03-03 20:38:00.338 [debug] QUERY OK db=0.0ms queue=0.2ms
+begin []
+2019-03-03 20:38:00.339 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [96, {{2019, 3, 3}, {20, 38, 0, 338786}}, 308]
+2019-03-03 20:38:00.340 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 20:38:00.342 [info] Sent 200 in 5ms
+2019-03-03 20:42:38.015 [info] PUT /ratings/update
+2019-03-03 20:42:38.015 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "6HNruFQlzQx4ulL4ppRLYI", "nymRating" => %{"numVotes" => 110, "score" => "4.92"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:42:38.017 [debug] QUERY OK source="ratings" db=0.6ms queue=0.4ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "6HNruFQlzQx4ulL4ppRLYI"]
+2019-03-03 20:42:38.019 [info] Sent 200 in 3ms
+2019-03-03 20:46:45.394 [info] PUT /ratings/update
+2019-03-03 20:46:45.394 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "5BP0oaQ1VhuaznT77CBXQp", "nymRating" => %{"numVotes" => 72, "score" => "4.76"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:46:45.395 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "5BP0oaQ1VhuaznT77CBXQp"]
+2019-03-03 20:46:45.397 [info] Sent 200 in 3ms
+2019-03-03 20:51:55.715 [info] PUT /ratings/update
+2019-03-03 20:51:55.716 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "4VqPOruhp5EdPBeR92t6lQ", "nymRating" => %{"numVotes" => 167, "score" => "4.70"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:51:55.717 [debug] QUERY OK source="ratings" db=0.5ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "4VqPOruhp5EdPBeR92t6lQ"]
+2019-03-03 20:51:55.719 [info] Sent 200 in 3ms
+2019-03-03 20:54:18.614 [info] PUT /ratings/update
+2019-03-03 20:54:18.615 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "5dKBaysNJtfpyNTRa5lqDb", "nymRating" => %{"numVotes" => 121, "score" => "4.65"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:54:18.616 [debug] QUERY OK source="ratings" db=0.5ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "5dKBaysNJtfpyNTRa5lqDb"]
+2019-03-03 20:54:18.617 [debug] QUERY OK db=0.0ms queue=0.3ms
+begin []
+2019-03-03 20:54:18.617 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [121, {{2019, 3, 3}, {20, 54, 18, 617168}}, 334]
+2019-03-03 20:54:18.618 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 20:54:18.620 [info] Sent 200 in 5ms
+2019-03-03 20:59:47.100 [info] PUT /ratings/update
+2019-03-03 20:59:47.101 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "0rTZNOc6MUHU68agVQ672b", "nymRating" => %{"numVotes" => 98, "score" => "4.62"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 20:59:47.102 [debug] QUERY OK source="ratings" db=0.6ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "0rTZNOc6MUHU68agVQ672b"]
+2019-03-03 20:59:47.102 [debug] QUERY OK db=0.0ms queue=0.3ms
+begin []
+2019-03-03 20:59:47.103 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [98, {{2019, 3, 3}, {20, 59, 47, 102663}}, 337]
+2019-03-03 20:59:47.104 [debug] QUERY OK db=0.8ms
+commit []
+2019-03-03 20:59:47.106 [info] Sent 200 in 5ms
+2019-03-03 21:02:37.330 [info] PUT /ratings/update
+2019-03-03 21:02:37.331 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "39sUeHQoIGY6BEIcgTMRXW", "nymRating" => %{"numVotes" => 117, "score" => "4.59"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 21:02:37.332 [debug] QUERY OK source="ratings" db=0.8ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "39sUeHQoIGY6BEIcgTMRXW"]
+2019-03-03 21:02:37.333 [debug] QUERY OK db=0.0ms queue=0.3ms
+begin []
+2019-03-03 21:02:37.333 [debug] QUERY OK db=0.4ms
+UPDATE "ratings" SET "num_votes" = $1, "updated_at" = $2 WHERE "id" = $3 [117, {{2019, 3, 3}, {21, 2, 37, 333263}}, 340]
+2019-03-03 21:02:37.334 [debug] QUERY OK db=0.9ms
+commit []
+2019-03-03 21:02:37.336 [info] Sent 200 in 5ms
+2019-03-03 21:07:32.088 [info] PUT /ratings/update
+2019-03-03 21:07:32.089 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "0Fghw1Ky3HNSvj04EtPrnf", "nymRating" => %{"numVotes" => 65, "score" => "3.48"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 21:07:32.090 [debug] QUERY OK source="ratings" db=0.6ms queue=0.2ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "0Fghw1Ky3HNSvj04EtPrnf"]
+2019-03-03 21:07:32.092 [info] Sent 200 in 3ms
+2019-03-03 21:11:27.044 [info] PUT /ratings/update
+2019-03-03 21:11:27.044 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "4B6BzjDSurNtids9TU4jdE", "nymRating" => %{"numVotes" => 56, "score" => "3.47"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 21:11:27.045 [debug] QUERY OK source="ratings" db=0.5ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "4B6BzjDSurNtids9TU4jdE"]
+2019-03-03 21:11:27.047 [info] Sent 200 in 3ms
+2019-03-03 21:15:50.886 [info] PUT /ratings/update
+2019-03-03 21:15:50.886 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "5MzjN4pg411OErJ1U2F3bj", "nymRating" => %{"numVotes" => 66, "score" => "3.46"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 21:15:50.888 [debug] QUERY OK source="ratings" db=0.5ms queue=0.4ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "5MzjN4pg411OErJ1U2F3bj"]
+2019-03-03 21:15:50.890 [info] Sent 200 in 3ms
+2019-03-03 21:20:22.978 [info] PUT /ratings/update
+2019-03-03 21:20:22.979 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "17xqcnBW4CdV6ARXLrKHWy", "nymRating" => %{"numVotes" => 153, "score" => "3.34"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 21:20:22.980 [debug] QUERY OK source="ratings" db=0.6ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "17xqcnBW4CdV6ARXLrKHWy"]
+2019-03-03 21:20:22.982 [info] Sent 200 in 3ms
+2019-03-03 21:27:00.841 [info] PUT /ratings/update
+2019-03-03 21:27:00.842 [debug] Processing by NymServer.RatingController.update/2
+  Parameters: %{"rating" => %{"domain" => "spotify.com", "item" => "3hZtCzZtVULcdJkln9pm3l", "nymRating" => %{"numVotes" => 64, "score" => "3.33"}, "nym_id" => "10", "user" => 0}}
+  Pipelines: [:api]
+2019-03-03 21:27:00.843 [debug] QUERY OK source="ratings" db=0.5ms queue=0.1ms
+SELECT r0."id", r0."domain", r0."item", r0."score", r0."num_votes", r0."nym_id", r0."inserted_at", r0."updated_at" FROM "ratings" AS r0 WHERE (((r0."nym_id" = $1) AND (r0."domain" = $2)) AND (r0."item" = $3)) [10, "spotify.com", "3hZtCzZtVULcdJkln9pm3l"]
+2019-03-03 21:27:00.845 [info] Sent 200 in 3ms
