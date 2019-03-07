@@ -223,29 +223,16 @@ def run_for(period, nym, user):
         try:
             id, nym, domain, uri, rating, num_votes = user_obj.get_next_recommendation()
             resp = None
-            decision = playback_decision(spotify_obj, uri, decision)
-            if  decision == 'trackdone' and spotify_obj.get_duration(uri):
-                print("Updating")
-                sent = datetime.now().time().isoformat()
-                resp = update([id, nym, domain, uri, rating, int(num_votes)], user)
-                recv = resp.headers["Date"].replace(",", " ")
-                timing_info.put([str(nym), str(user_obj.user_num), sent, recv])
-            elif decision == "clickrow":
-                user_obj.set_recommendation(random.randint(0, len(user_obj.recommendations) - 1))
-            if resp:
-                to_be_added = False
-                while resp.status_code != 200 and not to_be_added:
-                    rating = resp.content[:len(resp.content) - int(resp.headers["padding-len"])].decode('utf8')
-                    rating = load(rating)
-                    if int(rating["nymRating"]["numVotes"]) == 0:
-                        to_be_added = True
-                    else:
-                        num_votes = float(rating["nymRating"]["score"])
-                        num_votes = int(rating["nymRating"]["numVotes"])
-                        sent = datetime.now().time().isoformat()
-                        resp = update([id, nym, domain, uri, rating, num_votes], user)
-                        recv = datetime.now().time().isoformat()
-                        timing_info.put([str(nym), str(user_obj.user_num), sent, recv])
+            if spotify_obj.get_duration(uri):
+                decision = playback_decision(spotify_obj, uri, decision)
+                if  decision == 'trackdone':
+                    print("Updating")
+                    sent = datetime.now().time().isoformat()
+                    resp = update([id, nym, domain, uri, rating, int(num_votes)], user)
+                    recv = resp.headers["Date"].replace(",", " ")
+                    timing_info.put([str(nym), str(user_obj.user_num), sent, recv])
+                elif decision == "clickrow":
+                    user_obj.set_recommendation(0)
 
         except Exception as e:
             print(e)
