@@ -88,6 +88,7 @@ def playback_decision(spotify_obj, uri, user_decision):
     a = MarkovUserBehavior()
     next_dec = user_decision
     if duration:
+        duration = duration/10
         next_dec = a.get_next_state(user_decision)
         if next_dec == 'fwdbtn' or next_dec == 'clickrow' :
             print("Skipping")

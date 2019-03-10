@@ -9,6 +9,7 @@ class User:
     
     def __init__(self, nym, user_num,config):
         self.nym = nym
+        self.is_playlist = False
         self.user_num = user_num
         self.current_recommendation = 0
         self.recommendations = []
@@ -20,6 +21,9 @@ class User:
         self.sids_to_details_map = {}
         self.uri_to_song = {}
         self.user_times = []
+        self.playlist = []
+        self.playlist_index = 0
+        self.song_to_uri = {}
 
         # Load users songs map
         self.user_songs_map_path = path.join(config["user_data"]["base"], config["user_data"]["user_songs_map"])
@@ -38,11 +42,14 @@ class User:
         
         # Load song uri to songs
         self.song_to_uri_path = path.join(config["song_data"]["base"], config["song_data"]["song_to_uri_map"])
-        #self.load_uri_to_songs()
+        self.load_uri_to_songs()
         
         # Load recommendations
         self.recommendations_path = path.join(config["database_data"]["base"], config["database_data"]['input_data'])
         self.load_recommendations()
+
+        self.nym_songs_path = path.join(config["nym_data"]["base"], config["nym_data"]["nym_songs_dir"])
+        self.create_playlist()
 
 
     def load_uri_to_songs(self):
@@ -51,7 +58,18 @@ class User:
             for k, v in load(input_pickle).items():
                 song, artist = k.split("<SEP>")
                 self.uri_to_song[v] = (artist, song)
+                self.song_to_uri[song] = v
             print("Done")
+
+    def create_playlist(self, size=100):
+        with open(path.join(self.nym_songs_path, '{}.csv'.format(self.nym)),'r') as input_f:
+            songs = list(csv.reader(input_f, delimiter=','))
+            for x in songs:
+                song, _ = x[0].split("<SEP>")
+                if song in self.song_to_uri:
+                    self.playlist.append(self.song_to_uri[song])
+                if len(self.playlist) >= size:
+                    break
 
     def load_song_ids(self):
         with open(self.sids_to_ids_map_path, 'rb') as output:

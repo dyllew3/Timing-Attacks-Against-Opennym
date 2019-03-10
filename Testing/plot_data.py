@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 num_users = int(input())
 
-#all_data = np.genfromtxt("TrainingData/training-{}-users(2).csv".format(num_users), delimiter=',')
-all_data = np.genfromtxt("TrainingData/ground_truth.csv", delimiter=',')
+all_data = np.genfromtxt("TrainingData/training-{}-users(3).csv".format(num_users), delimiter=',')
+#all_data = np.genfromtxt("TrainingData/ground_truth.csv", delimiter=',')
 
 for i in range(num_users):
     threes = np.array(list(filter(lambda x: x[2] == i, list(all_data))))

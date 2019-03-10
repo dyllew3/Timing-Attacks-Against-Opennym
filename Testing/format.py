@@ -84,7 +84,7 @@ def read_in_times(packet_file):
     for packet in packet_data:
         frame = packet["_source"]["layers"]["frame"]
         frame_time = frame["frame.time"].replace(' GMT Standard Time', '')
-        datetime_obj = datetime.datetime.strptime(frame_time[: len(frame_time) - 3], "%b  %d, %Y %H:%M:%S.%f")
+        datetime_obj = datetime.datetime.strptime(frame_time[: len(frame_time) - 7], "%b  %d, %Y %H:%M:%S.%f")
         time_frame_tuples.append((frame["frame.number"], datetime_obj))
     return time_frame_tuples
 
@@ -137,23 +137,31 @@ def generate_training_data(csv_file, log_file, packet_file, output_file):
     with open(output_file, 'w', newline='') as train_csv:
         training_file = csv.writer(train_csv)
         for i in range(len(users)):
-            start_seconds = (time_frame_tuples[i][0] - base_time).total_seconds()/60
-            end_seconds = (time_frame_tuples[i][1] - base_time).total_seconds()/60
+            start_seconds = (time_frame_tuples[i][0] - base_time).total_seconds()*10/60
+            end_seconds = (time_frame_tuples[i][1] - base_time).total_seconds()*10/60
             training_file.writerow([start_seconds, end_seconds, users[i]])
             result.append([start_seconds, end_seconds, users[i]])
     return result
 
 #clean_csv('Packets/CSVs/1-user.csv','Packets/CSVs/1-user-clean.csv')
 #(generate_training_data('Packets/CSVs/1-user-clean.csv', 'Logs/1-user.log','Packets/Json/1-user.json', 'TrainingData/training-1-user.csv'))
-#
-clean_csv('Packets/CSVs/5-users.csv','Packets/CSVs/5-users-clean.csv')
-(generate_training_data('Packets/CSVs/5-users-clean.csv', 'Logs/5-users.log','Packets/Json/5-users.json', 'TrainingData/training-5-users.csv'))
-clean_csv('Packets/CSVs/5-users(1).csv','Packets/CSVs/5-users-clean(1).csv')
-(generate_training_data('Packets/CSVs/5-users-clean(1).csv', 'Logs/5-users(1).log','Packets/Json/5-users(1).json', 'TrainingData/training-5-users(1).csv'))
+
+#clean_csv('Packets/CSVs/2-users.csv','Packets/CSVs/2-users-clean.csv')
+#(generate_training_data('Packets/CSVs/2-users-clean.csv', 'Logs/2-users.log','Packets/Jsons/2-users.json', 'TrainingData/training-2-users.csv'))
+
+#clean_csv('Packets/CSVs/5-users.csv','Packets/CSVs/5-users-clean.csv')
+#(generate_training_data('Packets/CSVs/5-users-clean.csv', 'Logs/5-users.log','Packets/Json/5-users.json', 'TrainingData/training-5-users.csv'))
+
+#clean_csv('Packets/CSVs/5-users(1).csv','Packets/CSVs/5-users-clean(1).csv')
+#(generate_training_data('Packets/CSVs/5-users-clean(1).csv', 'Logs/5-users(1).log','Packets/Json/5-users(1).json', 'TrainingData/training-5-users(1).csv'))
+
+#clean_csv('Packets/CSVs/5-users(2).csv','Packets/CSVs/5-users-clean(2).csv')
+#(generate_training_data('Packets/CSVs/5-users-clean(2).csv', 'Logs/5-users(2).log','Packets/Json/5-users(2).json', 'TrainingData/training-5-users(2).csv'))
+
+clean_csv('Packets/CSVs/5-users(3).csv','Packets/CSVs/5-users-clean(3).csv')
+(generate_training_data('Packets/CSVs/5-users-clean(3).csv', 'Logs/5-users(3).log','Packets/Jsons/5-users(3).json', 'TrainingData/training-5-users(3).csv'))
 
 
-clean_csv('Packets/CSVs/5-users(2).csv','Packets/CSVs/5-users-clean(2).csv')
-(generate_training_data('Packets/CSVs/5-users-clean(2).csv', 'Logs/5-users(2).log','Packets/Json/5-users(2).json', 'TrainingData/training-5-users(2).csv'))
 ##
 #clean_csv('Packets/CSVs/10-users.csv','Packets/CSVs/10-users-clean.csv')
 #(generate_training_data('Packets/CSVs/10-users-clean.csv', 'Logs/10-users.log','Packets/Json/10-users.json', 'TrainingData/training-10-users.csv'))
