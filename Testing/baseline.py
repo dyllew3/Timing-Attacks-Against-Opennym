@@ -1,11 +1,16 @@
 import numpy as np
 import scipy.stats
-
+from sklearn.model_selection import train_test_split
 
 
 norms = {}
 timestamps = {}
 
+MEAN = None
+STD = None
+MIN = 20000
+MAX = 0
+normal  = scipy.stats.norm(4.5, 1.08)
 
 def get_all_data(filename,delimiter=','):
     all_data = np.genfromtxt(filename, delimiter=delimiter)
@@ -15,53 +20,56 @@ def get_all_data(filename,delimiter=','):
     return features, labels
 
 
-def get_test(features, labels):
-    test_amount = 0.
-    amount = int(features.shape[0] * test_amount)
-    return (features[:amount,:], labels[:amount], features[amount:, :], labels[amount:])
-
 def get_valid_points(time_stamp, time_period, min_val, max_val):
     abv_min = ((time_period - time_stamp) >= min_val)
     below_max = ((time_period - time_stamp) <= max_val)
-    return time_period[np.where(abv_min & below_max)]
+    indexes = np.where(abv_min & below_max)
+    if not indexes:
+        return ()
+    else:
+        return indexes
 
-def predict(time_data):
-    label_probs = np.zeros(len(timestamps.keys()))
-    for label in timestamps.keys():
-        norm, max_val, min_val = norms[label]
-        valid_points = get_valid_points(time_data[1], timestamps[label][:,1], min_val, max_val)
-        diffs = valid_points - time_data[1]
-        if len(list(diffs)) > 0:
-            pdf = np.vectorize(norm.pdf)
-            probs = pdf(diffs)
-            label_probs[int(label)] = np.max(probs)
-    return np.argmax(label_probs)
+def predict(time_data, time_period, normal):
+    valid_points = get_valid_points(time_data, time_period, MIN, MAX)
+    if  len(valid_points[0]) == 0:
+        return np.random.choice(np.arange(time_period.shape[0]),1)
+    else:
+        pdfs = np.vectorize(normal.pdf)
+        points = time_period[valid_points[0]] - time_data
+        index = np.argmax(pdfs(points))
+        return valid_points[0][index]
 
-def score(test_feat, test_labels):
+
+def score(test_feat, test_labels, time_period, time_period_labels,normal):
     predictions = np.zeros(test_feat.shape[0])
     for i in range(test_feat.shape[0]):
-        predictions[i] = predict(test_feat[i,:])
+        index = predict(test_feat[i,0], time_period, normal)
+        predictions[i] = time_period_labels[index]
     return np.mean(np.where(test_labels == predictions, 1, 0))
 
 
-features, labels = get_all_data('TrainingData/ground_truth.csv')
+features, labels = get_all_data('TrainingData/training-10-users.csv')
+x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=.2, random_state=42)
 
-
+means = np.zeros(np.unique(labels).shape[0])
+std_devs = np.zeros(np.unique(labels).shape[0])
 for label in np.unique(labels):
     timestamp_labels = features[np.where(labels == label)]
     timestamps[label] = timestamp_labels
     diffs = timestamp_labels[1:, 0] - timestamp_labels[: timestamp_labels.shape[0] - 1, 1]
     mu = np.mean(diffs)
-    max_val = np.max(diffs)
-    min_val = np.min(diffs)
+    MAX = max(MAX, np.max(diffs))
+    MIN = min(MIN, np.min(diffs))
     sigma = np.std(diffs)
     #print('for {} mean is {} std is {}, max is {}, min is {}'.format(label, mu, sigma, max_val, min_val))
-    norms[label] = (scipy.stats.norm(mu, sigma), max_val, min_val)
+    means[int(label)] = mu
+    std_devs[int(label)] = sigma
 
-
-size=50
-indexes = np.random.choice(range(features.shape[0]), size, replace=False)
-features_test, labels_test = features[indexes], labels[indexes]
-
-
-print(score(features_test, labels_test))
+MEAN = np.mean(means)
+print(np.std(means))
+print(np.std(std_devs))
+STD = np.mean(std_devs)
+normal  = scipy.stats.norm(MEAN, STD)
+print(MEAN)
+print(STD)
+print(score(x_test,y_test, features[:,1], labels, normal))
