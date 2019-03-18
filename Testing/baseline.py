@@ -48,7 +48,7 @@ def score(test_feat, test_labels, time_period, time_period_labels,normal):
     return np.mean(np.where(test_labels == predictions, 1, 0))
 
 
-features, labels = get_all_data('TrainingData/training-10-users.csv')
+features, labels = get_all_data('TrainingData/ground_truth.csv')
 x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=.2, random_state=42)
 
 means = np.zeros(np.unique(labels).shape[0])
@@ -65,10 +65,10 @@ for label in np.unique(labels):
     means[int(label)] = mu
     std_devs[int(label)] = sigma
 
-MEAN = np.mean(means)
-print(np.std(means))
-print(np.std(std_devs))
-STD = np.mean(std_devs)
+MEAN = 4.80
+print(np.mean(means))
+print(np.mean(std_devs))
+STD = 1.22
 normal  = scipy.stats.norm(MEAN, STD)
 print(MEAN)
 print(STD)

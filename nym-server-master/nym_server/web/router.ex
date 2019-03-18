@@ -25,6 +25,7 @@ defmodule NymServer.Router do
 
     resources "/:nym_id/:domain", RatingController, only: [:show, :index]
     put "/update/", RatingController, :update
+    put "/padding/", RatingController, :pointless_request
   end
 
   scope "/cookies", NymServer do

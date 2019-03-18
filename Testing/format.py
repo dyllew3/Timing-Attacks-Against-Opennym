@@ -158,8 +158,20 @@ def generate_training_data(csv_file, log_file, packet_file, output_file):
 #clean_csv('Packets/CSVs/5-users(2).csv','Packets/CSVs/5-users-clean(2).csv')
 #(generate_training_data('Packets/CSVs/5-users-clean(2).csv', 'Logs/5-users(2).log','Packets/Json/5-users(2).json', 'TrainingData/training-5-users(2).csv'))
 
-clean_csv('Packets/CSVs/5-users(3).csv','Packets/CSVs/5-users-clean(3).csv')
-(generate_training_data('Packets/CSVs/5-users-clean(3).csv', 'Logs/5-users(3).log','Packets/Jsons/5-users(3).json', 'TrainingData/training-5-users(3).csv'))
+#clean_csv('Packets/CSVs/5-users(3).csv','Packets/CSVs/5-users-clean(3).csv')
+#(generate_training_data('Packets/CSVs/5-users-clean(3).csv', 'Logs/5-users(3).log','Packets/Jsons/5-users(3).json', 'TrainingData/training-5-users(3).csv'))
+
+log_file='Logs/50-users(1).log'
+logs = read_in_log(log_file)
+users, ground_truth = get_users_from_logs(logs)
+with open('TrainingData/ground_truth.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    base_time = datetime.datetime.strptime(ground_truth[0][0], '%Y-%m-%d %H:%M:%S.%f')
+    for truth in ground_truth:
+        start_seconds = (datetime.datetime.strptime(truth[0], '%Y-%m-%d %H:%M:%S.%f') - base_time).total_seconds()*10/60
+        end_seconds = (datetime.datetime.strptime(truth[1], '%Y-%m-%d %H:%M:%S.%f') - base_time ).total_seconds()*10/60
+        writer.writerow([start_seconds, end_seconds, truth[2]])
+
 
 
 ##

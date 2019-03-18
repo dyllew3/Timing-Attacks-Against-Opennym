@@ -19,4 +19,4 @@ for i in range(num_users):
     #count, bins, p = plt.hist(result[:, 1], 20, density=True)
     plt.plot(result[:,0], result[:, 1], 'bo')
     #plt.plot(bins, 1/(sigma * np.sqrt(2 * np.pi)) *  np.exp( - (bins - mu)**2 / (2 * sigma**2) ),       linewidth=3, color='y')
-    plt.show()
+    #plt.show()

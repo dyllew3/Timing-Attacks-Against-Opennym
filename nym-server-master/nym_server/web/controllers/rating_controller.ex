@@ -65,11 +65,25 @@ defmodule NymServer.RatingController do
     end
   end
 
-  def update(conn, params) do
-    rating_map = params["rating"]
-    nym_rating = rating_map["nymRating"]
+  def pointless_request(conn, params) do
+    fudge = "testing"
+    conn
+    |> register_before_send(&pad_packet(&1))
+    |> send_resp(200, fudge)
+  end
 
-    # Get rating struct from db or create new one
+  def decrement() do
+    :timer.sleep(4000)
+    ConCache.update(:my_cache, "to_send", fn(old_value) ->
+      counts = case old_value do
+        nil -> %{ active_traces: 0, active_users: 0, active_dummy: 0}
+        _ -> old_value
+      end
+        {:ok, %{ active_traces: counts.active_traces - 1, active_users: counts.active_users - 1, active_dummy: counts.active_dummy}}
+    end)
+  end
+
+  defp updating_stuff(conn, rating_map, nym_rating) do
     db_query =
       try do
         case Repo.get_by(Rating, [nym_id: rating_map["nym_id"], domain: rating_map["domain"], item: rating_map["item"]]) do
@@ -121,6 +135,40 @@ defmodule NymServer.RatingController do
                         #|> assign(:rating, rating)
                         |> send_resp(200, Poison.encode! render_rating_local(rating) )
     end
+  end
+
+
+  def update(conn, params) do
+    rating_map = params["rating"]
+    nym_rating = rating_map["nymRating"]
+    # Get rating struct from db or create new one
+    lock = ConCache.update(:my_cache, "to_send", fn(old_value) ->
+
+      old_value = case old_value do
+        nil -> %{ active_traces: 0, active_users: 0, active_dummy: 0}
+        val -> val
+      end
+
+      if old_value.active_traces < 10 do
+        {:ok, %{ active_traces: old_value.active_traces + 1, active_users: old_value.active_users + 1, active_dummy: old_value.active_dummy}}
+      else
+        {:error, ""}
+      end
+
+    end)
+
+    if lock === :ok do
+      Task.async(fn -> decrement() end)
+      q = updating_stuff(conn, rating_map, nym_rating)
+      q
+
+    else
+      conn
+      |> register_before_send(&pad_packet(&1))
+      #|> assign(:rating, rating)
+      |> send_resp(200, "")
+    end
+
   end
 
   # Given list of rating objects, return only ratings from specified domain

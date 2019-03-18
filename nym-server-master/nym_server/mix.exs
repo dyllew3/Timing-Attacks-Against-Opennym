@@ -19,7 +19,7 @@ defmodule NymServer.Mixfile do
   def application do
     [mod: {NymServer, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :con_cache, :httpoison]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,7 +38,9 @@ defmodule NymServer.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:logger_file_backend, "~> 0.0.10"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:con_cache, "~> 0.13"},
+     {:httpoison, "~> 1.4"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

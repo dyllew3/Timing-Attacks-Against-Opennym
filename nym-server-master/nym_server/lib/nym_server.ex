@@ -12,13 +12,17 @@ defmodule NymServer do
       supervisor(NymServer.Repo, []),
       # Start the endpoint when the application starts
       supervisor(NymServer.Endpoint, []),
+      {ConCache, [name: :my_cache,   ttl_check_interval: false]},
+      Supervisor.child_spec({NymServer.TimingDefense, []}, id: :my_worker_1),
+      #Supervisor.child_spec({NymServer.TimingDefense, []}, id: :my_worker_2),
       # Start your own worker by calling: NymServer.Worker.start_link(arg1, arg2, arg3)
       # worker(NymServer.Worker, [arg1, arg2, arg3]),
+
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: NymServer.Supervisor]
+    opts = [strategy: :one_for_one, name: NymServer.Supervisor, max_restarts: 5000]
     Supervisor.start_link(children, opts)
   end
 
