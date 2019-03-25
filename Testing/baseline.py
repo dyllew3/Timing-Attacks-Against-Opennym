@@ -11,6 +11,42 @@ STD = None
 MIN = 20000
 MAX = 0
 normal  = scipy.stats.norm(4.5, 1.08)
+features, labels = ([],[])
+
+from sklearn.base import BaseEstimator, ClassifierMixin
+class Attack(BaseEstimator, ClassifierMixin):
+
+    def __init__ (self):
+        self.mean = MEAN
+        self.std = STD
+        self.time_period = features[:,1]
+        self.labels = labels
+        self.normal = scipy.stats.norm(self.mean, self.std)
+
+    def fit(self, X, y):
+        return None
+
+    def get_params(self,deep=True):
+        return {}
+
+    def predict(self, time_data):
+        valid_points = get_valid_points(time_data, self.time_period, MIN, MAX)
+        if  len(valid_points[0]) == 0:
+            return np.random.choice(np.arange(self.time_period.shape[0]),1)
+        else:
+            pdfs = np.vectorize(self.normal.pdf)
+            points = self.time_period[valid_points[0]] - time_data
+            index = np.argmax(pdfs(points))
+            return valid_points[0][index]
+    
+    def score(self, test_feat, test_labels):
+        predictions = np.zeros(test_feat.shape[0])
+        for i in range(test_feat.shape[0]):
+            index = self.predict(test_feat[i,0])
+            predictions[i] = self.labels[index]
+        return np.mean(np.where(test_labels == predictions, 1, 0))
+
+
 
 def get_all_data(filename,delimiter=','):
     all_data = np.genfromtxt(filename, delimiter=delimiter)
@@ -40,15 +76,15 @@ def predict(time_data, time_period, normal):
         return valid_points[0][index]
 
 
-def score(test_feat, test_labels, time_period, time_period_labels,normal):
+def score(estimator, test_feat, test_labels):
     predictions = np.zeros(test_feat.shape[0])
     for i in range(test_feat.shape[0]):
-        index = predict(test_feat[i,0], time_period, normal)
-        predictions[i] = time_period_labels[index]
+        index = estimator.predict(test_feat[i,0])
+        predictions[i] = estimator.labels[index]
     return np.mean(np.where(test_labels == predictions, 1, 0))
 
 
-features, labels = get_all_data('TrainingData/ground_truth.csv')
+features, labels = get_all_data('TrainingData/training-100-users.csv')
 x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=.2, random_state=42)
 
 means = np.zeros(np.unique(labels).shape[0])
@@ -65,11 +101,17 @@ for label in np.unique(labels):
     means[int(label)] = mu
     std_devs[int(label)] = sigma
 
-MEAN = 4.80
+MEAN = 4.25
 print(np.mean(means))
 print(np.mean(std_devs))
 STD = 1.22
 normal  = scipy.stats.norm(MEAN, STD)
 print(MEAN)
 print(STD)
-print(score(x_test,y_test, features[:,1], labels, normal))
+clf  = Attack()
+
+
+from sklearn.model_selection import cross_val_score
+a = cross_val_score(clf, features, labels, cv=5)
+print(a.mean())
+print(a.std())
