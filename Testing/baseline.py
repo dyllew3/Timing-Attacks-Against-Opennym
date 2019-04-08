@@ -43,6 +43,7 @@ class Attack(BaseEstimator, ClassifierMixin):
         predictions = np.zeros(test_feat.shape[0])
         for i in range(test_feat.shape[0]):
             index = self.predict(test_feat[i,0])
+
             predictions[i] = self.labels[index]
         return np.mean(np.where(test_labels == predictions, 1, 0))
 
@@ -84,34 +85,37 @@ def score(estimator, test_feat, test_labels):
     return np.mean(np.where(test_labels == predictions, 1, 0))
 
 
-features, labels = get_all_data('TrainingData/training-100-users.csv')
+features, labels = get_all_data('TrainingData/training-50-users.csv')
 x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=.2, random_state=42)
 
 means = np.zeros(np.unique(labels).shape[0])
 std_devs = np.zeros(np.unique(labels).shape[0])
 for label in np.unique(labels):
-    timestamp_labels = features[np.where(labels == label)]
-    timestamps[label] = timestamp_labels
-    diffs = timestamp_labels[1:, 0] - timestamp_labels[: timestamp_labels.shape[0] - 1, 1]
-    mu = np.mean(diffs)
-    MAX = max(MAX, np.max(diffs))
-    MIN = min(MIN, np.min(diffs))
-    sigma = np.std(diffs)
-    #print('for {} mean is {} std is {}, max is {}, min is {}'.format(label, mu, sigma, max_val, min_val))
-    means[int(label)] = mu
-    std_devs[int(label)] = sigma
+    if label != -1:
+        timestamp_labels = features[np.where(labels == label)]
+        timestamps[label] = timestamp_labels
+        diffs = timestamp_labels[1:, 0] - timestamp_labels[: timestamp_labels.shape[0] - 1, 1]
+        mu = np.mean(diffs)
+        MAX = max(MAX, np.max(diffs))
+        MIN = min(MIN, np.min(diffs))
+        sigma = np.std(diffs)
+        #print('for {} mean is {} std is {}, max is {}, min is {}'.format(label, mu, sigma, max_val, min_val))
+        means[int(label)] = mu
+        std_devs[int(label)] = sigma
 
-MEAN = 4.25
+MEAN = 4.0
 print(np.mean(means))
 print(np.mean(std_devs))
-STD = 1.22
+STD = 1.3
 normal  = scipy.stats.norm(MEAN, STD)
 print(MEAN)
 print(STD)
 clf  = Attack()
 
+real_labels = np.where(labels != -1)
+
 
 from sklearn.model_selection import cross_val_score
-a = cross_val_score(clf, features, labels, cv=5)
+a = cross_val_score(clf, features[real_labels], labels[real_labels], cv=5)
 print(a.mean())
 print(a.std())
