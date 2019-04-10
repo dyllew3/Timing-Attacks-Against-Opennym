@@ -1,9 +1,31 @@
 #!/usr/bin/python3
 
-from os import path
+from os import listdir, path
 from pickle import load, dump
 import csv
 
+def format_artist(artist):
+    final_artist_string = artist
+    stop_words = ["/", " Feat", " feat ", " ft ", " Vs", " vs"]
+    for stop_word in stop_words:
+        if stop_word in final_artist_string:
+            end = final_artist_string.index(stop_word)
+            final_artist_string = final_artist_string[:end].strip()
+    return final_artist_string
+
+
+def get_top_artists(filepath):
+    nym_top_artists = []
+    with open(filepath) as input_file:
+        for i in range(10):
+            line = input_file.readline()
+            if not line:
+                break
+            artist = format_artist(line.split("<SEP>")[0].strip())
+            print(artist)
+            nym_top_artists.append(artist)
+
+    return nym_top_artists
 
 class User:
     
@@ -24,6 +46,12 @@ class User:
         self.playlist = []
         self.playlist_index = 0
         self.song_to_uri = {}
+        top_artists_dir = path.join(config["nym_data"]["base"], config["nym_data"]["nym_variance_dir"])
+        top_artists_file_format = config["nym_data"]["file_formats"]["top_artists"]
+        dir_files = listdir(top_artists_dir)
+        top_artists_file = [f for f in dir_files if "{}_top_artists.csv".format(nym) == f][0]
+        print(top_artists_file)
+        self.top_artists = get_top_artists(path.join(top_artists_dir, top_artists_file))
 
         # Load users songs map
         self.user_songs_map_path = path.join(config["user_data"]["base"], config["user_data"]["user_songs_map"])

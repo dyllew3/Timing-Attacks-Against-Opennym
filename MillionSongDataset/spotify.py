@@ -115,6 +115,32 @@ class SpotifyWrapper:
         else:
             return None
 
+    def song_recommendations(self, artist_uris, num_songs=100):
+        if not self.spotify:
+            print("Spotify object not yet authorized")
+            return None
+
+        artist_uris = [ar for ar in artist_uris if ar]
+        seed_uris = artist_uris[:5]
+        print(seed_uris)
+
+        recommended_songs = set()
+        recommendations = []
+        while len(recommended_songs) < num_songs:
+            print("Need {} more artists".format(num_songs - len(recommended_songs)))
+            try:
+                recommendations = self.spotify.recommendations(seed_artists=seed_uris, limit=100)
+            except spotipy.client.SpotifyException:
+                self.authorize_user()
+                recommendations = self.spotify.recommendations(seed_artists=seed_uris, limit=100)
+
+            for track in recommendations["tracks"]:
+                song_uri = track["id"]
+                duration = track["duration_ms"]
+                recommended_songs.add((song_uri, duration))
+                
+        return list(recommended_songs)
+
     def get_recommendations(self, artist_uris, num_artists=100):
         if not self.spotify:
             print("Spotify object not yet authorized")
