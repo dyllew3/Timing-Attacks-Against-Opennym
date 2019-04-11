@@ -7,6 +7,7 @@ RATING_TABLE = "ratings"
 METADATA_TABLE = "nym_metadata"
 COOKIES_TABLE = "session_cookies"
 RULES_TABLE = "rules"
+DEFENSE_TABLE = "defenses"
 
 conn = psycopg2.connect("dbname='nym_server_dev' user='opennym' password='opennym' host='localhost'")
 cur = conn.cursor()
@@ -28,6 +29,11 @@ cur.execute(delete_command)
 
 delete_command = "DELETE FROM {}".format(METADATA_TABLE)
 cur.execute(delete_command)
+
+# Delete from defenses table
+delete_command = "DELETE FROM {}".format(DEFENSE_TABLE)
+cur.execute(delete_command)
+
 
 conn.commit()
 

@@ -3,6 +3,7 @@
 from os import listdir, path
 from pickle import load, dump
 import csv
+import random
 
 def format_artist(artist):
     final_artist_string = artist
@@ -33,8 +34,8 @@ class User:
         self.nym = nym
         self.is_playlist = False
         self.user_num = user_num
-        self.current_recommendation = 0
-        self.recommendations = []
+        self.current_song = 0
+        self.ratings = []
         self.user_songs_dict = {}
         self.song_to_id_dict = {}
         self.user_to_id_dict = {}
@@ -46,6 +47,7 @@ class User:
         self.playlist = []
         self.playlist_index = 0
         self.song_to_uri = {}
+        self.rating_dict = {}
         top_artists_dir = path.join(config["nym_data"]["base"], config["nym_data"]["nym_variance_dir"])
         top_artists_file_format = config["nym_data"]["file_formats"]["top_artists"]
         dir_files = listdir(top_artists_dir)
@@ -73,8 +75,9 @@ class User:
         self.load_uri_to_songs()
         
         # Load recommendations
-        self.recommendations_path = path.join(config["database_data"]["base"], config["database_data"]['input_data'])
-        self.load_recommendations()
+        self.ratings_path = path.join(config["database_data"]["base"], config["database_data"]['input_data'])
+        self.load_ratings()
+        self.playlist = self.ratings
 
         self.nym_songs_path = path.join(config["nym_data"]["base"], config["nym_data"]["nym_songs_dir"])
         self.create_playlist()
@@ -122,12 +125,24 @@ class User:
             print("Loaded dict of users to numbers")
         pass
 
+    def get_data(self, item):
+        if item in self.rating_dict:
+            return self.rating_dict[item]
+        else:
+            self.last_id += 1
+            return [self.last_id, self.nym, 'spotify.com', 0.0, 0]
+
     # Loads the recommendations from db file
-    def load_recommendations(self):
-        with open( self.recommendations_path, 'r' ) as csvfile:
+    def load_ratings(self):
+        with open( self.ratings_path, 'r' ) as csvfile:
             csv_reader = csv.reader(csvfile, delimiter=',')
             # Remove empty lists and only look at songs from the nym
-            self.recommendations =  list(filter(lambda x: x != [] and x[1] == str(self.nym), csv_reader))
+            self.last_id = 1880
+            self.ratings =  list(filter(lambda x: x != [] and x[1] == str(self.nym), csv_reader))
+            for rating in self.ratings:
+                id, nym, domain, uri, rating, num_votes = rating
+                self.rating_dict[uri] = [id, nym, domain, rating, num_votes]
+
 
     def load_song_tuples(self):
         with open(self.sids_to_details_map_path, 'rb') as output_pickle:
@@ -163,22 +178,22 @@ class User:
                 return k
         return None
 
-    def get_next_recommendation(self):
-        self.current_recommendation += 1 
-        current_recommendation = self.current_recommendation - 1
-        self.current_recommendation %= len(self.recommendations)
-        return self.recommendations[current_recommendation]
+    def get_next_song(self):
+        self.current_song += 1 
+        current_song = self.current_song - 1
+        self.current_song %= len(self.ratings)
+        return self.ratings[current_song]
 
-    def get_prev_recommendation(self):
-        current_recommendation = self.current_recommendation
-        self.current_recommendation -= 1 
-        if self.current_recommendation < 0:
-            self.current_recommendation = len(self.recommendations) - 1
-        return self.recommendations[current_recommendation]
+    def get_prev_song(self):
+        current_song = self.current_song
+        self.current_song -= 1 
+        if self.current_song < 0:
+            self.current_song = len(self.ratings) - 1
+        return self.ratings[current_song]
 
     def set_recommendation(self, index):
-        self.current_recommendation = index
-        return self.recommendations[index]
+        self.current_song = index
+        return self.ratings[index]
 
     def dump_songs(self):
         print("Writing new users song map to disk")

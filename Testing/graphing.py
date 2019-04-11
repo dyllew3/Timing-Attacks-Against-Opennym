@@ -33,8 +33,9 @@ users_75_err = (b[np.where(b[:,0] == 75)])[:len(x_vals),3]
 users_100 = (b[np.where(b[:,0] == 100)])[:len(x_vals),2]
 users_100_err = (b[np.where(b[:,0] == 100)])[:len(x_vals),3]
 """
-group_1 = (b[np.where(b[:,1] == 50)])[:len(active_users),2]
-group_1_err = (b[np.where(b[:,1] == 50)])[:len(active_users),3]
+val = 25 # 1 2 5 10 25 50 100
+group_1 = (b[np.where(b[:,1] == val)])[:len(active_users),2]
+group_1_err = (b[np.where(b[:,1] == val)])[:len(active_users),3]
 print(group_1)
 
 fig = plt.figure()
@@ -78,9 +79,8 @@ plt.savefig('Results/grouping.png')"""
 plt.xlabel('Amount of active users')
 plt.ylabel('Accuracy')
 width = 0.35
-plt.bar(ind, group_1, width, yerr=group_1_err)
-plt.xticks(ind, ('1', '2', '5', '10', '50', '75', '100'))
+plt.errorbar(active_users, group_1, yerr=group_1_err, color='blue', ecolor='black', fmt='--o')
+#plt.xticks(ind, ('1', '2', '5', '10', '50', '75', '100'))
 
-plt.savefig('Results/grouping-50.png')
+plt.savefig('Results/Application Layer/grouping-{}-line.png'.format(val))
 plt.show()
-

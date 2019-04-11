@@ -13,7 +13,7 @@ defmodule NymServer do
       # Start the endpoint when the application starts
       supervisor(NymServer.Endpoint, []),
       {ConCache, [name: :my_cache,   ttl_check_interval: false]},
-      Supervisor.child_spec({NymServer.TimingDefense, []}, id: :my_worker_1),
+      #Supervisor.child_spec({NymServer.TimingDefense, []}, id: :my_worker_1),
       #Supervisor.child_spec({NymServer.TimingDefense, []}, id: :my_worker_2),
       # Start your own worker by calling: NymServer.Worker.start_link(arg1, arg2, arg3)
       # worker(NymServer.Worker, [arg1, arg2, arg3]),

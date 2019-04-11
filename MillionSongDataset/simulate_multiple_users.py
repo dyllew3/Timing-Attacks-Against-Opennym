@@ -28,8 +28,9 @@ import asyncio
 import queue
 import csv
 
-REQ = "https://ec2-52-50-185-176.eu-west-1.compute.amazonaws.com:4400/ratings/update"#localhost 
-RATINGS_REQ = "http://localhost:4000/ratings/{}/spotify.com"
+NUM_DUMMY = 5
+
+REQ = "https://172.31.30.80:4400/ratings/update"#localhost 
 
 import threading
 # pre-selected users just for convenience
@@ -213,26 +214,41 @@ def load_users(users_tuples):
     return result
 
 
+def latency():
+    sleep_time = np.random.rand(1)[0] * 2
+    time.sleep(sleep_time)
+    return None
+
 def run_for(period, nym, user):
     current_hour = datetime.now().hour
     pick_time = random.uniform(current_hour, current_hour + 1) % 24
     print("Picked time is {}".format(pick_time))
     user_obj = User(nym, user, config)
+    artist_uris = spotify_obj.get_artist_uris(user_obj.top_artists)
+    recommendations = spotify_obj.song_recommendations(artist_uris)
+    index = 0
+    next_song = recommendations[index]
     decision = 'appload'
     while datetime.now() < start + period:
         try:
-            id, nym, domain, uri, rating, num_votes = user_obj.get_next_recommendation()
+            #id, nym, domain, uri, rating, num_votes = user_obj.get_next_recommendation()
             resp = None
-            if spotify_obj.get_duration(uri):
-                decision = playback_decision(spotify_obj, uri, decision)
+            if spotify_obj.get_duration(next_song):
+                decision = playback_decision(spotify_obj, next_song, decision)
                 if  decision == 'trackdone':
                     print("Updating")
                     sent = datetime.now().time().isoformat()
-                    resp = update([id, nym, domain, uri, rating, int(num_votes)], user)
-                    recv = resp.headers["Date"].replace(",", " ")
-                    timing_info.put([str(nym), str(user_obj.user_num), sent, recv])
+                    id, nym, domain, rating, num_votes = user_obj.get_data(next_song)
+                    resp = update([id, str(nym), domain, str(next_song), str(rating), int(num_votes)], user)
+                    #recv = resp.headers["Date"].replace(",", " ")
+                    #timing_info.put([str(nym), str(user_obj.user_num), sent, recv])
+                    if index >= len(recommendations):
+                        index = 0
+                        recommendations = spotify_obj.song_recommendations(artist_uris)
+                    next_song = recommendations[index]
+                    index += 1
                 elif decision == "clickrow":
-                    user_obj.set_recommendation(0)
+                    next_song = user_obj.get_next_song()[3]
 
         except Exception as e:
             print(e)
@@ -243,13 +259,18 @@ NYMS = [0,1,2,3,4,5,6,7,8,9,10,12,14]
 
 if __name__ == "__main__":
     start = datetime.now()
-    period = timedelta(hours=6)
+    period = timedelta(hours=5)
     print("Enter number of users")
-    num_users = int(input())
+    num_users = 1
     #users_tuples_indexes = np.random.choice(len(USER_LIST), num_users, replace=False)
     #users_tuples = [USER_LIST[x] for x in users_tuples_indexes]
     nym_tuples = np.random.choice(NYMS, num_users)
+    fake_nyms = np.random.choice(NYMS, NUM_DUMMY)
     threads = []
+    #for nym in fake_nyms:
+    #    thread = (threading.Thread(target=run_for, args=(period, nym, -1)))
+    #    threads.append(thread)
+    #    thread.start()
     for user, nym in enumerate(nym_tuples):
         thread = (threading.Thread(target=run_for, args=(period, nym, user)))
         threads.append(thread)

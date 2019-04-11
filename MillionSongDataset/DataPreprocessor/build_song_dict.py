@@ -10,7 +10,7 @@ class SongDictBuilder:
         self.song_tuple_list = {}
 
     def load_track_list(self):
-        with open(self.unique_tracks_path) as track_list:
+        with open(self.unique_tracks_path, 'r', encoding='utf8') as track_list:
             print("Building Song Dictionary")
             for line in track_list:
                 song_id, artist, song_name = line.split("<SEP>")[1:]

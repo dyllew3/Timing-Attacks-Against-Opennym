@@ -22,7 +22,23 @@ class MarkovUserBehavior:
 
     def get_next_state(self, current_state):
         row = self.states.index(current_state)
-        return  np.random.choice(self.states, 1, p=self.transition_matrix[row])
+        probabilities = self.transition_matrix[row]
+        return  np.random.choice(self.states, 1, p=probabilities)
+
+
+states = ['fwdbtn','clickrow','trackdone','appload'] 
+transition_matrix = [
+            [0.75, 0.05, 0.20, 0.00],
+            [0.08, 0.58, 0.34, 0.00],
+            [0.10, 0.05, 0.84, 0.0],
+            [0.15, 0.13, 0.55, 0.16]
+        ]
+
+def get_next_state(current_state):
+    row = states.index(current_state)
+    probabilities = transition_matrix[row]
+    return  np.random.choice(states, 1, p=probabilities)
+
 
 class Devices(Enum):
     Mobile = 0
@@ -88,7 +104,6 @@ def playback_decision(spotify_obj, uri, user_decision):
     a = MarkovUserBehavior()
     next_dec = user_decision
     if duration:
-        duration = duration/10
         next_dec = a.get_next_state(user_decision)
         if next_dec == 'fwdbtn' or next_dec == 'clickrow' :
             print("Skipping")

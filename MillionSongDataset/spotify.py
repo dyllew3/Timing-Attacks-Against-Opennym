@@ -137,8 +137,9 @@ class SpotifyWrapper:
             for track in recommendations["tracks"]:
                 song_uri = track["id"]
                 duration = track["duration_ms"]
-                recommended_songs.add((song_uri, duration))
-                
+                recommended_songs.add(song_uri)
+                self.song_uri_dict[song_uri] = ('', float(duration)/1000)
+
         return list(recommended_songs)
 
     def get_recommendations(self, artist_uris, num_artists=100):

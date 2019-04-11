@@ -9,7 +9,7 @@ class UntrustedSongsFilter:
 
     def filter_untrusted_triplets(self):
         valid_triplets = []
-        with open(self.train_triplets_path, 'r') as train_triplets:
+        with open(self.train_triplets_path, 'r',encoding="utf8") as train_triplets:
             for line in train_triplets:
                 song = line.split("\t")[1]
                 if song not in self.untrusted_song_ids_set:
