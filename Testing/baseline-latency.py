@@ -11,7 +11,7 @@ STD = None
 MIN = 20000
 MAX = 0
 features, labels = ([],[])
-GROUPS = [1, 2, 5, 10, 25, 50, 100]
+GROUPS = [25, 50, 100]
 NUM_GROUPS = 10
 
 from sklearn.base import BaseEstimator, ClassifierMixin
@@ -85,9 +85,8 @@ def predict(time_data, time_period, normal):
     if  len(valid_points[0]) == 0:
         return np.random.choice(np.arange(time_period.shape[0]),1)
     else:
-        pdfs = np.vectorize(normal.pdf)
         points = time_period[valid_points[0]] - time_data
-        index = np.argmax(pdfs(points))
+        index = np.argmax(normal.pdf(points))
         return valid_points[0][index]
 
 
@@ -100,12 +99,19 @@ def score(estimator, test_feat, test_labels):
         predictions[i,:] = estimator.labels[index]
     return np.mean(np.where(test_labels == predictions, 1, 0))
 
+def latency_to_add(feats, length):
+    a = np.zeros((length, 2))
+    a[:, 0] = 1.2 * (np.random.randn(length) + 20)
+    a[:, 1] = a[:, 0]
+    return feats + a
 
-features, labels = get_all_data('TrainingData/training-2-users.csv')
-x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=.2, random_state=42)
+features, labels = get_all_data('TrainingData/training-50-users(1).csv')
+features = latency_to_add(features, features.shape[0])
+
 
 means = np.zeros(np.unique(labels).shape[0])
 std_devs = np.zeros(np.unique(labels).shape[0])
+
 for label in np.unique(labels):
     timestamp_labels = features[np.where(labels == label)]
     timestamps[label] = timestamp_labels
@@ -118,7 +124,7 @@ for label in np.unique(labels):
     means[int(label)] = mu
     std_devs[int(label)] = sigma
 
-MEAN = 4.25
+MEAN = 4.8
 STD = 1.22
 normal  = scipy.stats.norm(MEAN, STD)
 print("Set mean is {}".format(MEAN))

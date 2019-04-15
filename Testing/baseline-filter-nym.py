@@ -20,7 +20,7 @@ class Attack(BaseEstimator, ClassifierMixin):
     def __init__ (self):
         self.mean = MEAN
         self.std = STD
-        self.time_period = features[:,1]
+        self.time_period = features[:, :]
         self.labels = labels
         self.normal = scipy.stats.norm(self.mean, self.std)
         self.num_groups = NUM_GROUPS
@@ -35,13 +35,13 @@ class Attack(BaseEstimator, ClassifierMixin):
     def predict(self, time_data):
         result = []
         for i in range(NUM_GROUPS):
-            valid_points = get_valid_points(time_data, self.time_period, MIN*(i + 1), MAX* (i + 1))
+            valid_points = get_valid_points(time_data, self.time_period, MIN * (i+1), MAX* (i + 1))
             if  len(valid_points[0]) == 0:
                 return np.random.choice(np.arange(self.time_period.shape[0]),1)
             else:
-                normal = scipy.stats.norm(self.mean*(i + 1), self.std*(i + 1))
+                normal = scipy.stats.norm(self.mean *(i + 1), self.std *(i + 1))
                 pdfs = np.vectorize(normal.pdf)
-                points = self.time_period[valid_points[0]] - time_data
+                points = self.time_period[valid_points[0], 1] - time_data[0]
                 index = np.argmax(pdfs(points))
                 result.append(valid_points[0][index])
         return np.array(result)
@@ -49,7 +49,7 @@ class Attack(BaseEstimator, ClassifierMixin):
     def score(self, test_feat, test_labels):
         predictions = np.zeros((test_feat.shape[0], NUM_GROUPS))
         for i in range(test_feat.shape[0]):
-            index = self.predict(test_feat[i,0])
+            index = self.predict(test_feat[i])
             predictions[i] = self.labels[index]
         return np.mean(self.stripping_pred(predictions, test_labels))
 
@@ -72,9 +72,14 @@ def get_all_data(filename,delimiter=','):
 
 
 def get_valid_points(time_stamp, time_period, min_val, max_val):
-    abv_min = ((time_period - time_stamp) >= min_val)
-    below_max = ((time_period - time_stamp) <= max_val)
-    indexes = np.where(abv_min & below_max)
+    #print(time_stamp)
+    #print(time_period[0])
+    #print(time_stamp[2])
+
+    same_nyms = (time_period[:, 2] == time_stamp[2])
+    abv_min = ((time_period[:, 0] - time_stamp[1]) >= min_val)
+    below_max = ((time_period[:, 0] - time_stamp[1]) <= max_val)
+    indexes = np.where(same_nyms & abv_min & below_max)
     if not indexes:
         return ()
     else:
@@ -93,17 +98,16 @@ def predict(time_data, time_period, normal):
 
 def score(estimator, test_feat, test_labels):
     predictions = np.zeros(test_feat.shape[0], NUM_GROUPS)
-    print("here")
     for i in range(test_feat.shape[0]):
         index = estimator.predict(test_feat[i,0])
         print(index)
         predictions[i,:] = estimator.labels[index]
     return np.mean(np.where(test_labels == predictions, 1, 0))
 
-
-features, labels = get_all_data('TrainingData/training-2-users.csv')
+val = 75
+features, labels = get_all_data('TrainingData/training-{}-users-filtering.csv'.format(val))
 x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=.2, random_state=42)
-
+print(features[0])
 means = np.zeros(np.unique(labels).shape[0])
 std_devs = np.zeros(np.unique(labels).shape[0])
 for label in np.unique(labels):
@@ -118,6 +122,8 @@ for label in np.unique(labels):
     means[int(label)] = mu
     std_devs[int(label)] = sigma
 
+print(MAX)
+print(MIN)
 MEAN = 4.25
 STD = 1.22
 normal  = scipy.stats.norm(MEAN, STD)
@@ -125,6 +131,8 @@ print("Set mean is {}".format(MEAN))
 print("Set std is {}".format(STD))
 
 from sklearn.model_selection import cross_val_score
+print(int(features[0, 2]))
+print(int(features[2, 2]))
 
 for group in GROUPS:
     NUM_GROUPS = group
