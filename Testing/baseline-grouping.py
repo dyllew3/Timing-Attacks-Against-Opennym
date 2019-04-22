@@ -11,7 +11,7 @@ STD = None
 MIN = 20000
 MAX = 0
 features, labels = ([],[])
-GROUPS = [1, 2, 5, 10, 25, 50, 100]
+GROUPS = [10, 25, 50, 100]
 NUM_GROUPS = 10
 
 from sklearn.base import BaseEstimator, ClassifierMixin
@@ -36,22 +36,22 @@ class Attack(BaseEstimator, ClassifierMixin):
         result = []
         for i in range(NUM_GROUPS):
             valid_points = get_valid_points(time_data, self.time_period, MIN*(i + 1), MAX* (i + 1))
-            if  len(valid_points[0]) == 0:
+            if  len(valid_points) == 0:
                 return np.random.choice(np.arange(self.time_period.shape[0]),1)
             else:
-                normal = scipy.stats.norm(self.mean*(i + 1), self.std*(i + 1))
-                pdfs = np.vectorize(normal.pdf)
-                points = self.time_period[valid_points[0]] - time_data
-                index = np.argmax(pdfs(points))
-                result.append(valid_points[0][index])
+                normal = scipy.stats.norm(self.mean + 3.7*(i - 1), self.std + 0.13*(i - 1))
+                points = self.time_period[valid_points] - time_data
+                index = np.argmax(normal.pdf(points))
+                result.append(valid_points[index])
         return np.array(result)
     
     def score(self, test_feat, test_labels):
-        predictions = np.zeros((test_feat.shape[0], NUM_GROUPS))
+        predictions = []
+        print(test_feat.shape)
         for i in range(test_feat.shape[0]):
             index = self.predict(test_feat[i,0])
-            predictions[i] = self.labels[index]
-        return np.mean(self.stripping_pred(predictions, test_labels))
+            predictions.append(self.labels[index])
+        return np.mean(self.stripping_pred(np.array(predictions), test_labels))
 
     def stripping_pred(self, predicitions, labels):
         results = np.zeros(predicitions.shape[0])
@@ -70,12 +70,51 @@ def get_all_data(filename,delimiter=','):
     labels = all_data[:, all_data.shape[1] - 1].ravel()
     return features, labels
 
+def find_max(max_val, points, time_stamp):
+    low = 0
+    high = points.shape[0]
+    mid = low + (high - low)//2
+    while low <= high:
+        mid = low + (high - low)//2
+        if mid == points.shape[0] - 1:
+            return mid
+        diff = points[mid] - time_stamp
+        diff_2 = points[mid + 1] - time_stamp
+        if points[mid] - time_stamp > max_val:
+            high = mid - 1
+        if diff == max_val or  (diff < max_val and diff_2 > max_val):
+            return mid
+        if diff < max_val:
+            low = mid + 1
+    return None
+
+def find_min(min_val, points, time_stamp):
+    low = 0
+    high = points.shape[0]
+    mid = 0
+    while low <= high:
+        mid = low + (high - low)//2
+        if mid == points.shape[0] - 1:
+            return mid
+        diff_2 = points[mid + 1] - time_stamp if mid < points.shape[0] - 1 else mid
+        diff = points[mid] - time_stamp
+        if diff == min_val or  (diff > min_val and diff_2 < min_val):
+            return mid
+        if diff < min_val:
+            high = mid - 1
+
+        if diff > min_val:
+            low = mid + 1
+        
+    return None 
 
 def get_valid_points(time_stamp, time_period, min_val, max_val):
     abv_min = ((time_period - time_stamp) >= min_val)
     below_max = ((time_period - time_stamp) <= max_val)
+    #min_ind =find_min(min_val, time_period, time_stamp)
+    #max_ind =find_max(max_val, time_period, time_stamp)
     indexes = np.where(abv_min & below_max)
-    if not indexes:
+    if len(indexes) == 0:
         return ()
     else:
         return indexes
@@ -85,9 +124,8 @@ def predict(time_data, time_period, normal):
     if  len(valid_points[0]) == 0:
         return np.random.choice(np.arange(time_period.shape[0]),1)
     else:
-        pdfs = np.vectorize(normal.pdf)
         points = time_period[valid_points[0]] - time_data
-        index = np.argmax(pdfs(points))
+        index = np.argmax(normal.pdf(points))
         return valid_points[0][index]
 
 
@@ -101,7 +139,7 @@ def score(estimator, test_feat, test_labels):
     return np.mean(np.where(test_labels == predictions, 1, 0))
 
 
-features, labels = get_all_data('TrainingData/training-2-users.csv')
+features, labels = get_all_data('TrainingData/training-100-users.csv')
 x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=.2, random_state=42)
 
 means = np.zeros(np.unique(labels).shape[0])

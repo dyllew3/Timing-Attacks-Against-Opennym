@@ -11,7 +11,7 @@ STD = None
 MIN = 20000
 MAX = 0
 features, labels = ([],[])
-GROUPS = [1, 2, 5, 10, 25, 50, 100]
+GROUPS = [5, 10, 25, 50, 100]
 NUM_GROUPS = 10
 
 from sklearn.base import BaseEstimator, ClassifierMixin
@@ -104,7 +104,7 @@ def score(estimator, test_feat, test_labels):
         predictions[i,:] = estimator.labels[index]
     return np.mean(np.where(test_labels == predictions, 1, 0))
 
-val = 75
+val = 50
 features, labels = get_all_data('TrainingData/training-{}-users-filtering.csv'.format(val))
 x_train, x_test, y_train, y_test = train_test_split(features, labels, test_size=.2, random_state=42)
 print(features[0])
@@ -124,7 +124,7 @@ for label in np.unique(labels):
 
 print(MAX)
 print(MIN)
-MEAN = 4.25
+MEAN = 4.8
 STD = 1.22
 normal  = scipy.stats.norm(MEAN, STD)
 print("Set mean is {}".format(MEAN))

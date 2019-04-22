@@ -17,7 +17,7 @@ def get_real_amount(users_arr, percent):
 def get_all_data(filename,delimiter=','):
     all_data = np.genfromtxt(filename, delimiter=delimiter)
     return all_data[1:]
-b = get_all_data('Results/baseline-grouping-application-layer.csv')
+b = get_all_data('Results/baseline-grouping-application-layer-latency.csv')
 
 users_1 = (b[np.where(b[:,0] == 1)])[:len(x_vals),2]
 users_1_err = (b[np.where(b[:,0] == 1)])[:len(x_vals),3]
@@ -40,23 +40,22 @@ users_75_err = (b[np.where(b[:,0] == 75)])[:len(x_vals),3]
 users_100 = (b[np.where(b[:,0] == 100)])[:len(x_vals),2]
 users_100_err = (b[np.where(b[:,0] == 100)])[:len(x_vals),3]
 
-vals = [1, 2]#, 5, 10, 25, 50, 100]
+vals = [1]#, 2, 5, 10, 25, 50, 100]
 #real_users = get_real_amount(active_users, dummy_percent)
-with open('Results/Application Layer/dummy-defence.csv', 'w', newline='') as csvfile:
-	header = ['Group Size', 'Number of Real Users', 'Number of Dummy Users', 'Percentage of Dummy Users', 'Accuracy']
-	csv_writer = csv.writer(csvfile, quoting=csv.QUOTE_NONE, delimiter=',')
-	csv_writer.writerow(header)
+with open('Results/Application Layer/dummy-defence.csv', 'r', newline='') as csvfile:
+	#header = ['Group Size', 'Number of Real Users', 'Number of Dummy Users', 'Percentage of Dummy Users', 'Accuracy']
+	#csv_writer = csv.writer(csvfile, quoting=csv.QUOTE_NONE, delimiter=',')
+	#csv_writer.writerow(header)
 	for val in vals :
 		group_1 = (b[np.where(b[:,1] == val)])[:len(active_users),2]
 		group_1_err = (b[np.where(b[:,1] == val)])[:len(active_users),3]
-		print(group_1)
-		for dummy_percent in dummy_percents:
-			for i in range(len(active_users)):
-				real_user = active_users[i] - (active_users[i]*dummy_percent)//100
-				csv_writer.writerow([val, real_user,  (active_users[i]*dummy_percent)//100, dummy_percent, group_1[i]])
+		#for dummy_percent in dummy_percents:
+			#for i in range(len(active_users)):
+			#	real_user = active_users[i] - (active_users[i]*dummy_percent)//100
+			#	csv_writer.writerow([val, real_user,  (active_users[i]*dummy_percent)//100, dummy_percent, group_1[i]])
 			#fig = plt.figure()
 			#ax = plt.subplot()
-			real_users = get_real_amount(active_users, dummy_percent)
+			#real_users = get_real_amount(active_users, dummy_percent)
 			#x_vals = get_real_amount(active_users, dummy_percent)
 			## Data
 			#df=pd.DataFrame({
@@ -91,15 +90,14 @@ with open('Results/Application Layer/dummy-defence.csv', 'w', newline='') as csv
 			## Put a legend below current axis
 			#ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15),
 			#		fancybox=True, shadow=True, ncol=5)
-			plt.xlabel('Nunber of \'real\' active users')
-			plt.ylabel('Accuracy')
-			width = 0.35
-			print(real_users)
-			plt.errorbar(real_users, group_1, yerr=group_1_err, color='blue', ecolor='black', fmt='--o')
-			#plt.xticks(ind, ('1', '2', '5', '10', '50', '75', '100'))
-			plt.xticks(range(0, 105, 5))
-			plt.yticks(np.arange(0, 1.1, step=0.1))
-			plt.grid()
+		plt.xlabel('Number of active users')
+		plt.ylabel('Accuracy')
+		width = 0.35
+		plt.errorbar(active_users, group_1, yerr=group_1_err, color='red', ecolor='black', fmt='--o')
+		#plt.xticks(ind, ('1', '2', '5', '10', '50', '75', '100'))
+		plt.xticks(range(0, 105, 5))
+		plt.yticks(np.arange(0, 1.1, step=0.1))
+		plt.grid()
 
-			plt.savefig('Results/Application Layer/grouping-{}-dummy-{}%.png'.format(val, dummy_percent))
-			plt.show()
+		plt.savefig('Results/Application Layer/grouping-{}-latency.png'.format(val))
+		plt.show()

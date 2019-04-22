@@ -11,7 +11,7 @@ STD = None
 MIN = 20000
 MAX = 0
 features, labels = ([],[])
-GROUPS = [25, 50, 100]
+GROUPS = [1, 2, 5, 10, 25, 50, 100]
 NUM_GROUPS = 10
 
 from sklearn.base import BaseEstimator, ClassifierMixin
@@ -39,7 +39,7 @@ class Attack(BaseEstimator, ClassifierMixin):
             if  len(valid_points[0]) == 0:
                 return np.random.choice(np.arange(self.time_period.shape[0]),1)
             else:
-                normal = scipy.stats.norm(self.mean*(i + 1), self.std*(i + 1))
+                normal = scipy.stats.norm(self.mean + 3.7*(i - 1), self.std + 0.13*(i - 1))
                 pdfs = np.vectorize(normal.pdf)
                 points = self.time_period[valid_points[0]] - time_data
                 index = np.argmax(pdfs(points))
@@ -105,7 +105,7 @@ def latency_to_add(feats, length):
     a[:, 1] = a[:, 0]
     return feats + a
 
-features, labels = get_all_data('TrainingData/training-50-users(1).csv')
+features, labels = get_all_data('TrainingData/training-100-users.csv')
 features = latency_to_add(features, features.shape[0])
 
 
@@ -124,7 +124,7 @@ for label in np.unique(labels):
     means[int(label)] = mu
     std_devs[int(label)] = sigma
 
-MEAN = 4.8
+MEAN = 4.25
 STD = 1.22
 normal  = scipy.stats.norm(MEAN, STD)
 print("Set mean is {}".format(MEAN))
